@@ -1,0 +1,100 @@
+body {
+    background: #e5e9eb !important;
+    /* background-image:("/static/images/bluesea.jpeg"); */
+    /* background: url(/static/images/bluesea.jpeg) top right no-repeat !important; */
+	color: #FFFFFF !important;
+	font-size:16px !important;
+	font-family: 'Assistant' !important;
+	padding: 0px 0 0 10px;
+}  
+
+body.noScroll { /* ...or body.dialogShowing */
+    overflow: hidden;
+}
+
+#content, html, body {
+    height: 100%;
+/* background: rgb(206, 188, 193); */
+}
+
+h1,h2,h3,h4,h5,h6{
+	/* margin-top: 20px;
+  	margin-bottom: 10px; */
+  	color:#2fff86;
+}
+
+p, ol{
+	/* margin-top: 20px;
+  	margin-bottom: 10px; */
+  	color:#0a0a0a;
+}
+
+* {
+	border-radius: 0px;
+}
+
+#left {
+    /* background: #fff; */
+          float: left;
+          top:0px;
+          width: 45%;
+          color:#ffffff;
+          height: 100%;
+          overflow: scroll;
+            border-right:5px solid #000000;
+          border-left:20px solid transparent;
+      }
+#right {
+          /* background: #fff; */
+    float: left;
+          top:0px;
+            border-right:40px solid transparent;
+            border-left:20px solid transparent;
+          width: 55%;
+          height: 100%;
+          overflow: scroll;
+      }
+      
+      ul.nav a.vb { color: #ffffff !important; font-size:14px !important;}
+      ul.nav a.vb:active { background-color: #666666  !important; color: #ffffff !important; }
+      ul.nav a.vb:focus { background-color: #666666  !important; color: #ffffff !important; }
+      ul.nav a.vb:visited { background-color: #666666  !important; color: #ffffff !important; }
+
+.stand14{
+	font-size:12px !important;
+	color:#ffffff;
+}
+
+/* MENU */
+.navbar {
+      background: #000000;
+      border: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.navbar-brand {
+    color: #ffffff  !important;
+}
+
+.navbar .nav > li > a {
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    color:  #ddd;
+}
+
+/* to change nav bar height */
+.navbar-nav > li > a, .navbar-brand {
+    padding-top:5px !important; padding-bottom:0 !important;
+    height: 36px;
+}
+.navbar {min-height:36px !important;}
+
+/* to make nav bar height change to work on mobiles */
+.navbar-toggle {
+     padding: 0 0;
+     margin-top: 7px;
+     margin-bottom: 0;
+}
+
+ul.nav a:hover { background-color: #666666  !important; color: #ffffff !important; }

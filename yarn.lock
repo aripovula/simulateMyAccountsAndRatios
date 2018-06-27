@@ -989,6 +989,13 @@ buffer@^4.3.0:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
+buffer@^5.0.3:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.1.0.tgz#c913e43678c7cb7c8bd16afbcddb6c5505e8f9fe"
+  dependencies:
+    base64-js "^1.0.2"
+    ieee754 "^1.1.4"
+
 builtin-modules@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
@@ -1310,7 +1317,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.5.3, create-react-class@^15.6.2:
+create-react-class@^15.5.3:
   version "15.6.3"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
   dependencies:
@@ -1345,6 +1352,10 @@ crypto-browserify@^3.11.0:
     pbkdf2 "^3.0.3"
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
+
+css-color-keywords@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/css-color-keywords/-/css-color-keywords-1.0.0.tgz#fea2616dc676b2962686b3af8dbdbe180b244e05"
 
 css-color-names@0.0.4:
   version "0.0.4"
@@ -1383,6 +1394,14 @@ css-selector-tokenizer@^0.7.0:
     cssesc "^0.1.0"
     fastparse "^1.1.1"
     regexpu-core "^1.0.0"
+
+css-to-react-native@^2.0.3:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-2.2.1.tgz#7f3f4c95de65501b8720c87bf0caf1f39073b88e"
+  dependencies:
+    css-color-keywords "^1.0.0"
+    fbjs "^0.8.5"
+    postcss-value-parser "^3.3.0"
 
 cssesc@^0.1.0:
   version "0.1.0"
@@ -1844,7 +1863,7 @@ faye-websocket@^0.10.0:
   dependencies:
     websocket-driver ">=0.5.1"
 
-fbjs@^0.8.16:
+fbjs@^0.8.16, fbjs@^0.8.5:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   dependencies:
@@ -2669,6 +2688,10 @@ loader-utils@^1.0.1, loader-utils@^1.0.2, loader-utils@^1.1.0:
     big.js "^3.1.3"
     emojis-list "^2.0.0"
     json5 "^0.5.0"
+
+loadjs@^3.3.1:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/loadjs/-/loadjs-3.5.4.tgz#ef0f4eb5a6ac2b86c7597a3d4de97b83816e36b8"
 
 locate-path@^2.0.0:
   version "2.0.0"
@@ -3679,12 +3702,6 @@ react-bootstrap-table@^4.3.1:
     react-modal "^3.1.7"
     react-s-alert "^1.3.2"
 
-react-chartjs@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-chartjs/-/react-chartjs-1.2.0.tgz#54d0f90f3e9026666d9fcae447cd090bab65689d"
-  dependencies:
-    create-react-class "^15.6.2"
-
 react-dom-factories@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-dom-factories/-/react-dom-factories-1.0.0.tgz#f43c05e5051b304f33251618d5bc859b29e46b6d"
@@ -3697,6 +3714,12 @@ react-dom@^16.4.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
+
+react-google-charts@^1.6.6:
+  version "1.6.6"
+  resolved "https://registry.yarnpkg.com/react-google-charts/-/react-google-charts-1.6.6.tgz#ec8d4cc4c07f31942e947ca1515eb59a6fa2f760"
+  dependencies:
+    loadjs "^3.3.1"
 
 react-lifecycles-compat@^3.0.0:
   version "3.0.4"
@@ -3766,11 +3789,21 @@ react-split-pane@^0.1.77:
     prop-types "^15.5.10"
     react-style-proptype "^3.0.0"
 
+react-splitter-layout@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-splitter-layout/-/react-splitter-layout-3.0.0.tgz#a0cba494ffb4e0af56b3a80679e865fc4a6dc71b"
+
 react-style-proptype@^3.0.0:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/react-style-proptype/-/react-style-proptype-3.2.1.tgz#7cfeb9b87ec7ab9dcbde9715170ed10c11fb86aa"
   dependencies:
     prop-types "^15.5.4"
+
+react-svg-bar-chart@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-svg-bar-chart/-/react-svg-bar-chart-1.0.0.tgz#6d57700e28049cb3c8c55e6a7a2889a5194f60cb"
+  dependencies:
+    styled-components "^2.1.2"
 
 react-table@^6.8.6:
   version "6.8.6"
@@ -4320,6 +4353,23 @@ style-loader@0.18.2:
   dependencies:
     loader-utils "^1.0.2"
     schema-utils "^0.3.0"
+
+styled-components@^2.1.2:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-2.4.1.tgz#663bd0485d4b6ab46f946210dc03d2398d1ade74"
+  dependencies:
+    buffer "^5.0.3"
+    css-to-react-native "^2.0.3"
+    fbjs "^0.8.9"
+    hoist-non-react-statics "^1.2.0"
+    is-plain-object "^2.0.1"
+    prop-types "^15.5.4"
+    stylis "^3.4.0"
+    supports-color "^3.2.3"
+
+stylis@^3.4.0:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.1.tgz#fd341d59f57f9aeb412bc14c9d8a8670b438e03b"
 
 supports-color@^2.0.0:
   version "2.0.0"

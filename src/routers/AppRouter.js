@@ -13,7 +13,6 @@ const AppRouter = () => (
       <Switch>
         <Route path="/" component={MainDashboard} exact={true} />
       </Switch>
-      <MainDashboard/>      
     </div>
   </BrowserRouter>
 );
