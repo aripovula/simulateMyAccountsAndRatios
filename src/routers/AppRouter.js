@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
-import SplitPane from 'react-split-pane';
 
 import MainDashboard from '../components/MainDashboard';
+import MainAddPosting from '../components/MainAddPosting';
 import Header from '../components/Header';
 
 
@@ -12,6 +12,7 @@ const AppRouter = () => (
       <Header />
       <Switch>
         <Route path="/" component={MainDashboard} exact={true} />
+        <Route path="/createposting" component={MainAddPosting} exact={true} />
       </Switch>
     </div>
   </BrowserRouter>

@@ -19,6 +19,54 @@ button:disabled {
   cursor: default;
 }
 
-.is-active {
-  font-weight: bold;
+
+  .normal {
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .is-active {
+    text-decoration: none;
+    color: red;
+  }
+
+  .actionButton {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      //display: inline-block;
+      white-space: normal;
+      font-size: 16px;
+      margin: 4px 2px;
+      border-radius: 4px;
+      cursor: pointer;
+      //padding: 32px 2px;
+      width: 24%;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+  }
+  
+  .actionButton:hover {
+    background-color: #4CAF50; /* Green */
+    color:lightblue;
+}
+
+input[type=text], input[type=number] {
+  border: none;
+  border-bottom: 2px solid lightseagreen;
+  margin:8px;
+}
+
+.card-4,.hover-shadow:hover{
+  box-shadow:0 8px 10px 0 rgba(0,0,0,0.2),0 8px 20px 0 rgba(0,0,0,0.19);
+  width:94%;
+  margin: 3%;
+}
+
+.bggreen,.w3-hover-green:hover{
+  color:#fff!important;
+  background-color:#4CAF50!important;
+  padding:0.01em 16px;
 }
