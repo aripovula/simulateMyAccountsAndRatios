@@ -3,7 +3,7 @@ import ReactTable from "react-table";
 import { render } from "react-dom";
 import "react-table/react-table.css";
 
-import { Logo, Tips } from "../utils/tableUtils";
+import { Tips } from "../utils/tableUtils";
 
 
 let Udata = [
@@ -97,7 +97,6 @@ class FinStatements extends React.Component {
         />
         <br />
         <Tips />
-        <Logo />
       </div>
     );
   }

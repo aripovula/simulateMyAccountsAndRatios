@@ -1,20 +1,18 @@
 .header {
     background: $dark-blue;
-    color:white
+    color:white;
+    height: 35px;
+    align-items: center;
   }
   
   .header__content {
     align-items: center;
     display: flex;
-    justify-content: space-between;
+    //justify-content: space-between;
     //padding: $s-size 0;
   }
   
   .header__title {
-    color: white;
     text-decoration: none;
-    h1 {
-      margin: 0;
-    }
   }
   

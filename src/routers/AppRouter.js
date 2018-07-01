@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
 import MainDashboard from '../components/MainDashboard';
 import MainAddPosting from '../components/MainAddPosting';
 import Header from '../components/Header';
+import AddPosting from '../components/AddPosting';
 
 
 const AppRouter = () => (
@@ -13,6 +14,7 @@ const AppRouter = () => (
       <Switch>
         <Route path="/" component={MainDashboard} exact={true} />
         <Route path="/createposting" component={MainAddPosting} exact={true} />
+        {/*<Route path="/createposting" component={AddPosting} exact={true} />*/}
       </Switch>
     </div>
   </BrowserRouter>

@@ -1,33 +1,35 @@
 import uuid from 'uuid';
 
-// ADD_EXPENSE
-export const addExpense = (
+// ADD_POSTING
+export const addPosting = (
   {
-    description = '',
+    ptype = '',
+    lineItem = '',
     note = '',
     amount = 0,
     createdAt = 0
   } = {}
 ) => ({
-  type: 'ADD_EXPENSE',
-  expense: {
+  type: 'ADD_POSTING',
+  posting: {
     id: uuid(),
-    description,
+    ptype,
+    lineItem,
     note,
     amount,
     createdAt
   }
 });
 
-// REMOVE_EXPENSE
-export const removeExpense = ({ id } = {}) => ({
-  type: 'REMOVE_EXPENSE',
+// REMOVE_POSTING
+export const removePosting = ({ id } = {}) => ({
+  type: 'REMOVE_POSTING',
   id
 });
 
-// EDIT_EXPENSE
-export const editExpense = (id, updates) => ({
-  type: 'EDIT_EXPENSE',
+// EDIT_POSTING
+export const editPosting = (id, updates) => ({
+  type: 'EDIT_POSTING',
   id,
   updates
 });

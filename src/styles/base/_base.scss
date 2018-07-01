@@ -7,8 +7,8 @@ body {
   font-size: $m-size;
 }
 
-h1 {
-  color:red;
+h1,h2 {
+  color:deepskyblue;
 }
 
 button {
@@ -46,6 +46,7 @@ button:disabled {
       width: 24%;
       -webkit-transition-duration: 0.4s; /* Safari */
       transition-duration: 0.4s;
+      box-shadow:0 8px 10px 0 rgba(0,0,0,0.2),0 8px 20px 0 rgba(0,0,0,0.19);
   }
   
   .actionButton:hover {
@@ -70,3 +71,76 @@ input[type=text], input[type=number] {
   background-color:#4CAF50!important;
   padding:0.01em 16px;
 }
+
+.horIndent{
+  display:inline-block; 
+  width: 20px;
+}
+
+.verIndent{
+  display:block; 
+  height: 10px;
+}
+
+.boxedtransp {
+  width: 96%;
+  border: green solid 2px;
+  padding: 5px;
+  margin: 5px;
+  //background: #d8d1d1 !important;
+  color: green;
+  /* font-size: 18px; */
+  text-align: left;
+  border-radius: 2px;
+  opacity: 0.85;
+}
+
+/* BUTTONS */
+
+.btn {
+	border-radius: 0px;
+}
+
+
+.button {
+   
+    //border:  rgb(48, 190, 238) solid 1px; 
+    color: white;
+    padding: 6px 14px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button1 {
+    background-color: rgb(48, 190, 238); 
+    color: white;
+}
+
+.button1:hover {
+  //background-color: rgb(48, 190, 238); 
+    //color: #99cc33;
+    box-shadow:0 8px 10px 0 rgba(0,0,0,0.2),0 8px 20px 0 rgba(0,0,0,0.19);
+}
+    
+.button2 {
+  background-color: rgb(48, 190, 238); 
+  color: white;
+}
+
+.button2:hover {
+  //background-color: rgb(48, 190, 238); 
+    //color: #ff6600;
+    box-shadow:0 8px 10px 0 rgba(0,0,0,0.2),0 8px 20px 0 rgba(0,0,0,0.19);
+}
+
+// .button1 {background-color: #4CAF50;} /* Green */
+// .button2 {background-color: #008CBA;} /* Blue */
+// .button3 {background-color: #f44336;} /* Red */ 
+// .button4 {background-color: #e7e7e7; color: black;} /* Gray */ 
+// .button5 {background-color: #555555;} /* Black */

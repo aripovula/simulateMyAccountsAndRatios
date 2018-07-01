@@ -1,5 +1,5 @@
 import { createStore, combineReducers } from 'redux';
-import postingssReducer from '../reducers/postings';
+import postingsReducer from '../reducers/postings';
 import filtersReducer from '../reducers/filters';
 
 export default () => {

@@ -11,7 +11,7 @@ const MainDashboard = () => (
   <div>
 
     <SplitterLayout primaryIndex={0} percentage={true} primaryMinSize={30} secondaryInitialSize={50} secondaryMinSize={40}>
-    <div>1st
+    <div>
         <GChart/>
     </div>
     <div>2nd
