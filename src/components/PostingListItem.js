@@ -2,12 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { removePosting } from '../actions/postings';
 
-const PostingsListItem = ({ dispatch, id, description, amount, createdAt }) => (
+const PostingsListItem = ({ dispatch, id, lineItem, amount, note, createdAt }) => (
   <div>
-    <h3>{description}</h3>
-    <p>{amount} - {createdAt}</p>
+    <h3>{lineItem}</h3>
+    <p>{amount} - {note}</p>
     <button onClick={() => {
-      dispatch(removeExpense({ id }));
+      dispatch(removePosting({ id }));
     }}>Remove</button>
   </div>
 );

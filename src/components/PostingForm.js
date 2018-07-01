@@ -1,9 +1,10 @@
 import React from 'react';
 import moment from 'moment';
-import { Route , withRouter} from 'react-router-dom';
 //import { SingleDatePicker } from 'react-dates/initialize';
 
-export default class PostingLineForm extends React.Component {
+let isDr = true;
+
+export default class PostingForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,7 +19,8 @@ export default class PostingLineForm extends React.Component {
     };
   }
   onTypeChange = (e) => {
-    const ptype = e.target.value;
+    isDr = !isDr;
+    const ptype = isDr ? 'Dr' : 'Cr';
     this.setState(() => ({ ptype }));
   };
   onLineItemChange = (e) => {
@@ -66,7 +68,6 @@ export default class PostingLineForm extends React.Component {
          {this.state.error && <p className="form__error">{this.state.error}</p>}
         
         <span className="horIndent"></span>
-        <span className="horIndent"></span>
 
        {/*<select>
           <option value="dr" >Dr</option>
@@ -75,17 +76,27 @@ export default class PostingLineForm extends React.Component {
           onChange={this.onTypeChange}
          </select>*/}
 
+         <button
+         type='button'
+         className="button1"
+         onClick={this.onTypeChange}
+         >
+         {isDr ? 'Dr' : 'Cr'}
+         </button>
+         
         <input
             type="text"
             placeholder=" line item"
             className="text-input"
+            size="36"
             value={this.state.lineItem}
             onChange={this.onLineItemChange}
         />
          <input
           type="text"
-          placeholder=" amount"
+          placeholder=" amount, US$"
           className="text-input"
+          size="16"
           value={this.state.amount}
           onChange={this.onAmountChange}
         />
@@ -108,6 +119,7 @@ export default class PostingLineForm extends React.Component {
             <input
             type="text"
               placeholder="Comment (optional)"
+              size="60"
               className="text-input"
               value={this.state.note}
               onChange={this.onNoteChange}

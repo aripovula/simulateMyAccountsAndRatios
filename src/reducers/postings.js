@@ -5,6 +5,7 @@ const postingsReducerDefaultState = [];
 export default (state = postingsReducerDefaultState, action) => {
   switch (action.type) {
     case 'ADD_POSTING':
+    console.log('IN ADD POSTING');
       return [
         ...state,
         action.posting

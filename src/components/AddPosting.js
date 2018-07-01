@@ -1,18 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startAddPosting } from '../actions/postings';
-import configureStore from '../store/configureStore';
-import getVisiblePostings from '../selectors/postings';
 import { Route , withRouter} from 'react-router-dom';
-//import {PostingOneLineDr} from './PostingOneLine';
-//import {PostingOneLineCr} from './PostingOneLine';
-import PostingLineForm from './PostingLineForm';
+import PostingForm from './PostingForm';
+import AddActionButton from './AddActionButton';
+import { addPosting } from '../actions/postings';
 
-const store = configureStore();
+let actButtons = [{name:'book Sales revenue'}, {name:'book COGS'}];
 
 const AddPosting = (props) => {
   console.log("PROPs=");
   console.log(props);
+
   return (
       <div>
       <div className="boxedtransp">
@@ -24,6 +22,9 @@ const AddPosting = (props) => {
           <button className="actionButton">Book sales revenue and COGS</button>
           <button className="actionButton">Book sales revenue and COGS</button>
           <button className="actionButton">Book sales revenue and COGS</button>
+          {actButtons.map((actButton) => {
+            return <AddActionButton key={actButton.name} {...actButton} />;
+          })}
       </div>
   
       <div className="card-4">
@@ -31,18 +32,9 @@ const AddPosting = (props) => {
       
         <h4><strong>Entry Form</strong> - use options above</h4>
       </div>
-      <PostingLineForm
-      
+      <PostingForm
         onSubmit={(posting) => {
-          let state = store.getState();
-          let visiblePostings = getVisiblePostings(state.postings, state.filters);
-          console.log("BEFORE="+visiblePostings);
-
-          props.dispatch(AddPosting(posting));
-
-           state = store.getState();
-           visiblePostings = getVisiblePostings(state.postings, state.filters);
-          console.log("AFTER ="+visiblePostings);
+          props.dispatch(addPosting(posting));
           props.history.push('/');
         }}
 

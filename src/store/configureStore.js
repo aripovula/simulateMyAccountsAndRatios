@@ -9,6 +9,8 @@ export default () => {
       filters: filtersReducer
     })
   );
-
+  console.log('STORE FROM STORE='+store);
+  const state = store.getState();
+  console.log('State FROM STORE='+state);
   return store;
 };

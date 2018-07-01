@@ -1,5 +1,6 @@
 import React from 'react';
 import FinStatements from './FinStatements';
+import PostingsList from './PostingsList';
 import BarChart from './BarChart';
 //import SplitPane from 'react-split-pane';
 import SplitterLayout from 'react-splitter-layout';
@@ -12,10 +13,11 @@ const MainDashboard = () => (
 
     <SplitterLayout primaryIndex={0} percentage={true} primaryMinSize={30} secondaryInitialSize={50} secondaryMinSize={40}>
     <div>
-        <GChart/>
+        {/*<GChart/>*/}
     </div>
-    <div>2nd
-        
+    <div>
+    {/*2nd*/}
+      <PostingsList/>
     </div>
     </SplitterLayout>
   </div>
