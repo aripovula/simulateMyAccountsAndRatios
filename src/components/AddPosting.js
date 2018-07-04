@@ -5,25 +5,25 @@ import PostingForm from './PostingForm';
 import AddActionButton from './AddActionButton';
 import { addPosting } from '../actions/postings';
 
-let actButtons = [{name:'book Sales revenue'}, {name:'book COGS'}];
+let actButtons = [
+  {idu:1, name:'book Revenue and COGS'}, 
+  {idu:2, name:'book Admin expenses'}, 
+  {idu:3, name:'book Accounts receivable'}, 
+  {idu:4, name:'book Short-term lending'}, 
+  {idu:5, name:'book Long-term lending'}, 
+  {idu:6, name:'book Short-term borrowing'}, 
+  {idu:7, name:'book Long-term borrowing'}, 
+  {idu:8, name:'book Accounts payable'}
+];
 
 const AddPosting = (props) => {
-  console.log("PROPs=");
-  console.log(props);
-
+  //console.log("PROPs=");
+  //console.log(props);
   return (
       <div>
       <div className="boxedtransp">
-          <button className="actionButton">Book sales revenue and COGS</button>
-          <button className="actionButton">Book<br/>admin<br/>expenses</button>
-          <button className="actionButton">Book sales revenue and COGS</button>
-          <button className="actionButton">Book sales revenue and COGS</button>
-          <button className="actionButton">Book sales revenue and COGS</button>
-          <button className="actionButton">Book sales revenue and COGS</button>
-          <button className="actionButton">Book sales revenue and COGS</button>
-          <button className="actionButton">Book sales revenue and COGS</button>
           {actButtons.map((actButton) => {
-            return <AddActionButton key={actButton.name} {...actButton} />;
+            return <AddActionButton key={actButton.idu} {...actButton} />;
           })}
       </div>
   
@@ -39,24 +39,11 @@ const AddPosting = (props) => {
         }}
 
       />
-      {/*<PostingOneLineDr/>
-      <PostingOneLineCr/>
-      <br/>
-      <span className="horIndent"></span>
-      <button>+ Dr line</button>
-      <span className="horIndent"></span>
-      <button>+ Cr line</button>
-      <span className="horIndent"></span>
-      <button>Post the entry</button>*/}
       <br/><br/>
       </div>
     </div>
     );
 }
-
-// const mapDispatchToProps = (dispatch) => ({
-//   startAddPosting: (posting) => dispatch(startAddPosting(posting))
-// });
 
 export default withRouter(connect() (AddPosting));
 

@@ -1,23 +1,47 @@
 import React from 'react';
 import moment from 'moment';
+import PostingOneLine from './PostingOneLine';
 //import { SingleDatePicker } from 'react-dates/initialize';
 
-let isDr = true;
+// let isDr = true;
+let idCounter = 1;
+// let linesData = [
+//     {idu:0, isDr:true},
+//     {idu:1, isDr:false}
+// ];
+
+// export const RemoveLine = () => {
+//   console.log('in removeLine');
+//   linesData.push({idu:idCounter,isDr:true});
+//    this.forceUpdate();
+// }
 
 export default class PostingForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-       ptype: props.posting ? props.posting.ptype : '',
+        ptype: props.posting ? props.posting.ptype : '',
         lineItem: props.posting ? props.posting.lineItem : '',
         note: props.expense ? props.expense.note : '',
         amount: props.expense ? (props.expense.amount / 100).toString() : '',
         //createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
         //calendarFocused: false,
-        error: ''
+        error: '',
+        linesData: [
+          {idu:0, isDr:true},
+          {idu:1, isDr:false}
+        ]
     };
+    this.processAddDrLine = this.processAddDrLine.bind(this);
+    this.processAddCrLine = this.processAddCrLine.bind(this);
+    this.processDeleteLine = this.processDeleteLine.bind(this);
   }
+
+  onNoteChange = (e) => {
+    const note = e.target.value;
+    this.setState(() => ({ note }));
+  };
+
   onTypeChange = (e) => {
     isDr = !isDr;
     const ptype = isDr ? 'Dr' : 'Cr';
@@ -27,10 +51,6 @@ export default class PostingForm extends React.Component {
     const lineItem = e.target.value;
     this.setState(() => ({ lineItem }));
   };
-  onNoteChange = (e) => {
-    const note = e.target.value;
-    this.setState(() => ({ note }));
-  };
   onAmountChange = (e) => {
     const amount = e.target.value;
 
@@ -38,6 +58,39 @@ export default class PostingForm extends React.Component {
       this.setState(() => ({ amount }));
     }
   };
+
+  onCloseClick = (e) => {
+    console.log(e.target.id);
+    RemoveLine().bind(this);
+  }
+
+  processAddDrLine = () => {
+      idCounter++;
+      this.setState((prevState) => {
+        return {
+          linesData: prevState.linesData.concat({idu:idCounter, isDr:true})
+        }
+      });
+  }
+
+  processAddCrLine = () => {
+    idCounter++;
+    this.setState((prevState) => {
+      return {
+        linesData: prevState.linesData.concat({idu:idCounter, isDr:false})
+      }
+    });
+  }
+
+  processDeleteLine = (props) => {
+    let line2remove = props.target.id;
+    this.setState((prevState) => {
+      return {
+        linesData:prevState.linesData.filter(linesDataPr =>linesDataPr.idu != line2remove)
+      }  
+    });
+  }
+  
 //   onDateChange = (createdAt) => {
 //     if (createdAt) {
 //       this.setState(() => ({ createdAt }));
@@ -62,44 +115,20 @@ export default class PostingForm extends React.Component {
       });
     }
   };
-  render() {
+  render () {
     return (
        <form className="form" onSubmit={this.onSubmit}>
          {this.state.error && <p className="form__error">{this.state.error}</p>}
-        
-        <span className="horIndent"></span>
 
-       {/*<select>
-          <option value="dr" >Dr</option>
-          <option value="cr" >Cr</option>
-          value={this.state.ptype}
-          onChange={this.onTypeChange}
-         </select>*/}
-
-         <button
-         type='button'
-         className="button1"
-         onClick={this.onTypeChange}
-         >
-         {isDr ? 'Dr' : 'Cr'}
-         </button>
-         
-        <input
-            type="text"
-            placeholder=" line item"
-            className="text-input"
-            size="36"
-            value={this.state.lineItem}
-            onChange={this.onLineItemChange}
-        />
-         <input
-          type="text"
-          placeholder=" amount, US$"
-          className="text-input"
-          size="16"
-          value={this.state.amount}
-          onChange={this.onAmountChange}
-        />
+         {this.state.linesData.map((lineData) => {
+          return <PostingOneLine
+            key={lineData.idu}
+            idu= {lineData.idu}
+            isDr = {lineData.isDr}
+            processDeleteLine = {this.processDeleteLine}
+          />
+        })}
+    
         {/*<SingleDatePicker
           date={this.state.createdAt}
           onDateChange={this.onDateChange}
@@ -111,9 +140,23 @@ export default class PostingForm extends React.Component {
         <div>
           <span className="verIndent"></span>
             <span className="horIndent"></span>
-            <button  className="button1">+ Dr line</button>
+            
+            <button
+              className="button1"
+              type="button"
+              onClick={this.processAddDrLine}
+              >+ Dr line
+            </button>
+
             <span className="horIndent"></span>
-            <button  className="button2">+ Cr line</button>
+
+            <button
+              className="button1"
+              type="button"
+              onClick={this.processAddCrLine}
+              >+ Cr line
+            </button>
+            <br/>
             <span className="verIndent"></span>
             <span className="horIndent"></span>
             <input
@@ -131,4 +174,5 @@ export default class PostingForm extends React.Component {
       </form>
     )
   }
+  //render();
 }

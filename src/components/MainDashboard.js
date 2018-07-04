@@ -24,3 +24,15 @@ const MainDashboard = () => (
 );
 
 export default MainDashboard;
+
+// default export :
+// export default class  OR
+// export default MainDashboard;
+
+// export const AddPosting
+// export class
+
+// default import
+//import PostingsList from './PostingsList';
+// named import
+// import {PostingsList} from './PostingsList';
