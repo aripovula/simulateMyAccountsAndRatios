@@ -32,6 +32,7 @@ export default class PostingForm extends React.Component {
   onNoteChange = (e) => {
     const note = e.target.value;
     this.setState(() => ({ note }));
+    this.onErrorChange('');
   };
 
   onLineItemChange = (e) => {
@@ -51,8 +52,10 @@ export default class PostingForm extends React.Component {
           linesData:prevState.linesData
         }
       });   
+      this.onErrorChange('');
     } else {
       e.target.value = this.state.linesData[index2change].lineItem;
+      this.onErrorChange('Please use only letters, numbers or space');
     }
   };
 
@@ -67,14 +70,15 @@ export default class PostingForm extends React.Component {
         });
     console.log('id = '+e.target.id+' amount = '+amount);
     if (!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
-      this.setState((prevState) => {        
-        prevState.linesData[index2change].amount = amount;
+      this.setState((prevState) => {
+        prevState.linesData[index2change].amount = (amount* 100).toString();
         return {
           linesData:prevState.linesData
         }
-      });   
+      }, this.checkSum);
     } else {
       e.target.value = this.state.linesData[index2change].amount;
+      this.onErrorChange('Please use valid amount');
     }
   };
 
@@ -85,6 +89,7 @@ export default class PostingForm extends React.Component {
           linesData: prevState.linesData.concat({idu:idCounter, isDr:true, lineItem:'', amount:0})
         }
       });
+      this.onErrorChange('');
   }
 
   processAddCrLine = () => {
@@ -94,6 +99,7 @@ export default class PostingForm extends React.Component {
         linesData: prevState.linesData.concat({idu:idCounter, isDr:false, lineItem:'', amount:0})
       }
     });
+    this.onErrorChange('');
   }
 
   processDeleteLine = (props) => {
@@ -103,6 +109,7 @@ export default class PostingForm extends React.Component {
         linesData:prevState.linesData.filter(linesDataPr =>linesDataPr.idu != line2remove)
       }  
     });
+    this.onErrorChange('');
   }
 
   processEntryTypeChange = (e) => {
@@ -123,7 +130,23 @@ export default class PostingForm extends React.Component {
       return {
         linesData:prevState.linesData
       }
-    }); 
+    }, this.checkSum);
+    
+  }
+
+  checkSum = () => {
+    let totalAmnt = 0;
+    this.state.linesData.map((lineData)=>{
+      let amnt = parseFloat(lineData.amount, 10) / 100;
+      if (lineData.isDr) totalAmnt = totalAmnt + amnt;
+      if (!lineData.isDr) totalAmnt = totalAmnt - amnt;
+    });
+    if (totalAmnt != 0) {this.onErrorChange(`Total is ${totalAmnt}, should be zero !`);} 
+    else this.onErrorChange('');
+  }
+
+  onErrorChange = (text) => {
+    this.setState(() =>  {return {error: text}}); 
   }
   
 //   onDateChange = (createdAt) => {
@@ -153,7 +176,6 @@ export default class PostingForm extends React.Component {
   render () {
     return (
        <form className="form" onSubmit={this.onSubmit}>
-         {this.state.error && <p className="form__error">{this.state.error}</p>}
 
          {this.state.linesData.map((lineData) => {
           return <PostingOneLine
@@ -194,6 +216,12 @@ export default class PostingForm extends React.Component {
               onClick={this.processAddCrLine}
               >+ Cr line
             </button>
+
+            <span className="horIndent"></span>
+            <span className="horIndent"></span>
+            
+            <span className="warning">{this.state.error}</span>
+
             <br/>
             <span className="verIndent"></span>
             <span className="horIndent"></span>
