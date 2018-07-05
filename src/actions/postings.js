@@ -3,20 +3,16 @@ import uuid from 'uuid';
 // ADD_POSTING
 export const addPosting = (
   {
-    ptype = '',
-    lineItem = '',
+    linesData,
     note = '',
-    amount = 0,
     createdAt = 0
   } = {}
 ) => ({
   type: 'ADD_POSTING',
   posting: {
     id: uuid(),
-    ptype,
-    lineItem,
+    linesData,
     note,
-    amount,
     createdAt
   }
 });

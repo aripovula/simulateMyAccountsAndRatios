@@ -131,7 +131,6 @@ export default class PostingForm extends React.Component {
         linesData:prevState.linesData
       }
     }, this.checkSum);
-    
   }
 
   checkSum = () => {
@@ -160,15 +159,13 @@ export default class PostingForm extends React.Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    if (!this.state.lineItem || !this.state.amount) {
-      this.setState(() => ({ error: 'Please provide line item and amount.' }));
+    if (!this.state.linesData) {
+      this.onErrorChange('Please provide line item and amount');
     } else {
-      this.setState(() => ({ error: '' }));
+      this.onErrorChange('');
       this.props.onSubmit({
-        ptype: this.state.ptype,
-        lineItem: this.state.lineItem,
-        amount: parseFloat(this.state.amount, 10) * 100,
-        // createdAt: this.state.createdAt.valueOf(),
+        linesData: this.state.linesData,
+        createdAt: 0 , //this.state.createdAt.valueOf(),
         note: this.state.note
       });
     }

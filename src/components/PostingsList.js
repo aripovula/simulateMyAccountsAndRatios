@@ -9,7 +9,9 @@ const PostingsList = (props) => {
   return (
     <div>
       <h1>Postings List</h1>
+      {console.log('postings')}
       {props.postings.map((posting) => {
+        console.log(posting);
         return <PostingListItem key={posting.id} {...posting} />;
       })}
     </div>

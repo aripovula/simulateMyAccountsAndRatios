@@ -13,7 +13,7 @@ const store = configureStore();
 
 //store.dispatch(addPosting({ lineItem: 'Water bill', amount: 4500 }));
 //store.dispatch(addPosting({ lineItem: 'Gas bill', createdAt: 1000 }));
-store.dispatch(addPosting({ lineItem: 'Rent', amount: 109500 }));
+//store.dispatch(addPosting({ lineItem: 'Rent', amount: 109500 }));
 
 const state = store.getState();
 const visiblePostings = getVisiblePostings(state.postings, state.filters);

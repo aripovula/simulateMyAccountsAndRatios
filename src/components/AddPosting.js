@@ -34,6 +34,7 @@ const AddPosting = (props) => {
       </div>
       <PostingForm
         onSubmit={(posting) => {
+          console.log('POSTING addPosting = ' + posting);
           props.dispatch(addPosting(posting));
           props.history.push('/');
         }}
