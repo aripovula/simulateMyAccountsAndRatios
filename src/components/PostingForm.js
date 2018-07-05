@@ -3,38 +3,30 @@ import moment from 'moment';
 import PostingOneLine from './PostingOneLine';
 //import { SingleDatePicker } from 'react-dates/initialize';
 
-// let isDr = true;
 let idCounter = 1;
-// let linesData = [
-//     {idu:0, isDr:true},
-//     {idu:1, isDr:false}
-// ];
-
-// export const RemoveLine = () => {
-//   console.log('in removeLine');
-//   linesData.push({idu:idCounter,isDr:true});
-//    this.forceUpdate();
-// }
 
 export default class PostingForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        ptype: props.posting ? props.posting.ptype : '',
-        lineItem: props.posting ? props.posting.lineItem : '',
+        // ptype: props.posting ? props.posting.ptype : '',
+        // lineItem: props.posting ? props.posting.lineItem : '',
         note: props.expense ? props.expense.note : '',
-        amount: props.expense ? (props.expense.amount / 100).toString() : '',
+        // amount: props.expense ? (props.expense.amount / 100).toString() : '',
         //createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
         //calendarFocused: false,
         error: '',
         linesData: [
-          {idu:0, isDr:true},
-          {idu:1, isDr:false}
+          {idu:0, isDr:true, lineItem:'', amount: 0 },
+          {idu:1, isDr:false, lineItem:'', amount: 0 }
         ]
     };
     this.processAddDrLine = this.processAddDrLine.bind(this);
     this.processAddCrLine = this.processAddCrLine.bind(this);
     this.processDeleteLine = this.processDeleteLine.bind(this);
+    this.processEntryTypeChange = this.processEntryTypeChange.bind(this);
+    this.onAmountChanged = this.onAmountChanged.bind(this);
+    this.onLineItemChange = this.onLineItemChange.bind(this);
   }
 
   onNoteChange = (e) => {
@@ -42,33 +34,55 @@ export default class PostingForm extends React.Component {
     this.setState(() => ({ note }));
   };
 
-  onTypeChange = (e) => {
-    isDr = !isDr;
-    const ptype = isDr ? 'Dr' : 'Cr';
-    this.setState(() => ({ ptype }));
-  };
   onLineItemChange = (e) => {
+    const id2locate = e.target.id;
     const lineItem = e.target.value;
-    this.setState(() => ({ lineItem }));
-  };
-  onAmountChange = (e) => {
-    const amount = e.target.value;
-
-    if (!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
-      this.setState(() => ({ amount }));
+    console.log('id = '+id2locate+' lineItem = '+lineItem);
+    let index2change;
+    let counterF = 0;
+        this.state.linesData.map((lineData)=>{
+          if (lineData.idu == id2locate) index2change = counterF;
+          counterF++;
+        });
+    if (!lineItem || lineItem.match(/^[a-zA-Z\d\s]+$/)) {
+      this.setState((prevState) => {        
+        prevState.linesData[index2change].lineItem = lineItem;
+        return {
+          linesData:prevState.linesData
+        }
+      });   
+    } else {
+      e.target.value = this.state.linesData[index2change].lineItem;
     }
   };
 
-  onCloseClick = (e) => {
-    console.log(e.target.id);
-    RemoveLine().bind(this);
-  }
+  onAmountChanged = (e) => {
+    const id2locate = e.target.id;
+    const amount = e.target.value;
+    let index2change;
+    let counterF = 0;
+        this.state.linesData.map((lineData)=>{
+          if (lineData.idu == id2locate) index2change = counterF;
+          counterF++;
+        });
+    console.log('id = '+e.target.id+' amount = '+amount);
+    if (!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
+      this.setState((prevState) => {        
+        prevState.linesData[index2change].amount = amount;
+        return {
+          linesData:prevState.linesData
+        }
+      });   
+    } else {
+      e.target.value = this.state.linesData[index2change].amount;
+    }
+  };
 
   processAddDrLine = () => {
       idCounter++;
       this.setState((prevState) => {
         return {
-          linesData: prevState.linesData.concat({idu:idCounter, isDr:true})
+          linesData: prevState.linesData.concat({idu:idCounter, isDr:true, lineItem:'', amount:0})
         }
       });
   }
@@ -77,7 +91,7 @@ export default class PostingForm extends React.Component {
     idCounter++;
     this.setState((prevState) => {
       return {
-        linesData: prevState.linesData.concat({idu:idCounter, isDr:false})
+        linesData: prevState.linesData.concat({idu:idCounter, isDr:false, lineItem:'', amount:0})
       }
     });
   }
@@ -89,6 +103,27 @@ export default class PostingForm extends React.Component {
         linesData:prevState.linesData.filter(linesDataPr =>linesDataPr.idu != line2remove)
       }  
     });
+  }
+
+  processEntryTypeChange = (e) => {
+    let id2locate = e.target.id;
+    let index2change;
+    console.log('id = '+id2locate);
+    this.setState((prevState) => {
+      // console.log('state - all lines');
+      let counterF = 0;
+      this.state.linesData.map((lineData)=>{
+        console.log(lineData);
+        if (lineData.idu == id2locate) {index2change = counterF; console.log(index2change); }
+        counterF++;
+      });
+      let isDr = !prevState.linesData[index2change].isDr;
+      prevState.linesData[index2change].isDr = isDr;
+      console.log('id = '+index2change+' isDr = '+isDr);
+      return {
+        linesData:prevState.linesData
+      }
+    }); 
   }
   
 //   onDateChange = (createdAt) => {
@@ -126,6 +161,9 @@ export default class PostingForm extends React.Component {
             idu= {lineData.idu}
             isDr = {lineData.isDr}
             processDeleteLine = {this.processDeleteLine}
+            processEntryTypeChange = {this.processEntryTypeChange}
+            onAmountChanged = {this.onAmountChanged}
+            onLineItemChange = {this.onLineItemChange}
           />
         })}
     

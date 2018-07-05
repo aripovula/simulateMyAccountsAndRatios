@@ -25,7 +25,7 @@ const MainDashboard = () => (
 
 export default MainDashboard;
 
-// default export :
+// default export :     - LECTURE 51 - 53
 // export default class  OR
 // export default MainDashboard;
 
@@ -36,3 +36,8 @@ export default MainDashboard;
 //import PostingsList from './PostingsList';
 // named import
 // import {PostingsList} from './PostingsList';
+
+// this.setState(()=> {});  this code does not return an empty object, it returns an undefined funtion
+// to make it an objest we need to WRAP in ()
+// this.setState(()=> ({}) );   this returns an object  - LECTURE #43
+
