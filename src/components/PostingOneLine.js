@@ -5,6 +5,21 @@ import { connect } from 'react-redux';
 let isDr;
 export default class PostingOneLine extends React.Component {
 //const PostingOneLine = ({ isDr }) => (
+
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+
+  }
+
+  updateTextAndAmount = (data) => {
+    console.log('data.lineItem = ');
+    //console.log(data.idu);
+    //console.log(data.lineItem);
+    console.log(data.amount);
+    //React.findDOMNode(this.refs.myRef).value = 'abc'+data.lineItem
+    {this.myRef.current.value = 'abc'+data.lineItem}
+  }
   
 render () {
   isDr = this.props.isDr;
@@ -21,11 +36,12 @@ render () {
 
     <input
       id = {this.props.idu}
+      ref={this.myRef}
       type="text"
       placeholder=" line item"
       className="text-input"
       size="36"
-      value={this.props.lineItem}
+      //value={this.props.lineItem}
       onChange={this.props.onLineItemChange}
     />
     <input
@@ -44,6 +60,7 @@ render () {
     className="glyphicon glyphicon-remove"
     onClick={this.props.processDeleteLine}
     ></span>
+    
   </div>
 }
 }

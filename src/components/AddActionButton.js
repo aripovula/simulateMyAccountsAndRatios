@@ -1,17 +1,22 @@
 import React from 'react';
 
-const AddActionButton = ({idu, name}) => {
+
+class AddActionButton extends React.Component {
+      
+    render () {
     console.log('actBut props = ');
     //console.log(props);
     //console.log('actBut name = '+props.actButton.name);
     return (
     <button
+    id={this.props.idu}
     className="actionButton"
-    onClick={()=>{console.log('btn idu ='+idu)}}
+    onClick={this.props.applyActionButtonValues}
     >
-    {name}
+    {this.props.name}
     </button>
     );
   }
+}
   
-  export default  AddActionButton;
+export default  AddActionButton;

@@ -24,3 +24,11 @@ const MainAddPosting = (props) => (
 );
 
 export default (MainAddPosting);
+
+/*      linesData:[
+        { idu: 0, isDr: true, lineItem: 'Accounts receivable', amount: 1000 },
+        { idu: 1, isDr: false, lineItem: 'Revenue', amount: 1000 },
+        { idu: 2, isDr: true, lineItem: 'Cost of goods sold', amount: 900 },
+        { idu: 3, isDr: false, lineItem: 'Inventory', amount: 900 }
+      ]
+*/
