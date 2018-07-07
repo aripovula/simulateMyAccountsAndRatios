@@ -48,8 +48,8 @@ class AddPosting extends React.Component {
             ref={this.textInput}
             onSubmit={(posting) => {
               console.log('POSTING addPosting = ' + posting);
-              props.dispatch(addPosting(posting));
-              props.history.push('/');
+              this.props.dispatch(addPosting(posting));
+              this.props.history.push('/postings');
             }}
 
           />

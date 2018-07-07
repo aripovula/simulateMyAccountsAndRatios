@@ -11,6 +11,8 @@ export const Header = ({ startLogout }) => (
         <span className="horIndent"></span><span className="horIndent"></span>
         <NavLink to="/" className="normal" activeClassName="is-active" exact={true}>Dashboard</NavLink>
         <span className="horIndent"></span>|<span className="horIndent"></span>
+        <NavLink to="/postings" className="normal" activeClassName="is-active" exact={true}>All postings</NavLink>
+        <span className="horIndent"></span>|<span className="horIndent"></span>
         <NavLink to="/createposting" className="normal" activeClassName="is-active">Make a new posting</NavLink>
         <span className="horIndent"></span>|<span className="horIndent"></span>
         <NavLink to="/help" style={{color: 'white', textDecoration: 'none'}} activeStyle={{color: 'red', textDecoration: 'none'}}>Help</NavLink>

@@ -34,7 +34,7 @@ export default class PostingForm extends React.Component {
     idCounter = 4;
     this.setState(() => {
       return {
-        note: posting.name,
+        note: `entry to reflect ${posting.name.substring(5)}`,
         linesData: posting.lines
       }
     }, this.checkSum);
@@ -243,7 +243,7 @@ export default class PostingForm extends React.Component {
             placeholder="Comment (optional)"
             size="60"
             className="text-input"
-            value={`entry to reflect ${this.state.note.substring(5)}`}
+            value={this.state.note}
             onChange={this.onNoteChange}
           />
           <span className="verIndent"></span>

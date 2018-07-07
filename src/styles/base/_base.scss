@@ -9,6 +9,7 @@ body {
 
 h1,h2 {
   color:deepskyblue;
+  margin-left: 15px;
 }
 
 button {
@@ -29,6 +30,13 @@ button:disabled {
     text-decoration: none;
     color: red;
   }
+
+  .normalsm {
+    text-decoration: none;
+    color: #fff;
+    font-size: 14px;
+  }
+
 
   .actionButton {
       background-color: #4CAF50; /* Green */
@@ -82,11 +90,17 @@ input[type=text], input[type=number] {
   height: 10px;
 }
 
+.verIndentFive{
+  display:block; 
+  height: 5px;
+}
+
 .boxedtransp {
   width: 96%;
   border: green solid 2px;
   padding: 5px;
   margin: 5px;
+  margin-left: 15px;
   //background: #d8d1d1 !important;
   color: green;
   /* font-size: 18px; */
@@ -145,6 +159,32 @@ input[type=text], input[type=number] {
 // .button4 {background-color: #e7e7e7; color: black;} /* Gray */ 
 // .button5 {background-color: #555555;} /* Black */
 
+.postingNote {color: red; }
+
 .warning {color: red; font-size: 14px}
 
 .postLineList {color: green; font-size: 14px}
+
+a.addn{
+	color: lightblue;
+	font-size: 14px;
+}
+
+a.addn:link {
+    text-decoration: none;
+}
+
+a.addn:visited {
+    text-decoration: none;
+}
+
+a.addn:hover {
+  color: deepskyblue;
+	transition-duration: 0.4s;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+a.addn:active {
+    text-decoration: none;
+}
