@@ -7,7 +7,6 @@ let idCounter = 1;
 export default class PostingForm extends React.Component {
   constructor(props) {
     super(props);
-    this.textInput2 = React.createRef();
     this.state = {
       // ptype: props.posting ? props.posting.ptype : '',
       // lineItem: props.posting ? props.posting.lineItem : '',
@@ -18,8 +17,7 @@ export default class PostingForm extends React.Component {
       error: '',
       linesData: [
         { idu: 0, isDr: true, lineItem: '', amount: 0 },
-        { idu: 1, isDr: false, lineItem: '', amount: 0 },
-        { idu: 2, isDr: false, lineItem: '', amount: 0 }
+        { idu: 1, isDr: false, lineItem: '', amount: 0 }
       ]
     };
     this.processAddDrLine = this.processAddDrLine.bind(this);
@@ -30,26 +28,16 @@ export default class PostingForm extends React.Component {
     this.onLineItemChange = this.onLineItemChange.bind(this);
   }
 
-  onActionButtonSelected = () => {
-    console.log('in onActionButtonSelected');
+  onActionButtonSelected = (posting) => {
+    console.log('in onActionButtonSelected data=');
+    console.log(posting.lines);
     idCounter = 4;
     this.setState(() => {
       return {
-        linesData: [
-          { idu: 0, isDr: true, lineItem: 'Accounts receivable', amount: 1000 },
-          { idu: 1, isDr: false, lineItem: 'Revenue', amount: 1000 },
-          { idu: 2, isDr: true, lineItem: 'Accounts receivable', amount: 1000 },
-          { idu: 3, isDr: false, lineItem: 'Revenue', amount: 1000 }
-        ]
+        note: posting.name,
+        linesData: posting.lines
       }
-    }, this.addTextAndAmount(this.state.linesData));
-  }
-
-  addTextAndAmount = (data) => {
-      data.map((dataItem) => {
-        //document.getElementById
-        this.textInput2.current.updateTextAndAmount(dataItem);
-      });
+    }, this.checkSum);
   }
 
   onNoteChange = (e) => {
@@ -68,7 +56,7 @@ export default class PostingForm extends React.Component {
       if (lineData.idu == id2locate) index2change = counterF;
       counterF++;
     });
-    if (!lineItem || lineItem.match(/^[a-zA-Z\d\s]+$/)) {
+    if (!lineItem || lineItem.match(/^[a-zA-Z\d-\s]+$/)) {
       this.setState((prevState) => {
         prevState.linesData[index2change].lineItem = lineItem;
         return {
@@ -78,7 +66,7 @@ export default class PostingForm extends React.Component {
       this.onErrorChange('');
     } else {
       e.target.value = this.state.linesData[index2change].lineItem;
-      this.onErrorChange('Please use only letters, numbers or space');
+      this.onErrorChange('Please use only letters, numbers, hyphen and space');
     }
   };
 
@@ -94,7 +82,8 @@ export default class PostingForm extends React.Component {
     console.log('id = ' + e.target.id + ' amount = ' + amount);
     if (!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
       this.setState((prevState) => {
-        prevState.linesData[index2change].amount = (amount * 100).toString();
+        if (!amount) { prevState.linesData[index2change].amount = '' }
+        else { prevState.linesData[index2change].amount = (amount * 100).toString(); }
         return {
           linesData: prevState.linesData
         }
@@ -159,11 +148,13 @@ export default class PostingForm extends React.Component {
   checkSum = () => {
     let totalAmnt = 0;
     this.state.linesData.map((lineData) => {
-      let amnt = parseFloat(lineData.amount, 10) / 100;
-      if (lineData.isDr) totalAmnt = totalAmnt + amnt;
-      if (!lineData.isDr) totalAmnt = totalAmnt - amnt;
+      if (lineData.amount) {
+        let amnt = parseFloat(lineData.amount, 10) / 100;
+        if (lineData.isDr) totalAmnt = totalAmnt + amnt;
+        if (!lineData.isDr) totalAmnt = totalAmnt - amnt;
+      }
     });
-    if (totalAmnt != 0) { this.onErrorChange(`Total is ${totalAmnt}, should be zero !`); }
+    if (totalAmnt != 0) { this.onErrorChange(`Total is ${totalAmnt.toFixed(2)}, should be zero !`); }
     else this.onErrorChange('');
   }
 
@@ -200,7 +191,6 @@ export default class PostingForm extends React.Component {
         {this.state.linesData.map((lineData) => {
           return <PostingOneLine
             key={lineData.idu}
-            ref={this.textInput2}
             idu={lineData.idu}
             isDr={lineData.isDr}
             lineItem={lineData.lineItem}
@@ -253,7 +243,7 @@ export default class PostingForm extends React.Component {
             placeholder="Comment (optional)"
             size="60"
             className="text-input"
-            value={this.state.note}
+            value={`entry to reflect ${this.state.note.substring(5)}`}
             onChange={this.onNoteChange}
           />
           <span className="verIndent"></span>
