@@ -1,10 +1,11 @@
 import React from 'react';
+import SplitterLayout from 'react-splitter-layout';
+
 import FinStatements from './FinStatements';
 import PostingsList from './PostingsList';
-import BarChart from './BarChart';
-//import SplitPane from 'react-split-pane';
-import SplitterLayout from 'react-splitter-layout';
-import MyBarChart from './BarChart';
+import PostingsListFilter from './PostingsListFilter';
+// import BarChart from './BarChart';
+// import MyBarChart from './BarChart';
 import Gchart from './Gchart';
 //import DataStore from './DataStore';
 
@@ -13,6 +14,7 @@ const MainDashboard = () => (
 
     <SplitterLayout primaryIndex={0} percentage={true} primaryMinSize={30} secondaryInitialSize={50} secondaryMinSize={40}>
     <div>
+      <PostingsListFilter/>
       <PostingsList/>
       
     </div>

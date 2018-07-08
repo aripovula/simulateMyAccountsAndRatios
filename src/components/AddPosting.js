@@ -26,7 +26,7 @@ class AddPosting extends React.Component {
   render() {
     return (
       <div>
-        <div className="boxedtransp">
+        <div className="boxed ">
           
           {/* this part renders 8 action buttons */}
           {actButtons.map((actButton) => {

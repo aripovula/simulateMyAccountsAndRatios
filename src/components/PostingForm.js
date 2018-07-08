@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
+import { formatDate, parseDate } from 'react-day-picker/moment';
 
 import PostingOneLine from './PostingOneLine';
 
@@ -13,6 +14,7 @@ export default class PostingForm extends React.Component {
     this.state = {
       note: this.props.posting ? this.props.posting.note : '',
       createdAt: this.props.posting ? moment(this.props.posting.createdAt) : moment(),
+      postingDate: this.props.posting ? moment(this.props.posting.postingDate) : moment(),
       //calendarFocused: false,
       error: '',
       linesData: this.props.posting ? this.props.posting.linesData :[
@@ -127,7 +129,7 @@ export default class PostingForm extends React.Component {
 
   processDateChange(date) {
     this.setState({
-      createdAt: moment(date)
+      postingDate: moment(date)
     });
   }
 
@@ -189,6 +191,7 @@ export default class PostingForm extends React.Component {
       this.props.onSubmit({
         linesData: this.state.linesData,
         createdAt: this.state.createdAt.valueOf(),
+        postingDate: this.state.postingDate.valueOf(),
         note: this.state.note
       });
     }
@@ -197,8 +200,8 @@ export default class PostingForm extends React.Component {
 
 
   render() {
-    console.log("createdAt");
-    console.log(this.state.createdAt);
+    console.log("postingDate");
+    console.log(this.state.postingDate);
     return (
       <form className="form" onSubmit={this.onSubmit}>
 
@@ -259,10 +262,12 @@ export default class PostingForm extends React.Component {
           <span>Date of posting:
           <span className="horIndent"></span>
             <DayPickerInput
-              selectedDays={this.state.createdAt}
+              selectedDays={this.state.postingDate}
+              format="LL"
+              formatDate={formatDate}
               onDayClick={day => this.processDateChange(day)}
               onDayChange={day => this.processDateChange(day)}
-              placeholder={this.state.createdAt.format('YYYY-M-D')}
+              placeholder={this.state.postingDate.format('MMMM D, YYYY')}
             />
           </span>
           <span className="horIndent"></span>

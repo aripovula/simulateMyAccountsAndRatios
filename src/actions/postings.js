@@ -5,7 +5,8 @@ export const addPosting = (
   {
     linesData,
     note = '',
-    createdAt = 0
+    createdAt = 0,
+    postingDate = 0
   } = {}
 ) => ({
   type: 'ADD_POSTING',
@@ -13,7 +14,8 @@ export const addPosting = (
     id: uuid(),
     linesData,
     note,
-    createdAt
+    createdAt,
+    postingDate
   }
 });
 

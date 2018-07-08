@@ -64,7 +64,7 @@ button:disabled {
     color:lightblue;
 }
 
-input[type=text], input[type=number] {
+input[type=text], input[type=number], input[type=date] {
   border: none;
   border-bottom: 2px solid lightseagreen;
   margin:8px;
@@ -97,12 +97,25 @@ input[type=text], input[type=number] {
   height: 5px;
 }
 
-.boxedtransp {
-  width: 96%;
+.boxed {
+  width: 94%;
   border: green solid 2px;
   padding: 5px;
   margin: 5px;
-  margin-left: 15px;
+  margin-left: 2%;
+  //background: #d8d1d1 !important;
+  color: green;
+  /* font-size: 18px; */
+  text-align: left;
+  border-radius: 2px;
+}
+
+.boxedtransp {
+  width: 94%;
+  border: green solid 2px;
+  padding: 5px;
+  margin: 5px;
+  margin-left: 2%;
   //background: #d8d1d1 !important;
   color: green;
   /* font-size: 18px; */
@@ -194,3 +207,5 @@ a.addn:hover {
 a.addn:active {
     text-decoration: none;
 }
+
+.black{color: black}
