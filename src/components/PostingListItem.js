@@ -1,12 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { removePosting } from '../actions/postings';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+
+import { removePosting } from '../actions/postings';
 
 let uniqCount=0;
 const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, countP }) => (
   <div className="boxedtransp">
-    <h4 className="postingNote">{countP}. {note}
+    <h4><span className="postingNote">{countP}. {note}</span>
+    <span className="horIndent"></span>
+    <span className="smalltext"> ({moment(createdAt).format('YYYY-MM-DD')}) </span>
     <span className="horIndent"></span>
     <Link to="#" className="addn" onClick={() => {
       dispatch(removePosting({ id }));

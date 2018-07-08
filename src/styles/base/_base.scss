@@ -12,6 +12,8 @@ h1,h2 {
   margin-left: 15px;
 }
 
+.smalltext {font-size: 12px; margin-left: 15px}
+
 button {
   cursor: pointer;
 }
@@ -151,6 +153,10 @@ input[type=text], input[type=number] {
   //background-color: rgb(48, 190, 238); 
     //color: #ff6600;
     box-shadow:0 8px 10px 0 rgba(0,0,0,0.2),0 8px 20px 0 rgba(0,0,0,0.19);
+}
+
+.buttonwide {
+  padding: 10px;
 }
 
 // .button1 {background-color: #4CAF50;} /* Green */

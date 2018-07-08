@@ -1,25 +1,26 @@
 import React from 'react';
 import moment from 'moment';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
+
 import PostingOneLine from './PostingOneLine';
-//import { SingleDatePicker } from 'react-dates/initialize';
+
 let idCounter = 1;
 
 export default class PostingForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // ptype: props.posting ? props.posting.ptype : '',
-      // lineItem: props.posting ? props.posting.lineItem : '',
-      note: this.props.expense ? this.props.expense.note : '',
-      // amount: props.expense ? (props.expense.amount / 100).toString() : '',
-      //createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
+      note: this.props.posting ? this.props.posting.note : '',
+      createdAt: this.props.posting ? moment(this.props.posting.createdAt) : moment(),
       //calendarFocused: false,
       error: '',
-      linesData: [
+      linesData: this.props.posting ? this.props.posting.linesData :[
         { idu: 0, isDr: true, lineItem: '', amount: 0 },
         { idu: 1, isDr: false, lineItem: '', amount: 0 }
       ]
     };
+    this.processDateChange = this.processDateChange.bind(this);
     this.processAddDrLine = this.processAddDrLine.bind(this);
     this.processAddCrLine = this.processAddCrLine.bind(this);
     this.processDeleteLine = this.processDeleteLine.bind(this);
@@ -124,6 +125,12 @@ export default class PostingForm extends React.Component {
     this.onErrorChange('');
   }
 
+  processDateChange(date) {
+    this.setState({
+      createdAt: moment(date)
+    });
+  }
+
   processEntryTypeChange = (e) => {
     let id2locate = e.target.id;
     let index2change;
@@ -146,45 +153,52 @@ export default class PostingForm extends React.Component {
   }
 
   checkSum = () => {
+    let missingLineItems = 0;
+    let entryAbsValue = 0;
     let totalAmnt = 0;
+    let errorText = "";
+    let isValidEntry = true;
+
     this.state.linesData.map((lineData) => {
+      if (lineData.lineItem.length == 0) missingLineItems++;
       if (lineData.amount) {
         let amnt = parseFloat(lineData.amount, 10) / 100;
         if (lineData.isDr) totalAmnt = totalAmnt + amnt;
         if (!lineData.isDr) totalAmnt = totalAmnt - amnt;
+        entryAbsValue = entryAbsValue + Math.abs(amnt);
       }
     });
-    if (totalAmnt != 0) { this.onErrorChange(`Total is ${totalAmnt.toFixed(2)}, should be zero !`); }
-    else this.onErrorChange('');
+
+    if (missingLineItems != 0) { errorText = `${errorText} add ${missingLineItems} line item(s); `;isValidEntry=false;}
+    if (entryAbsValue == 0) { errorText = `${errorText} add amounts; `;isValidEntry=false;}
+    if (this.state.note.length == 0) { errorText = `${errorText} add posting comment; `;isValidEntry=false;}
+    if (totalAmnt != 0) { errorText = `${errorText} not balanced: ${totalAmnt.toFixed(2)}; `;isValidEntry=false;}
+    this.onErrorChange(errorText);
+    return isValidEntry;
   }
 
   onErrorChange = (text) => {
     this.setState(() => { return { error: text } });
   }
 
-  //   onDateChange = (createdAt) => {
-  //     if (createdAt) {
-  //       this.setState(() => ({ createdAt }));
-  //     }
-  //   };
-  //   onFocusChange = ({ focused }) => {
-  //     this.setState(() => ({ calendarFocused: focused }));
-  //   };
   onSubmit = (e) => {
     e.preventDefault();
 
-    if (!this.state.linesData) {
-      this.onErrorChange('Please provide line item and amount');
-    } else {
+    if (this.checkSum()) {
       this.onErrorChange('');
       this.props.onSubmit({
         linesData: this.state.linesData,
-        createdAt: 0, //this.state.createdAt.valueOf(),
+        createdAt: this.state.createdAt.valueOf(),
         note: this.state.note
       });
     }
   };
+
+
+
   render() {
+    console.log("createdAt");
+    console.log(this.state.createdAt);
     return (
       <form className="form" onSubmit={this.onSubmit}>
 
@@ -202,14 +216,6 @@ export default class PostingForm extends React.Component {
           />
         })}
 
-        {/*<SingleDatePicker
-          date={this.state.createdAt}
-          onDateChange={this.onDateChange}
-          focused={this.state.calendarFocused}
-          onFocusChange={this.onFocusChange}
-          numberOfMonths={1}
-          isOutsideRange={() => false}
-        />*/}
         <div>
           <span className="verIndent"></span>
           <span className="horIndent"></span>
@@ -228,16 +234,16 @@ export default class PostingForm extends React.Component {
             type="button"
             onClick={this.processAddCrLine}
           >+ Cr line
-            </button>
+          </button>
 
           <span className="horIndent"></span>
-          <span className="horIndent"></span>
 
-          <span className="warning">{this.state.error}</span>
+          <span className="warning">{this.state.error!=null && this.state.error}</span>
 
           <br />
-          <span className="verIndent"></span>
+          <span className="verIndentFive"></span>
           <span className="horIndent"></span>
+
           <input
             type="text"
             placeholder="Comment (optional)"
@@ -246,9 +252,23 @@ export default class PostingForm extends React.Component {
             value={this.state.note}
             onChange={this.onNoteChange}
           />
-          <span className="verIndent"></span>
+
+          <span className="verIndentFive"></span>
           <span className="horIndent"></span>
-          <button className="button1">Post Entry</button>
+
+          <span>Date of posting:
+          <span className="horIndent"></span>
+            <DayPickerInput
+              selectedDays={this.state.createdAt}
+              onDayClick={day => this.processDateChange(day)}
+              onDayChange={day => this.processDateChange(day)}
+              placeholder={this.state.createdAt.format('YYYY-M-D')}
+            />
+          </span>
+          <span className="horIndent"></span>
+
+          <button className="button button1 buttonwide">Post Entry</button>
+          <br /><span className="smalltext">* click Dr or Cr buttons to toggle between Dr and Cr. Total check is auto re-counted.</span>
         </div>
       </form>
     )

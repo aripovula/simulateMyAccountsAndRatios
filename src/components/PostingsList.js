@@ -21,6 +21,7 @@ const PostingsList = (props) => {
         </div>
         {console.log('postings')}
         <div>
+          {props.postings.length == 0 && <div className="boxedtransp"><br/>No entries have been posted yet !<br/><br/></div>}
           {props.postings.map((posting) => {
             console.log(posting);
             countP++;

@@ -10,7 +10,7 @@ let actButtons;
 class AddPosting extends React.Component {
   constructor(props) {
     super(props);
-    actButtons = this.getActionButtons(); // this function is defined below
+    actButtons = this.getActionButtons(); // this function is defined at the bottom
     this.state = {
     }
     this.textInput = React.createRef();
@@ -47,13 +47,13 @@ class AddPosting extends React.Component {
           <PostingForm
             ref={this.textInput}
             onSubmit={(posting) => {
-              console.log('POSTING addPosting = ' + posting);
+              console.log('POSTING addPosting = ');
+              console.log(posting);
               this.props.dispatch(addPosting(posting));
               this.props.history.push('/postings');
             }}
-
           />
-          <br /><br />
+          <br />
         </div>
       </div>
     );
