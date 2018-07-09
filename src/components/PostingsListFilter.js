@@ -33,7 +33,7 @@ class PostingsListFilter extends React.Component {
   handleFromChange(from) {
     // Change the from date and focus the "to" input field
     this.setState({ from }, ()=> {
-      console.log('PICKER FROM = ' + this.state.from);
+      //console.log('PICKER FROM = ' + this.state.from);
       this.props.dispatch(setStartDate(moment(this.state.from)));
     });
     
@@ -41,15 +41,15 @@ class PostingsListFilter extends React.Component {
   handleToChange(to) {
     this.setState({ to }, () => {
       this.showFromMonth();
-      console.log('PICKER TO = ' + this.state.to);
+      //console.log('PICKER TO = ' + this.state.to);
       this.props.dispatch(setEndDate(moment(this.state.to)));
     });
   }
 
   clearDateRange = () => {
-    this.setState({ to: undefined, from: undefined }, () => {
-      this.props.dispatch(setStartDate(moment(this.state.from)));
-      this.props.dispatch(setEndDate(moment(this.state.to)));  
+    this.setState({from: undefined, to: undefined }, () => {
+      this.props.dispatch(setStartDate(moment(1)));
+      this.props.dispatch(setEndDate(moment(2000000000000)));  
     });
   }
 

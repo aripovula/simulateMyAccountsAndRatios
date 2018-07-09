@@ -4,11 +4,11 @@ export default (postings, { text, sortBy, startDate, endDate }) => {
     
     return postings.filter((posting) => {
       const postDateAtMoment = moment(posting.postingDate);
-      console.log('PICKER startDate = ' + startDate +' -- '+startDate.format('MMMM D, YYYY'));
-      console.log('PICKER endDate = ' + endDate+' -- '+endDate.format('MMMM D, YYYY'));
-      console.log('PICKER postDateAtMoment = ' + postDateAtMoment+' -- '+postDateAtMoment.format('MMMM D, YYYY'));
-      console.log('PICKER st= '+startDate.isSameOrBefore(postDateAtMoment, 'day'));
-      console.log('PICKER end= '+endDate.isSameOrAfter(postDateAtMoment, 'day'));
+      // console.log('PICKER startDate = ' + startDate +' -- '+startDate.format('MMMM D, YYYY'));
+      // console.log('PICKER endDate = ' + endDate+' -- '+endDate.format('MMMM D, YYYY'));
+      // console.log('PICKER postDateAtMoment = ' + postDateAtMoment+' -- '+postDateAtMoment.format('MMMM D, YYYY'));
+      // console.log('PICKER st= '+startDate.isSameOrBefore(postDateAtMoment, 'day'));
+      // console.log('PICKER end= '+endDate.isSameOrAfter(postDateAtMoment, 'day'));
       const startDateMatch = startDate ? startDate.isSameOrBefore(postDateAtMoment, 'day') : true;
       const endDateMatch = endDate ? endDate.isSameOrAfter(postDateAtMoment, 'day') : true;
       const textMatch = posting.note.toLowerCase().includes(text.toLowerCase());

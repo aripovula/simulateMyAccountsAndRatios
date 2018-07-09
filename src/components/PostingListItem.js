@@ -10,6 +10,13 @@ const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, postingDat
   <div className="boxedtransp">
     <h4><span className="postingNote">{countP}. {note}</span>
       <span className="horIndent"></span>
+
+      <Link to={`/editposting/${id}`} className="addn" 
+        //onClick={() => {dispatch(removePosting({ id }));}
+      >edit</Link>
+      
+      <span className="horIndent"></span>
+      
       <Link to="#" className="addn" onClick={() => {
         //dispatch(removePosting({ id }));
       }}>un-post</Link>
@@ -17,7 +24,7 @@ const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, postingDat
       <span className="horIndent"></span>
       <Link to="#" className="addn" onClick={() => {
         dispatch(removePosting({ id }));
-      }}>remove</Link>
+      }}>delete</Link>
 
     </h4>
 
@@ -27,12 +34,12 @@ const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, postingDat
         className="postLineList"
         >
         {line.isDr ? 'Dr ' : '\xa0 \xa0   Cr '} 
-        {line.lineItem} - 
+        {line.lineItem} &nbsp; - &nbsp;&nbsp;
         {(parseFloat(line.amount, 10) / 100).toLocaleString('en-US')}
         </p>)
     })}
-    <span className="smalltext">( posted on &nbsp;
-      {moment(createdAt).format('MMMM D, YYYY')}; &nbsp; posted for date of &nbsp;
+    <span className="smalltext">( posted on&nbsp;
+      {moment(createdAt).format('MMMM D, YYYY')}; &nbsp; posted for date of&nbsp;
       {moment(postingDate).format('MMMM D, YYYY')} )
       </span>
   </div>

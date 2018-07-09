@@ -16,6 +16,7 @@ const AppRouter = () => (
         <Route path="/" component={MainDashboard} exact={true} />
         <Route path="/postings" component={MainAllPostings} exact={true} />
         <Route path="/createposting" component={MainAddPosting} exact={true} />
+        <Route path="/editposting/:id" component={MainAddPosting} exact={true} />
         {/*<Route path="/createposting" component={AddPosting} exact={true} />*/}
       </Switch>
     </div>
