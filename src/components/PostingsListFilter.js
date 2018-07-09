@@ -8,7 +8,7 @@ import { formatDate, parseDate } from 'react-day-picker/moment';
 import { Link } from 'react-router-dom';
 
 import selectPostings from '../selectors/postings';
-import { setTextFilter, sortByCreatedDate, sortByPostingDate, sortByAmount, setStartDate, setEndDate } from '../actions/filters';
+import { setTextFilter, setLineItemFilter, setAmountFilter, setAmountFilterType, sortByCreatedDate, sortByPostingDate, sortByAmount, setStartDate, setEndDate } from '../actions/filters';
 
 class PostingsListFilter extends React.Component {
   constructor(props) {
@@ -32,11 +32,11 @@ class PostingsListFilter extends React.Component {
   }
   handleFromChange(from) {
     // Change the from date and focus the "to" input field
-    this.setState({ from }, ()=> {
+    this.setState({ from }, () => {
       //console.log('PICKER FROM = ' + this.state.from);
       this.props.dispatch(setStartDate(moment(this.state.from)));
     });
-    
+
   }
   handleToChange(to) {
     this.setState({ to }, () => {
@@ -47,9 +47,9 @@ class PostingsListFilter extends React.Component {
   }
 
   clearDateRange = () => {
-    this.setState({from: undefined, to: undefined }, () => {
+    this.setState({ from: undefined, to: undefined }, () => {
       this.props.dispatch(setStartDate(moment(1)));
-      this.props.dispatch(setEndDate(moment(2000000000000)));  
+      this.props.dispatch(setEndDate(moment(2000000000000)));
     });
   }
 
@@ -61,6 +61,8 @@ class PostingsListFilter extends React.Component {
       <div className="card-4">
         <span className="verIndentFive"></span>
         <div className="boxed">
+          <span className="horIndent"></span>
+          <span><strong>FILTER AND SORT OPTIONS: </strong></span>
           <span className="horIndent"></span>
           Sort postings by: &nbsp;
           <select
@@ -77,18 +79,81 @@ class PostingsListFilter extends React.Component {
           >
             <option value="createdDate">created date</option>
             <option value="postingDate">posting date</option>
-            <option value="amount">amount</option>
+            <option value="amount">total amount</option>
           </select>
+          <br />
 
+          {/* LINE TWO */}
           <span className="horIndent"></span>
-          Text filter:&nbsp;
+          Description:
           <input
             type="text"
+            size="20"
             value={this.props.filters.text}
             onChange={(e) => {
               this.props.dispatch(setTextFilter(e.target.value));
             }}
+          />&nbsp;&nbsp;
+
+          Line item:
+          <input
+            type="text"
+            size="20"
+            value={this.props.filters.lineItem}
+            onChange={(e) => {
+              this.props.dispatch(setLineItemFilter(e.target.value));
+            }}
           />
+          <br />
+          <span className="horIndent"></span>
+          Amount&nbsp;
+          <select
+            value={this.props.filters.filterBy}
+            onChange={(e) => {
+              if (e.target.value === 'amountinc') {
+                this.props.dispatch(setAmountFilterType('includes'));
+              } else if (e.target.value === 'amounteq') {
+                this.props.dispatch(setAmountFilterType('equals'))
+              } else if (e.target.value === 'amountgt') {
+                this.props.dispatch(setAmountFilterType('grthan'));
+              } else if (e.target.value === 'amountlt') {
+                this.props.dispatch(setAmountFilterType('lsthan'));
+              }
+            }}
+          >
+            <option value="amountinc">that includes</option>
+            <option value="amounteq">that equals</option>
+            <option value="amountgt">greater than</option>
+            <option value="amountlt">less than</option>
+          </select>
+
+          <input
+            type="number"
+            className="numberWidth"
+            value={this.props.filters.amountF}
+            onChange={(e) => {
+              this.props.dispatch(setAmountFilter(e.target.value));
+            }}
+          />
+
+          <span className="horIndent"></span>
+          Apply all to: &nbsp;
+          <select
+            value={this.props.filters.filterBy}
+            onChange={(e) => {
+              if (e.target.value === 'posting') {
+                this.props.dispatch(filterPostings());
+              } else if (e.target.value === 'lineItem') {
+                this.props.dispatch(filterLineItems());
+              }
+            }}
+          >
+            <option value="aposting">a posting</option>
+            <option value="alineitem">a line item</option>
+          </select>
+
+          <span className="horIndent"></span>
+
           <div className="InputFromTo">
             <span className="horIndent"></span>
             Date range:
@@ -154,7 +219,7 @@ class PostingsListFilter extends React.Component {
           }
           `}
               </style>
-            </Helmet>      
+            </Helmet>
           </div>
         </div>
         <span className="verIndentFive"></span>

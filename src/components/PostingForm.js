@@ -13,6 +13,7 @@ export default class PostingForm extends React.Component {
     super(props);
     this.state = {
       note: this.props.posting ? this.props.posting.note : '',
+      totalAmount: this.props.posting ? this.props.posting.totalAmount : '',
       createdAt: this.props.posting ? moment(this.props.posting.createdAt) : moment(),
       postingDate: this.props.posting ? moment(this.props.posting.postingDate) : moment(),
       //calendarFocused: false,
@@ -170,7 +171,9 @@ export default class PostingForm extends React.Component {
         entryAbsValue = entryAbsValue + Math.abs(amnt);
       }
     });
-
+    
+    this.setState(() => { return { totalAmount: entryAbsValue } });
+    
     if (missingLineItems != 0) { errorText = `${errorText} add ${missingLineItems} line item(s); `;isValidEntry=false;}
     if (entryAbsValue == 0) { errorText = `${errorText} add amounts; `;isValidEntry=false;}
     if (this.state.note.length == 0) { errorText = `${errorText} add posting comment; `;isValidEntry=false;}
@@ -192,7 +195,8 @@ export default class PostingForm extends React.Component {
         linesData: this.state.linesData,
         createdAt: this.state.createdAt.valueOf(),
         postingDate: this.state.postingDate.valueOf(),
-        note: this.state.note
+        note: this.state.note,
+        totalAmount: this.state.totalAmount
       });
     }
   };

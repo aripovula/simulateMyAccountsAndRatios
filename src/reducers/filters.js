@@ -4,6 +4,8 @@ import moment from 'moment';
 
 const filtersReducerDefaultState = {
   text: '',
+  lineItem: '',
+  amountF: '',
   sortBy: 'createdDate',
   startDate: moment().startOf('month'),
   endDate: moment().endOf('month')
@@ -15,6 +17,22 @@ export default (state = filtersReducerDefaultState, action) => {
       return {
         ...state,
         text: action.text
+      };
+    case 'SET_LINEITEM_FILTER':
+      return {
+        ...state,
+        lineItem: action.lineItem
+      };
+    case 'SET_AMOUNT_FILTER':
+      return {
+        ...state,
+        amountF: action.amountF
+      };
+    case 'SET_AMOUNT_FILTER_TYPE':
+      console.log('SET_AMOUNT_FILTER_TYPE = '+action.amountFType);
+      return {
+        ...state,
+        amountFType: action.amountFType
       };
     case 'SORT_BY_AMOUNT':
       return {

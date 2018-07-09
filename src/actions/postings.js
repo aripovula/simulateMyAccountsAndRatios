@@ -5,6 +5,7 @@ export const addPosting = (
   {
     linesData,
     note = '',
+    totalAmount = '',
     createdAt = 0,
     postingDate = 0
   } = {}
@@ -14,6 +15,7 @@ export const addPosting = (
     id: uuid(),
     linesData,
     note,
+    totalAmount,
     createdAt,
     postingDate
   }

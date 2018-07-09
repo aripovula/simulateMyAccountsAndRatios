@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export default (postings, { text, sortBy, startDate, endDate }) => {
+export default (postings, { text, lineItem, amountF, amountFType='includes', sortBy, startDate, endDate }) => {
     
     return postings.filter((posting) => {
       const postDateAtMoment = moment(posting.postingDate);
@@ -13,7 +13,19 @@ export default (postings, { text, sortBy, startDate, endDate }) => {
       const endDateMatch = endDate ? endDate.isSameOrAfter(postDateAtMoment, 'day') : true;
       const textMatch = posting.note.toLowerCase().includes(text.toLowerCase());
 
-      return startDateMatch && endDateMatch && textMatch;
+      let lineItemMatch = lineItem ? false : true;
+      let lineAmountMatch = amountF ? false : true;
+      //if (amountFType == null) amountFType='includes';
+      console.log('amountFType = '+amountFType);
+      posting.linesData.map(lineData =>  {
+        if (lineData.lineItem.toLowerCase().includes(lineItem.toLowerCase())) lineItemMatch = true;
+        if (amountFType=='includes' && (''+lineData.amount).includes(''+amountF)) lineAmountMatch = true;
+        if (amountFType=='equals' && parseFloat(lineData.amount, 10) / 100 == amountF) lineAmountMatch = true;
+        if (amountFType=='grthan' && parseFloat(lineData.amount, 10) / 100 >= amountF) lineAmountMatch = true;
+        if (amountFType=='lsthan' && parseFloat(lineData.amount, 10) / 100 <= amountF) lineAmountMatch = true;
+      });
+
+      return startDateMatch && endDateMatch && textMatch && lineItemMatch && lineAmountMatch;
 
     }).sort((a, b) => {
       if (sortBy === 'createdDate') {
@@ -21,7 +33,7 @@ export default (postings, { text, sortBy, startDate, endDate }) => {
       } else if (sortBy === 'postingDate') {
         return a.postingDate < b.postingDate ? -1 : 1;
       } else if (sortBy === 'amount') {
-        return a.amount < b.amount ? 1 : -1;
+        return a.totalAmount < b.totalAmount ? 1 : -1;
       }
     });
   };
