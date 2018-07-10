@@ -12,8 +12,6 @@ h1,h2 {
   margin-left: 15px;
 }
 
-.smalltext {font-size: 12px; margin-left: 15px}
-
 button {
   cursor: pointer;
 }
@@ -21,7 +19,6 @@ button {
 button:disabled {
   cursor: default;
 }
-
 
   .normal {
     text-decoration: none;
@@ -185,7 +182,7 @@ input[type=text], input[type=number], input[type=date] {
 .postLineList {color: green; font-size: 14px}
 
 a.addn{
-	color: lightblue;
+	color: white;
 	font-size: 14px;
 }
 
@@ -208,6 +205,34 @@ a.addn:active {
     text-decoration: none;
 }
 
+a.addnlightbg{
+	color: lightslategray;
+	font-size: 14px;
+}
+
+a.addnlightbg:link {
+    text-decoration: none;
+}
+
+a.addnlightbg:visited {
+    text-decoration: none;
+}
+
+a.addnlightbg:hover {
+  color: deepskyblue;
+	transition-duration: 0.4s;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+a.addnlightbg:active {
+    text-decoration: none;
+}
+
 .black{color: black}
 
 .numberWidth{width: 120px;}
+
+.smalltext {font-size: 12px; margin-left: 15px}
+
+.text14white {font-size: 14px; margin-left: 15px;color: 14px;}

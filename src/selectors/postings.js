@@ -4,11 +4,6 @@ export default (postings, { text, lineItem, amountF, amountFType='includes', sor
     
     return postings.filter((posting) => {
       const postDateAtMoment = moment(posting.postingDate);
-      // console.log('PICKER startDate = ' + startDate +' -- '+startDate.format('MMMM D, YYYY'));
-      // console.log('PICKER endDate = ' + endDate+' -- '+endDate.format('MMMM D, YYYY'));
-      // console.log('PICKER postDateAtMoment = ' + postDateAtMoment+' -- '+postDateAtMoment.format('MMMM D, YYYY'));
-      // console.log('PICKER st= '+startDate.isSameOrBefore(postDateAtMoment, 'day'));
-      // console.log('PICKER end= '+endDate.isSameOrAfter(postDateAtMoment, 'day'));
       const startDateMatch = startDate ? startDate.isSameOrBefore(postDateAtMoment, 'day') : true;
       const endDateMatch = endDate ? endDate.isSameOrAfter(postDateAtMoment, 'day') : true;
       const textMatch = posting.note.toLowerCase().includes(text.toLowerCase());
@@ -16,7 +11,6 @@ export default (postings, { text, lineItem, amountF, amountFType='includes', sor
       let lineItemMatch = lineItem ? false : true;
       let lineAmountMatch = amountF ? false : true;
       //if (amountFType == null) amountFType='includes';
-      console.log('amountFType = '+amountFType);
       posting.linesData.map(lineData =>  {
         if (lineData.lineItem.toLowerCase().includes(lineItem.toLowerCase())) lineItemMatch = true;
         if (amountFType=='includes' && (''+lineData.amount).includes(''+amountF)) lineAmountMatch = true;

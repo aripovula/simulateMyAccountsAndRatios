@@ -61,29 +61,8 @@ class PostingsListFilter extends React.Component {
       <div className="card-4">
         <span className="verIndentFive"></span>
         <div className="boxed">
-          <span className="horIndent"></span>
-          <span><strong>FILTER AND SORT OPTIONS: </strong></span>
-          <span className="horIndent"></span>
-          Sort postings by: &nbsp;
-          <select
-            value={this.props.filters.sortBy}
-            onChange={(e) => {
-              if (e.target.value === 'createdDate') {
-                this.props.dispatch(sortByCreatedDate());
-              } else if (e.target.value === 'postingDate') {
-                this.props.dispatch(sortByPostingDate());
-              } else if (e.target.value === 'amount') {
-                this.props.dispatch(sortByAmount());
-              }
-            }}
-          >
-            <option value="createdDate">created date</option>
-            <option value="postingDate">posting date</option>
-            <option value="amount">total amount</option>
-          </select>
-          <br />
 
-          {/* LINE TWO */}
+          {/* LINE ONE */}
           <span className="horIndent"></span>
           Description:
           <input
@@ -104,6 +83,8 @@ class PostingsListFilter extends React.Component {
               this.props.dispatch(setLineItemFilter(e.target.value));
             }}
           />
+
+          {/* LINE TWO */}
           <br />
           <span className="horIndent"></span>
           Amount&nbsp;
@@ -135,32 +116,34 @@ class PostingsListFilter extends React.Component {
               this.props.dispatch(setAmountFilter(e.target.value));
             }}
           />
-
           <span className="horIndent"></span>
-          Apply all to: &nbsp;
+          Sort by &nbsp;
           <select
-            value={this.props.filters.filterBy}
+            value={this.props.filters.sortBy}
             onChange={(e) => {
-              if (e.target.value === 'posting') {
-                this.props.dispatch(filterPostings());
-              } else if (e.target.value === 'lineItem') {
-                this.props.dispatch(filterLineItems());
+              if (e.target.value === 'createdDate') {
+                this.props.dispatch(sortByCreatedDate());
+              } else if (e.target.value === 'postingDate') {
+                this.props.dispatch(sortByPostingDate());
+              } else if (e.target.value === 'amount') {
+                this.props.dispatch(sortByAmount());
               }
             }}
           >
-            <option value="aposting">a posting</option>
-            <option value="alineitem">a line item</option>
+            <option value="createdDate">creation date</option>
+            <option value="postingDate">posting date</option>
+            <option value="amount">total amount</option>
           </select>
+          <br/>
 
-          <span className="horIndent"></span>
-
+          {/* LINE THREE */}
           <div className="InputFromTo">
             <span className="horIndent"></span>
             Date range:
             <span className="horIndent"></span>
             <DayPickerInput
               value={from}
-              placeholder="From"
+              placeholder=" from"
               format="LL"
               formatDate={formatDate}
               parseDate={parseDate}
@@ -173,12 +156,12 @@ class PostingsListFilter extends React.Component {
               }}
               onDayChange={this.handleFromChange}
             />{' '}
-            —{' '}
+            -{' '}
             <span className="InputFromTo-to">
               <DayPickerInput
                 ref={el => (this.to = el)}
                 value={to}
-                placeholder="To"
+                placeholder=" to"
                 format="LL"
                 formatDate={formatDate}
                 parseDate={parseDate}
@@ -192,7 +175,7 @@ class PostingsListFilter extends React.Component {
                 }}
                 onDayChange={this.handleToChange}
               />
-              <Link to="#" className="addn" onClick={this.clearDateRange}>&nbsp; &nbsp; clear</Link>
+              <Link to="#" className="addnlightbg" onClick={this.clearDateRange}>&nbsp; &nbsp; clear</Link>
             </span>
             <Helmet>
               <style>{`

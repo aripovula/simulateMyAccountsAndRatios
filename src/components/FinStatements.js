@@ -1,39 +1,28 @@
 import React from 'react';
 import ReactTable from "react-table";
 import { render } from "react-dom";
+import { connect } from 'react-redux';
+import selectPostings from '../selectors/postings';
 import "react-table/react-table.css";
 
 import { Tips } from "../utils/tableUtils";
 
-
-let Udata = [
-{
-    firstName: 'Cash',
-    lastName: '123',
-    age: 'Current loans',
-    visits: 33,
-    progress: 33,
-    status: 223
-},
-{
-    firstName: 'ABC2',
-    lastName: 'XYZ2',
-    age: 22,
-    visits: 33,
-    progress: 33,
-    status: "relationship"
-}
-    
-];
-
 class FinStatements extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.props.postings.map(posting => {
+      console.log(posting.note);
+    });
     this.state = {
-      data: Udata
+      data: this.getUData()
+
     };
+    this.getUData = this.getUData.bind(this);
   }
+
   render() {
+
+
     const { data } = this.state;
     return (
       <div>
@@ -69,14 +58,14 @@ class FinStatements extends React.Component {
                       <span style={{
                         color: row.value === 'relationship' ? '#ff2e00'
                           : row.value === 'complicated' ? '#ffbf00'
-                          : '#57d500',
+                            : '#57d500',
                         transition: 'all .3s ease'
                       }}>
                         &#x25cf;
                       </span> {
                         row.value === 'relationship' ? 'In a relationship'
-                        : row.value === 'complicated' ? `It's complicated`
-                        : 'Single'
+                          : row.value === 'complicated' ? `It's complicated`
+                            : 'Single'
                       }
                     </span>)
                 }
@@ -100,6 +89,32 @@ class FinStatements extends React.Component {
       </div>
     );
   }
+
+  getUData = () => {
+    let data = [];
+    this.props.postings.map(posting => {
+      posting.linesData.map(lineData => {
+        //console.log('')
+        data.push(
+          {
+            firstName: lineData.lineItem,
+            lastName: (parseFloat(lineData.amount, 10) / 100).toLocaleString('en-US'),
+            age: 'Current loans',
+            visits: 33,
+            progress: 33,
+            status: 223
+          }
+        );
+      });
+    });
+    return data;
+  }
 }
 
-export default FinStatements;
+const mapStateToProps = (state) => {
+  return {
+    postings: state.postings
+  };
+};
+
+export default connect(mapStateToProps)(FinStatements);

@@ -20,7 +20,7 @@ const MainDashboard = () => (
     </div>
     <div>
     {/*2nd*/}
-      {/*<Gchart/>*/}
+      <FinStatements/>
     </div>
     </SplitterLayout>
   </div>

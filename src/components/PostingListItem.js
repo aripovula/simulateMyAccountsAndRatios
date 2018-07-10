@@ -7,22 +7,22 @@ import { removePosting } from '../actions/postings';
 
 let uniqCount = 0;
 const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, postingDate, countP }) => (
-  <div className="boxedtransp">
+  <div className="boxed">
     <h4><span className="postingNote">{countP}. {note}</span>
       <span className="horIndent"></span>
 
-      <Link to={`/editposting/${id}`} className="addn" 
+      <Link to={`/editposting/${id}`} className="addnlightbg" 
         //onClick={() => {dispatch(removePosting({ id }));}
       >edit</Link>
       
       <span className="horIndent"></span>
       
-      <Link to="#" className="addn" onClick={() => {
+      <Link to="#" className="addnlightbg" onClick={() => {
         //dispatch(removePosting({ id }));
       }}>un-post</Link>
 
       <span className="horIndent"></span>
-      <Link to="#" className="addn" onClick={() => {
+      <Link to="#" className="addnlightbg" onClick={() => {
         dispatch(removePosting({ id }));
       }}>delete</Link>
 
