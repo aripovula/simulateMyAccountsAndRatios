@@ -15,7 +15,6 @@ class FinStatements extends React.Component {
     });
     this.state = {
       data: this.getUData()
-
     };
     this.getUData = this.getUData.bind(this);
   }
@@ -30,55 +29,42 @@ class FinStatements extends React.Component {
           data={data}
           columns={[
             {
-              Header: "Assets, 30 Jun 18",
+              Header: "Trial Balance",
               columns: [
                 {
-                  Header: "",
-                  accessor: "firstName"
+                  Header: "Line items",
+                  accessor: "assets"
                 },
                 {
-                  Header: "US$'000",
-                  id: "lastName",
-                  accessor: d => d.lastName
+                  Header: "US$",
+                  id: "amounts_assets",
+                  accessor: d => d.amounts_assets
+                },
+                {
+                  Header: "US$",
+                  id: "amounts_assets",
+                  accessor: d => d.amounts_assets
                 }
               ]
             },
             {
-              Header: "Liabilities, 30 Jun 18",
-              columns: [
-                {
-                  Header: "",
-                  accessor: "age"
-                },
-                {
-                  Header: "US$'000",
-                  accessor: "status",
-                  Cell: row => (
-                    <span>
-                      <span style={{
-                        color: row.value === 'relationship' ? '#ff2e00'
-                          : row.value === 'complicated' ? '#ffbf00'
-                            : '#57d500',
-                        transition: 'all .3s ease'
-                      }}>
-                        &#x25cf;
-                      </span> {
-                        row.value === 'relationship' ? 'In a relationship'
-                          : row.value === 'complicated' ? `It's complicated`
-                            : 'Single'
-                      }
-                    </span>)
-                }
-              ]
-            },
-            {
-              Header: 'Stats',
-              columns: [
-                {
-                  Header: "Visits",
-                  accessor: "visits"
-                }
-              ]
+              Header: "US$",
+              accessor: "status",
+              Cell: row => (
+                <span>
+                  <span style={{
+                    color: row.value === 'relationship' ? '#ff2e00'
+                      : row.value === 'complicated' ? '#ffbf00'
+                        : '#57d500',
+                    transition: 'all .3s ease'
+                  }}>
+                    &#x25cf;
+                  </span> {
+                    row.value === 'relationship' ? 'In a relationship'
+                      : row.value === 'complicated' ? `It's complicated`
+                        : 'Single'
+                  }
+                </span>)
             }
           ]}
           defaultPageSize={10}
@@ -92,22 +78,62 @@ class FinStatements extends React.Component {
 
   getUData = () => {
     let data = [];
+    let accum = [];
+
+    var mySet = new Set();
+
     this.props.postings.map(posting => {
       posting.linesData.map(lineData => {
+        mySet.add(lineData.lineItem);
+      });
+    });
+
+    let LIs = [...mySet];
+
+    this.props.postings.map(posting => {
+      posting.linesData.map(lineData => {
+        for (let x = 0; x < LIs.length; x++) {
+          if (LIs[x] == lineData.lineItem) {
+            let amt = parseFloat(lineData.amount, 10) / 100;
+            if (accum[x] == null) accum[x] = 0;
+            if (lineData.isDr) accum[x] = accum[x] + amt;
+            if (!lineData.isDr) accum[x] = accum[x] - amt;
+          }
+        }
+      });
+    });
+
+    let accs = [];
+    for (let x = 0; x < LIs.length; x++) {
+      accs[x] = {lineItem: LIs[x], balance: accum[x]}
+    }
+    console.log('accum = ');
+    console.log(accum);
+
+    let accounts = this.sortAccounts(accs);
+
+    accounts.map(acc => {
         //console.log('')
         data.push(
           {
-            firstName: lineData.lineItem,
-            lastName: (parseFloat(lineData.amount, 10) / 100).toLocaleString('en-US'),
-            age: 'Current loans',
+            assets: acc.lineItem,
+            amounts_assets: acc.balance.toLocaleString('en-US'),
+            liabilities: 'Current loans',
+            amounts_liabs: 22,
             visits: 33,
             progress: 33,
             status: 223
           }
         );
       });
-    });
+    
     return data;
+  }
+
+  sortAccounts = (accs) => {
+    return accs.sort((a, b) => {
+        return a.balance < b.balance ? 1 : -1;
+    });
   }
 }
 

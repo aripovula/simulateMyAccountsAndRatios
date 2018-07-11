@@ -101,7 +101,7 @@ class AddPosting extends React.Component {
       { idu: 7, name: 'book Inventory purchase',
       lines: [
         { idu: 0, isDr: true, lineItem: 'Inventory', amount: 5000000 },
-        { idu: 1, isDr: false, lineItem: 'Advance payments', amount: 5000000 }
+        { idu: 1, isDr: false, lineItem: 'Accounts payable', amount: 5000000 }
       ] }
     ];
   }

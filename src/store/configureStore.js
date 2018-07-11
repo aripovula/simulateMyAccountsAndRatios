@@ -11,10 +11,10 @@ export default () => {
       separateLines: separateLinesReducer
     })
   );
-  console.log('STORE FROM STORE=');
-  console.log(store);
+  // console.log('STORE FROM STORE=');
+  // console.log(store);
   const state = store.getState();
-  console.log('State FROM STORE=');
-  console.log(state);
+  // console.log('State FROM STORE=');
+  // console.log(state);
   return store;
 };

@@ -10,7 +10,7 @@ export default (postings, { text, lineItem, amountF, amountFType='includes', sor
 
       let lineItemMatch = lineItem ? false : true;
       let lineAmountMatch = amountF ? false : true;
-      //if (amountFType == null) amountFType='includes';
+
       posting.linesData.map(lineData =>  {
         if (lineData.lineItem.toLowerCase().includes(lineItem.toLowerCase())) lineItemMatch = true;
         if (amountFType=='includes' && (''+lineData.amount).includes(''+amountF)) lineAmountMatch = true;

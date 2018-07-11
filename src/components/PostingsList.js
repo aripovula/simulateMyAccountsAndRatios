@@ -20,7 +20,7 @@ class PostingsList extends React.Component {
   }
 
   togglePostingsAndLines(event) {
-    console.log(event.target.value);
+    //console.log(event.target.value);
 
     if (event.target.value === 'lines') {
       this.setState(() => { return { showLinesOnly: true } });
@@ -39,14 +39,14 @@ class PostingsList extends React.Component {
     } else {
       this.setState(() => { return { showLinesOnly: false } });
     }
-    console.log('REDUX STATE=');
-    console.log(this.props);
+    // console.log('REDUX STATE=');
+    // console.log(this.props);
   }
 
   render() {
-    console.log("from PList PROPs =");
-    console.log(this.props);
-    console.log('amountF=' + this.props.postings.amountF)
+    // console.log("from PList PROPs =");
+    // console.log(this.props);
+    // console.log('amountF=' + this.props.postings.amountF)
     countP = 0;
     return (
 
@@ -68,16 +68,16 @@ class PostingsList extends React.Component {
             </h4>
           </div>
           <div>
-            {this.props.postings.length == 0 && <div className="boxedtransp"><br />No entries have been found !<br /><br /></div>}
+            {this.props.postings.length == 0 && this.props.separateLines.length == 0 && <div className="boxedtransp"><br />No entries have been found !<br /><br /></div>}
 
             {this.state.showLinesOnly == true && this.props.separateLines.map((separateLine) => {
-              console.log(separateLine);
+              //console.log(separateLine);
               countP++;
               return <SeparateLineItem key={separateLine.id} countP={countP} {...separateLine} />;
             })}
 
             {this.state.showLinesOnly == false && this.props.postings.map((posting) => {
-              console.log(posting);
+              //console.log(posting);
               countP++;
               return <PostingListItem key={posting.id} countP={countP} {...posting} />;
             })}

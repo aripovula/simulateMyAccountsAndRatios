@@ -18,7 +18,7 @@ const MainDashboard = () => (
       <PostingsList/>
       
     </div>
-    <div>
+    <div className="boxed">
     {/*2nd*/}
       <FinStatements/>
     </div>

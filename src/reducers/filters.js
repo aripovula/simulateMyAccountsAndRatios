@@ -29,7 +29,7 @@ export default (state = filtersReducerDefaultState, action) => {
         amountF: action.amountF
       };
     case 'SET_AMOUNT_FILTER_TYPE':
-      console.log('SET_AMOUNT_FILTER_TYPE = '+action.amountFType);
+      //console.log('SET_AMOUNT_FILTER_TYPE = '+action.amountFType);
       return {
         ...state,
         amountFType: action.amountFType
