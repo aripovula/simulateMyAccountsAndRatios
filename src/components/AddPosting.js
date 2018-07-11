@@ -49,8 +49,10 @@ class AddPosting extends React.Component {
             onSubmit={(posting) => {
               console.log('POSTING addPosting = ');
               console.log(posting);
+              console.log(posting.is2go2list);
               this.props.dispatch(addPosting(posting));
-              this.props.history.push('/postings');
+              if (posting.is2go2list) this.props.history.push('/postings');
+              if (!posting.is2go2list) this.textInput.current.onStayHereSelected();
             }}
           />
           <br />

@@ -7,6 +7,7 @@ import { formatDate, parseDate } from 'react-day-picker/moment';
 import PostingOneLine from './PostingOneLine';
 
 let idCounter = 1;
+let is2go2list = true;
 
 export default class PostingForm extends React.Component {
   constructor(props) {
@@ -30,6 +31,8 @@ export default class PostingForm extends React.Component {
     this.processEntryTypeChange = this.processEntryTypeChange.bind(this);
     this.onAmountChanged = this.onAmountChanged.bind(this);
     this.onLineItemChange = this.onLineItemChange.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+    this.onStayHereSelected = this.onStayHereSelected.bind(this);
   }
 
   onActionButtonSelected = (posting) => {
@@ -42,6 +45,22 @@ export default class PostingForm extends React.Component {
         linesData: posting.lines
       }
     }, this.checkSum);
+  }
+
+  onStayHereSelected = () => {
+    idCounter = 2;
+    this.setState(() => {
+      return {
+        note: "",
+        totalAmount: '',
+        createdAt: moment(),
+        postingDate: moment(),  
+        linesData: [
+          { idu: 0, isDr: true, lineItem: '', amount: 0 },
+          { idu: 1, isDr: false, lineItem: '', amount: 0 }
+        ]
+      }
+    }, () => this.onErrorChange('Posting has been submitted !'));
   }
 
   onNoteChange = (e) => {
@@ -155,6 +174,12 @@ export default class PostingForm extends React.Component {
     }, this.checkSum);
   }
 
+  handleCheckboxChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    is2go2list = !value;
+  }
+
   checkSum = () => {
     let missingLineItems = 0;
     let entryAbsValue = 0;
@@ -196,7 +221,8 @@ export default class PostingForm extends React.Component {
         createdAt: this.state.createdAt.valueOf(),
         postingDate: this.state.postingDate.valueOf(),
         note: this.state.note,
-        totalAmount: this.state.totalAmount
+        totalAmount: this.state.totalAmount,
+        is2go2list
       });
     }
   };
@@ -266,6 +292,7 @@ export default class PostingForm extends React.Component {
           <span>Date of posting:
           <span className="horIndent"></span>
             <DayPickerInput
+              value = {this.state.postingDate.format('MMMM D, YYYY')}
               selectedDays={this.state.postingDate}
               format="LL"
               formatDate={formatDate}
@@ -277,6 +304,14 @@ export default class PostingForm extends React.Component {
           <span className="horIndent"></span>
 
           <button className="button button1 buttonwide">Post Entry</button>
+          
+          <span className="text14black">&amp; stay here &nbsp;</span>
+          <input
+            name="is2go2list"
+            type="checkbox"
+            onChange={this.handleCheckboxChange} />
+            
+        
           <br /><span className="smalltext">* click Dr or Cr buttons to toggle between Dr and Cr. Total check is auto re-counted.</span>
         </div>
       </form>
