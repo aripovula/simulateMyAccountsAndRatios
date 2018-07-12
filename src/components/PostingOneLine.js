@@ -23,8 +23,8 @@ export default class PostingOneLine extends React.Component {
         id={this.props.idu}
         type="text"
         placeholder=" line item"
-        className="text-input"
-        size="36"
+        className="text-input forLineItem"
+        //size="36"
         value={this.props.lineItem}
         onChange={this.props.onLineItemChange}
       />
@@ -32,8 +32,8 @@ export default class PostingOneLine extends React.Component {
         id={this.props.idu}
         type="number"
         placeholder=" amount, US$"
-        className="text-input"
-        size="16"
+        className="text-input forNumber"
+        //size="16"
         value={'' + (parseFloat(this.props.amount, 10) / 100)}
         onChange={this.props.onAmountChanged}
       />

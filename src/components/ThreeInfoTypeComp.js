@@ -13,8 +13,8 @@ export default class ThreeInfoTypeComp extends React.Component {
         this.state = {
             infoType: 1,
             button1Color: 'greenc',
-            button2Color: 'bluec',
-            button3Color: 'bluec'
+            button2Color: 'lightgreenc',
+            button3Color: 'lightgreenc'
         };
         this.handleInfoType = this.handleInfoType.bind(this);
     }
@@ -23,9 +23,9 @@ export default class ThreeInfoTypeComp extends React.Component {
         let type = e.target.id;
         this.setState({
             infoType: type,
-            button1Color: type == 1 ? 'greenc' : 'bluec',
-            button2Color: type == 2 ? 'greenc' : 'bluec',
-            button3Color: type == 3 ? 'greenc' : 'bluec'
+            button1Color: type == 1 ? 'greenc' : 'lightgreenc',
+            button2Color: type == 2 ? 'greenc' : 'lightgreenc',
+            button3Color: type == 3 ? 'greenc' : 'lightgreenc'
         });
 
     }

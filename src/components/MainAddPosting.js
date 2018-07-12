@@ -4,27 +4,34 @@ import { connect } from 'react-redux';
 import SplitterLayout from 'react-splitter-layout';
 import AddPosting from './AddPosting';
 import ThreeInfoTypeComp from './ThreeInfoTypeComp';
+import EditPosting from './EditPosting';
 
-const MainAddPosting = (props) => (
-  <div>
+export default class MainAddPosting extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log('in MainAddPosting - props:');
+    console.log(props);
+    console.log(props.match.path);
+    console.log(props.match.path == '/createposting');
 
-    <SplitterLayout primaryIndex={0} percentage={true} primaryMinSize={30} secondaryInitialSize={50} secondaryMinSize={40}>
+  }
+
+  render() {
+    return (
       <div>
-        <AddPosting />
-      </div>
-      <div>
-        <ThreeInfoTypeComp />
-      </div>
-    </SplitterLayout>
-  </div>
-);
 
-export default (MainAddPosting);
-
-/*      linesData:[
-        { idu: 0, isDr: true, lineItem: 'Accounts receivable', amount: 1000 },
-        { idu: 1, isDr: false, lineItem: 'Revenue', amount: 1000 },
-        { idu: 2, isDr: true, lineItem: 'Cost of goods sold', amount: 900 },
-        { idu: 3, isDr: false, lineItem: 'Inventory', amount: 900 }
-      ]
-*/
+        <SplitterLayout primaryIndex={0} percentage={true} primaryMinSize={30} secondaryInitialSize={50} secondaryMinSize={40}>
+          <div>
+            {this.props.match.path == "/createposting" && <AddPosting />}
+            {this.props.match.path == "/editposting/:id" && <EditPosting
+              idtoedit = {this.props.match.params.id}
+            />}
+          </div>
+          <div>
+            <ThreeInfoTypeComp />
+          </div>
+        </SplitterLayout>
+      </div>
+    );
+  }
+}

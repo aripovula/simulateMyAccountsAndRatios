@@ -25,9 +25,9 @@ export default class SimpleBarChart extends React.Component {
                     <Tooltip />
                     <Legend />
 
-                    <Bar dataKey="py" fill="#00C49F" name="Prior year - actual" />
-                    <Bar dataKey="target" fill="#FFBB28" name="Current year - target" />
-                    <Bar dataKey="cy" fill="#0088FE" name="Current year - actual" />
+                    <Bar dataKey="py" fill="#00C49F" name="Prior period - actual" />
+                    <Bar dataKey="target" fill="#FFBB28" name="Current period - target" />
+                    <Bar dataKey="cy" fill="#0088FE" name="Current period - actual" />
 
                 </BarChart>
             </ResponsiveContainer>

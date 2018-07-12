@@ -19,14 +19,11 @@ const SeparateLineItem = ({ dispatch, id, entryId, isDr, lineItem, amount, creat
         {(parseFloat(amount, 10) / 100).toLocaleString('en-US')}
         
         <span className="horIndent"></span>
-        
-        <Link to="#" className="addnlightbg" onClick={() => {
-          dispatch(removePosting({ entryId }));
-        }}>edit
-        </Link>  
+
+        <Link to={`/editposting/${entryId}`} className="addnlightbg">edit</Link>
         
         <span className="smalltext">( posted on&nbsp;
-          {moment(createdAt).format('MMMM D, YYYY')}; &nbsp; posted for date of&nbsp;
+          {moment(createdAt).format('MMMM D, YYYY')}&nbsp;for date of&nbsp;
           {moment(postingDate).format('MMMM D, YYYY')} )
           </span>
         </p>

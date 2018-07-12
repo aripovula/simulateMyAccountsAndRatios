@@ -43,8 +43,9 @@ button:disabled {
       color: white;
       text-align: center;
       text-decoration: none;
+      white-space:pre-wrap;
       //display: inline-block;
-      white-space: normal;
+      //white-space: normal;
       font-size: 16px;
       margin: 4px 2px;
       border-radius: 4px;
@@ -245,6 +246,12 @@ a.addnlightbg:active {
 
 .numberWidth{width: 120px;}
 
+.forLineItem{width: 45%}
+
+.forNumber{width: 25%}
+
+.forComment{width: 80%}
+
 .smalltext {font-size: 12px; margin-left: 15px}
 
 .text14white {font-size: 14px; margin-left: 15px;color: white;}
@@ -257,12 +264,24 @@ a.addnlightbg:active {
   padding: 6px 14px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
+  //display: inline-block;
   font-size: 16px;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-  cursor: pointer;
-  color: white;
+  //cursor: pointer;
+}
+
+.lightgreenc{
+  background-color:rgb(239, 247, 239)!important; 
+  color: green;
+  padding: 6px 14px;
+  text-align: center;
+  text-decoration: none;
+  //display: inline-block;
+  font-size: 16px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  //cursor: pointer;
 }
 
 .bluec{
@@ -276,6 +295,5 @@ a.addnlightbg:active {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   cursor: pointer;
-  color: white;
 }
 

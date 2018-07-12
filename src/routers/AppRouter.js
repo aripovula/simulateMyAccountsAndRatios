@@ -6,6 +6,7 @@ import MainAddPosting from '../components/MainAddPosting';
 import MainAllPostings from '../components/MainAllPostings';
 import Header from '../components/Header';
 import AddPosting from '../components/AddPosting';
+import EditPosting from '../components/EditPosting';
 
 
 const AppRouter = () => (

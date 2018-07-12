@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import { removePosting } from '../actions/postings';
+import { editPosting } from '../actions/postings';
+import { unpostPosting } from '../actions/postings';
+import { repostPosting } from '../actions/postings';
 
 let uniqCount = 0;
 const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, postingDate, countP }) => (
@@ -11,9 +14,7 @@ const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, postingDat
     <h4><span className="postingNote">{countP}. {note}</span>
       <span className="horIndent"></span>
 
-      <Link to={`/editposting/${id}`} className="addnlightbg" 
-        //onClick={() => {dispatch(removePosting({ id }));}
-      >edit</Link>
+      <Link to={`/editposting/${id}`} className="addnlightbg">edit</Link>
       
       <span className="horIndent"></span>
       

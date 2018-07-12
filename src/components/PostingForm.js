@@ -8,18 +8,20 @@ import PostingOneLine from './PostingOneLine';
 
 let idCounter = 1;
 let is2go2list = true;
+let isEditMode = false;
 
 export default class PostingForm extends React.Component {
   constructor(props) {
     super(props);
+    console.log('this.props.postingForm');
+    console.log(this.props.posting);
     this.state = {
       note: this.props.posting ? this.props.posting.note : '',
       totalAmount: this.props.posting ? this.props.posting.totalAmount : '',
       createdAt: this.props.posting ? moment(this.props.posting.createdAt) : moment(),
       postingDate: this.props.posting ? moment(this.props.posting.postingDate) : moment(),
-      //calendarFocused: false,
       error: '',
-      linesData: this.props.posting ? this.props.posting.linesData :[
+      linesData: this.props.posting ? this.props.posting.linesData : [
         { idu: 0, isDr: true, lineItem: '', amount: 0 },
         { idu: 1, isDr: false, lineItem: '', amount: 0 }
       ]
@@ -33,6 +35,9 @@ export default class PostingForm extends React.Component {
     this.onLineItemChange = this.onLineItemChange.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.onStayHereSelected = this.onStayHereSelected.bind(this);
+    idCounter = this.props.posting ? this.props.posting.linesData.length + 1 : 4;
+    isEditMode = this.props.posting ? true : false;
+    is2go2list = true;
   }
 
   onActionButtonSelected = (posting) => {
@@ -41,7 +46,7 @@ export default class PostingForm extends React.Component {
     idCounter = 4;
     this.setState(() => {
       return {
-        note: `entry to reflect ${posting.name.substring(5)}`,
+        note: `entry to reflect ${posting.name.substring(5).replace(/(\r\n\t|\n|\r\t)/gm,"")}`,
         linesData: posting.lines
       }
     }, this.checkSum);
@@ -54,7 +59,7 @@ export default class PostingForm extends React.Component {
         note: "",
         totalAmount: '',
         createdAt: moment(),
-        postingDate: moment(),  
+        postingDate: moment(),
         linesData: [
           { idu: 0, isDr: true, lineItem: '', amount: 0 },
           { idu: 1, isDr: false, lineItem: '', amount: 0 }
@@ -196,13 +201,13 @@ export default class PostingForm extends React.Component {
         entryAbsValue = entryAbsValue + Math.abs(amnt);
       }
     });
-    
+
     this.setState(() => { return { totalAmount: entryAbsValue } });
-    
-    if (missingLineItems != 0) { errorText = `${errorText} add ${missingLineItems} line item(s); `;isValidEntry=false;}
-    if (entryAbsValue == 0) { errorText = `${errorText} add amounts; `;isValidEntry=false;}
-    if (this.state.note.length == 0) { errorText = `${errorText} add posting comment; `;isValidEntry=false;}
-    if (totalAmnt != 0) { errorText = `${errorText} not balanced: ${totalAmnt.toFixed(2)}; `;isValidEntry=false;}
+
+    if (missingLineItems != 0) { errorText = `${errorText} add ${missingLineItems} line item(s); `; isValidEntry = false; }
+    if (entryAbsValue == 0) { errorText = `${errorText} add amounts; `; isValidEntry = false; }
+    if (this.state.note.length == 0) { errorText = `${errorText} add posting comment; `; isValidEntry = false; }
+    if (totalAmnt != 0) { errorText = `${errorText} not balanced: ${totalAmnt.toFixed(2)}; `; isValidEntry = false; }
     this.onErrorChange(errorText);
     return isValidEntry;
   }
@@ -271,7 +276,7 @@ export default class PostingForm extends React.Component {
 
           <span className="horIndent"></span>
 
-          <span className="warning">{this.state.error!=null && this.state.error}</span>
+          <span className="warning">{this.state.error != null && this.state.error}</span>
 
           <br />
           <span className="verIndentFive"></span>
@@ -280,8 +285,8 @@ export default class PostingForm extends React.Component {
           <input
             type="text"
             placeholder="Comment (optional)"
-            size="60"
-            className="text-input"
+            //size="60"
+            className="text-input forComment"
             value={this.state.note}
             onChange={this.onNoteChange}
           />
@@ -292,7 +297,7 @@ export default class PostingForm extends React.Component {
           <span>Date of posting:
           <span className="horIndent"></span>
             <DayPickerInput
-              value = {this.state.postingDate.format('MMMM D, YYYY')}
+              value={this.state.postingDate.format('MMMM D, YYYY')}
               selectedDays={this.state.postingDate}
               format="LL"
               formatDate={formatDate}
@@ -304,14 +309,18 @@ export default class PostingForm extends React.Component {
           <span className="horIndent"></span>
 
           <button className="button button1 buttonwide">Post Entry</button>
-          
-          <span className="text14black">&amp; stay here &nbsp;</span>
-          <input
-            name="is2go2list"
-            type="checkbox"
-            onChange={this.handleCheckboxChange} />
-            
-        
+
+          {console.log('this.isEditMode' + isEditMode)}
+          {!isEditMode && <span>
+            <span className="text14black">&amp; stay here &nbsp;</span>
+            <input
+              name="is2go2list"
+              type="checkbox"
+              onChange={this.handleCheckboxChange} />
+          </span>
+          }
+
+
           <br /><span className="smalltext">* click Dr or Cr buttons to toggle between Dr and Cr. Total check is auto re-counted.</span>
         </div>
       </form>
