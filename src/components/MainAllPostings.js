@@ -6,11 +6,6 @@ import PostingsList from './PostingsList';
 import PostingsListFilter from './PostingsListFilter';
 import ThreeInfoTypeComp from './ThreeInfoTypeComp';
 
-// import BarChart from './BarChart';
-// import MyBarChart from './BarChart';
-import Gchart from './Gchart';
-//import DataStore from './DataStore';
-
 const MainAllPostings = () => (
   <div>
 

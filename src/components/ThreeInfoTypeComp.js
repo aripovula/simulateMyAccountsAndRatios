@@ -1,7 +1,6 @@
 import React from 'react';
 
 import FinStatements from './FinStatements';
-//import GChart from './Gchart';
 import SimpleBarChart from './ReChartBars';
 import ReChartRadialBar from './ReChartRadialBar';
 import ReChartPieChart from './ReChartPieChart';

@@ -1,12 +1,7 @@
 import React from 'react';
 import FinStatements from './FinStatements';
 import PostingsList from './PostingsList';
-import BarChart from './BarChart';
-//import SplitPane from 'react-split-pane';
 import SplitterLayout from 'react-splitter-layout';
-import MyBarChart from './BarChart';
-import Gchart from './Gchart';
-//import DataStore from './DataStore';
 
 const MainDashboard = () => (
   <div>
@@ -18,7 +13,7 @@ const MainDashboard = () => (
     </div>
     <div>
     {/*2nd*/}
-      <Gchart/>
+
     </div>
     </SplitterLayout>
   </div>

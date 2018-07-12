@@ -1,11 +1,7 @@
 import React from 'react';
 import FinStatements from './FinStatements';
 import { connect } from 'react-redux';
-import BarChart from './BarChart';
-//import SplitPane from 'react-split-pane';
 import SplitterLayout from 'react-splitter-layout';
-import MyBarChart from './BarChart';
-import Gchart from './Gchart';
 import AddPosting from './AddPosting';
 import ThreeInfoTypeComp from './ThreeInfoTypeComp';
 
