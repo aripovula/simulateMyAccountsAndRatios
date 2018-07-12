@@ -13,17 +13,22 @@ import { formatDate, parseDate } from 'react-day-picker/moment';
 
 import { Tips } from "../utils/tableUtils";
 
-let postingDate;
-let openingDate;
+let date = new Date();
+//let pydate = 'Dec 31, ' + ( date.getFullYear() - 1);
+
+let pydate = moment();
 
 class FinStatements extends React.Component {
   constructor(props) {
     super(props);
+    let date = new Date();
+    let pydate = moment(''+( date.getFullYear() - 1)+'-12-31');
+    console.log('pydate='+pydate.format('MMMM D, YYYY'));
     this.state = {
       data: this.getUData(),
       reportDate: this.props.posting ? moment(this.props.posting.reportDate) : moment(),
       reportDate2: ' pick report date',
-      openingDate: this.props.posting ? moment(this.props.posting.openingDate) : moment(),
+      openingDate: this.props.posting ? moment(this.props.posting.openingDate) : pydate,
       openingDate2: ' comparatives date'
     };
     this.getUData = this.getUData.bind(this);
@@ -53,7 +58,7 @@ class FinStatements extends React.Component {
         <span className="horIndent"></span>
           <DayPickerInput
             value={this.state.reportDate2}
-            selectedDays={this.state.reportDate2}
+            selectedDays={this.state.reportDate}
             format="LL"
             formatDate={formatDate}
             onDayClick={day => this.processReportDateChange(day)}
@@ -65,7 +70,7 @@ class FinStatements extends React.Component {
 
           <DayPickerInput
           value={this.state.openingDate2}
-          selectedDays={this.state.openingDate2}
+          selectedDays={this.state.openingDate}
           format="LL"
           formatDate={formatDate}
           onDayClick={day => this.processOpeningDateChange(day)}
@@ -80,19 +85,19 @@ class FinStatements extends React.Component {
 
               columns: [
                 {
-                  Header: "Line items",
-                  accessor: "assets"
+                  Header: "Line items, in US$",
+                  accessor: "TBLineItems"
                 },
                 {
                   Header: this.state.reportDate.format('MMM D, YYYY').toString(),
-                  id: "amounts_assets",
-                  accessor: d => d.amounts_assets,
+                  id: "amounts_current",
+                  accessor: d => d.amounts_current,
                   className: "right"
                 },
                 {
                   Header: this.state.openingDate.format('MMM D, YYYY').toString(),
-                  id: "amounts_assets",
-                  accessor: d => d.amounts_assets,
+                  id: "amounts_comparatives",
+                  accessor: d => d.amounts_comparatives,
                   className: "right"
                 }
               ]
@@ -128,11 +133,18 @@ class FinStatements extends React.Component {
   }
 
   getUData = () => {
+    
+    let broughtForward = this.getPYbalances();
     let data = [];
     let accum = [];
+    let accumOpening = [];
 
     var mySet = new Set();
 
+    broughtForward.map(lineData => {
+      mySet.add(lineData.lineItem);
+    });
+    
     this.props.postings.map(posting => {
       posting.linesData.map(lineData => {
         mySet.add(lineData.lineItem);
@@ -140,6 +152,21 @@ class FinStatements extends React.Component {
     });
 
     let LIs = [...mySet];
+
+    broughtForward.map(lineData => {
+      for (let x = 0; x < LIs.length; x++) {
+        if (LIs[x] == lineData.lineItem) {
+          let amt = parseFloat(lineData.amount, 10) / 100;
+          if (accum[x] == null) accum[x] = 0;
+          if (lineData.isDr) accum[x] = accum[x] + amt;
+          if (!lineData.isDr) accum[x] = accum[x] - amt;
+
+          if (accumOpening[x] == null) accumOpening[x] = 0;
+          if (lineData.isDr) accumOpening[x] = accumOpening[x] + amt;
+          if (!lineData.isDr) accumOpening[x] = accumOpening[x] - amt;
+        }
+      }
+    });
 
     this.props.postings.map(posting => {
       posting.linesData.map(lineData => {
@@ -156,7 +183,7 @@ class FinStatements extends React.Component {
 
     let accs = [];
     for (let x = 0; x < LIs.length; x++) {
-      accs[x] = { lineItem: LIs[x], balance: accum[x] }
+      accs[x] = { lineItem: LIs[x], balance: accum[x], openingBalance: accumOpening[x] }
     }
     console.log('accum = ');
     console.log(accum);
@@ -164,15 +191,14 @@ class FinStatements extends React.Component {
     let accounts = this.sortAccounts(accs);
 
     accounts.map(acc => {
-      //console.log('')
+      console.log('acc');
+      console.log(acc);
       data.push(
         {
-          assets: acc.lineItem,
-          amounts_assets: acc.balance.toLocaleString('en-US'),
-          liabilities: 'Current loans',
-          amounts_liabs: 22,
-          visits: 33,
-          progress: 33,
+          TBLineItems: acc.lineItem,
+          amounts_current: acc.balance != null ? acc.balance.toLocaleString('en-US') : '',
+          amounts_comparatives: acc.openingBalance != null ? acc.openingBalance.toLocaleString('en-US'): '',
+          percentChanges: 'Current loans',
           status: 223
         }
       );
@@ -185,6 +211,32 @@ class FinStatements extends React.Component {
     return accs.sort((a, b) => {
       return a.balance < b.balance ? 1 : -1;
     });
+  }
+
+  getPYbalances = () => {
+    return [
+      {isDr: true, lineItem: 'Cash and equivalents', amount: '322324234'},
+      {isDr: true, lineItem: 'Accounts receivable', amount: '46323242'},
+      {isDr: true, lineItem: 'Inventory', amount: '46323242'},
+      {isDr: true, lineItem: 'Long-term loans', amount: '46323242'},
+      {isDr: true, lineItem: 'Short-term loans', amount: '46323242'},
+      {isDr: true, lineItem: 'Advance payments', amount: '46323242'},
+      {isDr: true, lineItem: 'Other assets', amount: '46323242'},
+      {isDr: false, lineItem: 'Accounts payable', amount: '46323242'},
+      {isDr: false, lineItem: 'Long-term borrowings', amount: '46323242'},
+      {isDr: false, lineItem: 'Short-term borrowings', amount: '46323242'},
+      {isDr: false, lineItem: 'Advances received', amount: '46323242'},
+      {isDr: false, lineItem: 'Other liabilities', amount: '46323242'},
+      {isDr: false, lineItem: 'Share capital', amount: '46323242'},
+      {isDr: false, lineItem: 'Retained earnings', amount: '46323242'},
+      {isDr: false, lineItem: 'Reserves', amount: '46323242'},
+      {isDr: false, lineItem: 'Revenue', amount: '46323242'},
+      {isDr: false, lineItem: 'Interest income', amount: '46323242'},
+      {isDr: true, lineItem: 'Cost of goods sold', amount: '46323242'},
+      {isDr: true, lineItem: 'Admin expenses', amount: '46323242'},
+      {isDr: true, lineItem: 'Interest expenses', amount: '46323242'},
+      {isDr: true, lineItem: 'Other expenses', amount: '46323242'}
+    ];
   }
 }
 

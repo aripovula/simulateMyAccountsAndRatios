@@ -60,7 +60,7 @@ export default class PostingForm extends React.Component {
           { idu: 1, isDr: false, lineItem: '', amount: 0 }
         ]
       }
-    }, () => this.onErrorChange('Posting has been submitted !'));
+    }, () => this.onErrorChange('Entry has been posted !'));
   }
 
   onNoteChange = (e) => {

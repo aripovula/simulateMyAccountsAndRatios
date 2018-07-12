@@ -38,6 +38,7 @@
     "react-splitter-layout": "^3.0.0",
     "react-svg-bar-chart": "^1.0.0",
     "react-table": "^6.8.6",
+    "recharts": "^1.0.1",
     "redux": "3.7.2",
     "sass-loader": "6.0.6",
     "style-loader": "0.18.2",

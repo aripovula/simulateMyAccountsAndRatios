@@ -4,29 +4,31 @@ import SplitterLayout from 'react-splitter-layout';
 import FinStatements from './FinStatements';
 import PostingsList from './PostingsList';
 import PostingsListFilter from './PostingsListFilter';
+import ThreeInfoTypeComp from './ThreeInfoTypeComp';
+
 // import BarChart from './BarChart';
 // import MyBarChart from './BarChart';
 import Gchart from './Gchart';
 //import DataStore from './DataStore';
 
-const MainDashboard = () => (
+const MainAllPostings = () => (
   <div>
 
     <SplitterLayout primaryIndex={0} percentage={true} primaryMinSize={30} secondaryInitialSize={50} secondaryMinSize={40}>
-    <div>
-      <PostingsListFilter/>
-      <PostingsList/>
-      
-    </div>
-    <div className="boxed">
-    {/*2nd*/}
-      <FinStatements/>
-    </div>
+      <div>
+        <PostingsListFilter />
+        <PostingsList />
+
+      </div>
+      <div>
+        {/*2nd*/}
+        <ThreeInfoTypeComp/>
+      </div>
     </SplitterLayout>
   </div>
 );
 
-export default MainDashboard;
+export default MainAllPostings;
 
 // default export :     - LECTURE 51 - 53
 // export default class  OR

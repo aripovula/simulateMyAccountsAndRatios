@@ -107,6 +107,18 @@ input[type=text], input[type=number], input[type=date] {
   border-radius: 2px;
 }
 
+.boxedExact {
+  width: 96%;
+  border: green solid 2px;
+  padding: 5px;
+  margin-left: 2%;
+  //background: #d8d1d1 !important;
+  color: green;
+  /* font-size: 18px; */
+  text-align: left;
+  border-radius: 2px;
+}
+
 .boxedtransp {
   width: 96%;
   border: green solid 2px;
@@ -238,3 +250,32 @@ a.addnlightbg:active {
 .text14white {font-size: 14px; margin-left: 15px;color: white;}
 
 .text14black {font-size: 14px; margin-left: 10px;color: black;}
+
+.greenc{
+  background-color:#4CAF50!important; 
+  color: white;
+  padding: 6px 14px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+  color: white;
+}
+
+.bluec{
+  background-color: rgb(48, 190, 238)!important; 
+  color: white;
+  padding: 6px 14px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+  color: white;
+}
+

@@ -5,20 +5,48 @@ import { connect } from 'react-redux';
 export const Header = ({ startLogout }) => (
   <header className="header">
     <div>
-      <div className="header__content">
-      
+      <div className="header__content">      
       &nbsp; Simulate accounts and ratios
         <span className="horIndent"></span><span className="horIndent"></span>
-        <NavLink to="/" className="normal" activeClassName="is-active" exact={true}>Dashboard</NavLink>
+        
+        <NavLink
+          to="/"
+          style={{color: 'white', textDecoration: 'none'}}
+          activeStyle={{color: 'red', textDecoration: 'none'}}
+          exact={true}
+          >Dashboard
+        </NavLink>
+
         <span className="horIndent"></span>|<span className="horIndent"></span>
-        <NavLink to="/postings" className="normal" activeClassName="is-active" exact={true}>All postings</NavLink>
+        
+        <NavLink 
+          to="/postings"
+          style={{color: 'white', textDecoration: 'none'}}
+          activeStyle={{color: 'red', textDecoration: 'none'}}
+          exact={true}
+          >All postings
+        </NavLink>
+        
         <span className="horIndent"></span>|<span className="horIndent"></span>
-        <NavLink to="/createposting" className="normal" activeClassName="is-active">New posting</NavLink>
+        
+        <NavLink
+          to="/createposting"
+          style={{color: 'white', textDecoration: 'none'}}
+          activeStyle={{color: 'red', textDecoration: 'none'}}
+          >New posting
+        </NavLink>
+        
         <span className="horIndent"></span>|<span className="horIndent"></span>
-        <NavLink to="/help" style={{color: 'white', textDecoration: 'none'}} activeStyle={{color: 'red', textDecoration: 'none'}}>Help</NavLink>
+        
+        <NavLink
+          to="/help"
+          style={{color: 'white', textDecoration: 'none'}}
+          activeStyle={{color: 'red', textDecoration: 'none'}}
+          >Help
+        </NavLink>
+        
         <span className="horIndent"></span><span className="horIndent"></span>
-        <button className="button button--link" onClick={startLogout}>Logout</button>
-      
+        {/*<button className="button button--link" onClick={startLogout}>Logout</button>*/}
     </div>
   </div>
   </header>

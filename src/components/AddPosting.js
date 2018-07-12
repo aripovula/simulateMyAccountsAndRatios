@@ -78,26 +78,26 @@ class AddPosting extends React.Component {
       { idu: 2, name: 'book Advance payments', 
       lines: [
         { idu: 0, isDr: true, lineItem: 'Advance payments', amount: 100000 },
-        { idu: 1, isDr: false, lineItem: 'Cash', amount: 100000 }
+        { idu: 1, isDr: false, lineItem: 'Cash and equivalents', amount: 100000 }
       ] },
       { idu: 3, name: 'book Short-term lending', 
       lines: [
         { idu: 0, isDr: true, lineItem: 'Short-term loans', amount: 2000000 },
-        { idu: 1, isDr: false, lineItem: 'Cash', amount: 2000000 }
+        { idu: 1, isDr: false, lineItem: 'Cash and equivalents', amount: 2000000 }
       ] },
       { idu: 4, name: 'book Long-term lending',
       lines: [
         { idu: 0, isDr: true, lineItem: 'Long-term loans', amount: 8000000 },
-        { idu: 1, isDr: false, lineItem: 'Cash', amount: 8000000 }
+        { idu: 1, isDr: false, lineItem: 'Cash and equivalents', amount: 8000000 }
       ] },
       { idu: 5, name: 'book Short-term borrowing',
       lines: [
-        { idu: 0, isDr: true, lineItem: 'Cash', amount: 2000000 },
+        { idu: 0, isDr: true, lineItem: 'Cash and equivalents', amount: 2000000 },
         { idu: 1, isDr: false, lineItem: 'Short-term borrowings', amount: 2000000 }
       ] },
       { idu: 6, name: 'book Long-term borrowing',
       lines: [
-        { idu: 0, isDr: true, lineItem: 'Cash', amount: 8000000 },
+        { idu: 0, isDr: true, lineItem: 'Cash and equivalents', amount: 8000000 },
         { idu: 1, isDr: false, lineItem: 'Long-term borrowings', amount: 8000000 }
       ] },
       { idu: 7, name: 'book Inventory purchase',
