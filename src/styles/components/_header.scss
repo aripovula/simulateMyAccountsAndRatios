@@ -2,10 +2,13 @@
     background: $dark-blue;
     color:white;
     height: 35px;
+    line-height: 35px;
     align-items: center;
   }
   
   .header__content {
+    height: 35px;
+    line-height: 35px;
     align-items: center;
     display: flex;
     //justify-content: space-between;

@@ -37,6 +37,16 @@ class EditPosting extends React.Component {
                         this.props.dispatch(removePosting({ id: this.props.posting.id }));
                         this.props.history.push('/postings');
                     }}>Permanently delete</button>
+
+                    <span className="horIndent"></span>
+
+                    <button 
+                    className="button1"        
+                    onClick={() => {
+                        this.props.dispatch(removePosting({ id: this.props.posting.id }));
+                        this.props.history.push('/postings');
+                    }}>Temporarily un-post</button>
+                    
                     <span className="verIndent"></span>
                 </div>
             </div>

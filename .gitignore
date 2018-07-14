@@ -1,3 +1,6 @@
 node_modules/
 public/images/
+public/dist/
 .env
+.env.test
+.env.development
