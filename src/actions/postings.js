@@ -46,8 +46,9 @@ export const startAddPosting = (postingData = {}) => {
         ...posting
       }));
     });
+    // return Promise.resolve();
   };
-  //return Promise.resolve();
+  
 };
 
 

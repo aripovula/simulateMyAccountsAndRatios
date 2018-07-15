@@ -115,7 +115,7 @@ input[type=text], input[type=number], input[type=date] {
   margin-left: 2%;
   //background: #d8d1d1 !important;
   color: green;
-  /* font-size: 18px; */
+  font-size: 15px;
   text-align: left;
   border-radius: 2px;
 }
@@ -189,6 +189,8 @@ input[type=text], input[type=number], input[type=date] {
 // .button5 {background-color: #555555;} /* Black */
 
 .postingNote {color: red; }
+
+.success {color:#4CAF50!important; font-size: 14px; background-color: lightyellow;}
 
 .warning {color: red; font-size: 14px}
 
@@ -298,5 +300,7 @@ a.addnlightbg:active {
 }
 
 .right{text-align: right;}
+
+.rightAndSmall{text-align: right;font-size: 8px}
 
 .center{text-align: center;}

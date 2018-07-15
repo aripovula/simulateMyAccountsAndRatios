@@ -20,6 +20,7 @@ export default class PostingForm extends React.Component {
       totalAmount: this.props.posting ? this.props.posting.totalAmount : '',
       createdAt: this.props.posting ? moment(this.props.posting.createdAt) : moment(),
       postingDate: this.props.posting ? moment(this.props.posting.postingDate) : moment(),
+      success: '',
       error: '',
       linesData: this.props.posting ? this.props.posting.linesData : [
         { idu: 0, isDr: true, lineItem: '', amount: 0 },
@@ -65,7 +66,7 @@ export default class PostingForm extends React.Component {
           { idu: 1, isDr: false, lineItem: '', amount: 0 }
         ]
       }
-    }, () => this.onErrorChange('Entry has been posted !'));
+    }, () => this.onSuccessChange('Entry has been posted !'));
   }
 
   onNoteChange = (e) => {
@@ -213,8 +214,13 @@ export default class PostingForm extends React.Component {
   }
 
   onErrorChange = (text) => {
-    this.setState(() => { return { error: text } });
+    this.setState(() => { return { error: text, success:'' } });
   }
+
+  onSuccessChange = (text) => {
+    this.setState(() => { return { success: text } });
+  }
+
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -277,6 +283,7 @@ export default class PostingForm extends React.Component {
           <span className="horIndent"></span>
 
           <span className="warning">{this.state.error != null && this.state.error}</span>
+          <span className="success">{this.state.success != null && this.state.success}</span>
 
           <br />
           <span className="verIndentFive"></span>
@@ -285,7 +292,6 @@ export default class PostingForm extends React.Component {
           <input
             type="text"
             placeholder="Comment (optional)"
-            //size="60"
             className="text-input forComment"
             value={this.state.note}
             onChange={this.onNoteChange}

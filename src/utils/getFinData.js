@@ -1,6 +1,10 @@
 import React from "react";
+import numeral from 'numeral';
 
 export const getFinData = (postings) => {
+
+  //console.log('postings==');
+  // console.log(postings);
 
     let broughtForward = getPYbalances();
     let data = [];
@@ -53,8 +57,8 @@ export const getFinData = (postings) => {
     for (let x = 0; x < LIs.length; x++) {
       accs[x] = { lineItem: LIs[x], balance: accum[x], openingBalance: accumOpening[x] }
     }
-    console.log('accum = ');
-    console.log(accum);
+    // console.log('accum = ');
+    // console.log(accum);
 
     let accounts =  accs.sort((a, b) => {
       return a.balance < b.balance ? 1 : -1;
@@ -62,21 +66,32 @@ export const getFinData = (postings) => {
 
 
     accounts.map(acc => {
-      console.log('acc');
-      console.log(acc);
-      let percentChange = (parseFloat(acc.balance, 10) - parseFloat(acc.openingBalance, 10)) / parseFloat(acc.openingBalance, 10);
-      console.log(percentChange);
+      // console.log('acc');
+      // console.log(acc);
+      let percentChange = (acc.balance != null && acc.openingBalance != null) ? ((parseFloat(acc.balance, 10) - parseFloat(acc.openingBalance, 10)) / parseFloat(acc.openingBalance, 10)) : 0;
+      let difce = acc.balance - acc.openingBalance;
+      let arrowType = 0;
+      if (percentChange>0 && difce>0) arrowType = 2;
+      if (percentChange>0 && difce<0) arrowType = 1;
+      if (percentChange<0 && difce<0) arrowType = -1;
+      if (percentChange<0 && difce>0) arrowType = -2;
+
+      let balance = acc.balance != null ? numeral(acc.balance).format('0,0') : '';
+      let openingBalance = acc.openingBalance != null ? numeral(acc.openingBalance).format('0,0') : '';
+      
+      // console.log(percentChange);
       data.push(
         {
-          TBLineItems: acc.lineItem,
-          amounts_current: acc.balance != null ? acc.balance.toLocaleString('en-US') : '',
-          amounts_comparatives: acc.openingBalance != null ? acc.openingBalance.toLocaleString('en-US') : '',
-          percent_change: (acc.balance != null && acc.openingBalance != null) ? percentChange.toFixed(2) + "%" : 'n/a',
+          TBLineItems: {lineItem: acc.lineItem, isUpdated: false},
+          amounts_current: {balance, isUpdated: false},
+          amounts_comparatives: {openingBalance, isUpdated: false},
+          percent_change: { percentChange, arrowType },
           status: 223
         }
       );
     });
-    console.log('postingsInFinStatementUpdated changed Data');
+    //console.log('postingsInFinStatementUpdated changed Data');
+    //console.log(data);
     return data;
   }
 
