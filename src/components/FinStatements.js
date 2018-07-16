@@ -123,7 +123,7 @@ class FinStatements extends React.Component {
                     </span>)
                 },
                 {
-                  Header: this.state.reportDate.format('MMM D, YY').toString(),
+                  Header: this.state.reportDate.format('MMM D, YYYY').toString(),
                   id: "amounts_current",
                   accessor: d => d.amounts_current,
                   width: this.state.numberColumnsWidth,
@@ -147,7 +147,7 @@ class FinStatements extends React.Component {
 
                 },
                 {
-                  Header: this.state.openingDate.format('MMM D, YY').toString(),
+                  Header: this.state.openingDate.format('MMM D, YYYY').toString(),
                   id: "amounts_comparatives",
                   accessor: d => d.amounts_comparatives,
                   width: this.state.numberColumnsWidth,
@@ -247,6 +247,7 @@ class FinStatements extends React.Component {
               dataTemp[x].amounts_current.isUpdated = true;
               dataTemp[x].amounts_comparatives.isUpdated = true;
             }
+            y = dataPrev.length;
           }
         }
       }

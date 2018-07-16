@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 // import {RemoveLine} from './PostingForm';
 
 let isDr;
@@ -27,6 +28,7 @@ export default class PostingOneLine extends React.Component {
         //size="36"
         value={this.props.lineItem}
         onChange={this.props.onLineItemChange}
+        autoComplete="off"
       />
       <input
         id={this.props.idu}
@@ -36,14 +38,16 @@ export default class PostingOneLine extends React.Component {
         //size="16"
         value={'' + (parseFloat(this.props.amount, 10) / 100)}
         onChange={this.props.onAmountChanged}
+        autoComplete="off"
       />
 
       <span className="horIndent"></span>
-      <span
+      <Link
+        to="#"
         id={this.props.idu}
-        className="glyphicon glyphicon-remove"
         onClick={this.props.processDeleteLine}
-      ></span>
+        className="noDecor"
+      >&#10060;</Link>
 
     </div>
   }

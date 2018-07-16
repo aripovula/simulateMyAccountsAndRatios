@@ -47,7 +47,7 @@ export default class PostingForm extends React.Component {
     idCounter = 4;
     this.setState(() => {
       return {
-        note: `entry to reflect ${posting.name.substring(5).replace(/(\r\n\t|\n|\r\t)/gm,"")}`,
+        note: `entry to reflect ${posting.name.substring(5).replace("\n\r","")}`,
         linesData: posting.lines
       }
     }, this.checkSum);
@@ -207,7 +207,7 @@ export default class PostingForm extends React.Component {
 
     if (missingLineItems != 0) { errorText = `${errorText} add ${missingLineItems} line item(s); `; isValidEntry = false; }
     if (entryAbsValue == 0) { errorText = `${errorText} add amounts; `; isValidEntry = false; }
-    if (this.state.note.length == 0) { errorText = `${errorText} add posting comment; `; isValidEntry = false; }
+    if (this.state.note.length == 0) { errorText = `${errorText} add description; `; isValidEntry = false; }
     if (totalAmnt != 0) { errorText = `${errorText} not balanced: ${totalAmnt.toFixed(2)}; `; isValidEntry = false; }
     this.onErrorChange(errorText);
     return isValidEntry;
@@ -233,6 +233,7 @@ export default class PostingForm extends React.Component {
         postingDate: this.state.postingDate.valueOf(),
         note: this.state.note,
         totalAmount: this.state.totalAmount,
+        isUnPosted: false,
         is2go2list
       });
     }
@@ -283,7 +284,7 @@ export default class PostingForm extends React.Component {
           <span className="horIndent"></span>
 
           <span className="warning">{this.state.error != null && this.state.error}</span>
-          <span className="success">{this.state.success != null && this.state.success}</span>
+          <span className="success"><strong>{this.state.success != null && this.state.success}</strong></span>
 
           <br />
           <span className="verIndentFive"></span>
@@ -291,7 +292,8 @@ export default class PostingForm extends React.Component {
 
           <input
             type="text"
-            placeholder="Comment (optional)"
+            autoComplete="off"
+            placeholder="Description (optional)"
             className="text-input forComment"
             value={this.state.note}
             onChange={this.onNoteChange}
@@ -318,11 +320,12 @@ export default class PostingForm extends React.Component {
 
           {console.log('this.isEditMode' + isEditMode)}
           {!isEditMode && <span>
-            <span className="text14black">&amp; stay here &nbsp;</span>
+            <label className="text14black">&amp; stay here &nbsp;
             <input
               name="is2go2list"
               type="checkbox"
               onChange={this.handleCheckboxChange} />
+              </label>
           </span>
           }
 

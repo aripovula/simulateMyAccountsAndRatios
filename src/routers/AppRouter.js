@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
+import { Router, Route, Switch, Link, NavLink } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
 
 import MainDashboard from '../components/MainDashboard';
 import MainAddPosting from '../components/MainAddPosting';
@@ -7,21 +8,25 @@ import MainAllPostings from '../components/MainAllPostings';
 import Header from '../components/Header';
 import AddPosting from '../components/AddPosting';
 import EditPosting from '../components/EditPosting';
+import LoginPage from '../components/LoginPage';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+
+export const history = createHistory();
 
 
 const AppRouter = () => (
-  <BrowserRouter>
+  <Router history={history}>
     <div>
-      <Header />
       <Switch>
-        <Route path="/" component={MainDashboard} exact={true} />
-        <Route path="/postings" component={MainAllPostings} exact={true} />
-        <Route path="/createposting" component={MainAddPosting} exact={true} />
-        <Route path="/editposting/:id" component={MainAddPosting} exact={true} />
-        {/*<Route path="/createposting" component={AddPosting} exact={true} />*/}
+        <PublicRoute path="/" component={LoginPage} exact={true} />
+        <PrivateRoute path="/dashboard" component={MainDashboard} exact={true} />
+        <PrivateRoute path="/postings" component={MainAllPostings} exact={true} />
+        <PrivateRoute path="/createposting" component={MainAddPosting} exact={true} />
+        <PrivateRoute path="/editposting/:id" component={MainAddPosting} exact={true} />
       </Switch>
     </div>
-  </BrowserRouter>
+    </Router>
 );
 
 export default AppRouter;

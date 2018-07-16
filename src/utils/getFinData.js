@@ -86,7 +86,7 @@ export const getFinData = (postings) => {
           amounts_current: {balance, isUpdated: false},
           amounts_comparatives: {openingBalance, isUpdated: false},
           percent_change: { percentChange, arrowType },
-          status: 223
+          isPosted: true
         }
       );
     });

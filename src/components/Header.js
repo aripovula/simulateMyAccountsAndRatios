@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { startLogout } from '../actions/auth';
+
 
 export const Header = ({ startLogout }) => (
   <header className="header">
@@ -10,8 +12,8 @@ export const Header = ({ startLogout }) => (
         <span className="horIndent"></span><span className="horIndent"></span>
         
         <NavLink
-          to="/"
-          style={{color: 'white', textDecoration: 'none'}}
+          to="/dashboard"
+          style={{color: 'white', textDecoration: 'none', fontSize: '14px'}}
           activeStyle={{color: 'red', textDecoration: 'none'}}
           exact={true}
           >Dashboard
@@ -21,7 +23,7 @@ export const Header = ({ startLogout }) => (
         
         <NavLink 
           to="/postings"
-          style={{color: 'white', textDecoration: 'none'}}
+          style={{color: 'white', textDecoration: 'none', fontSize: '14px'}}
           activeStyle={{color: 'red', textDecoration: 'none'}}
           exact={true}
           >All postings
@@ -31,7 +33,7 @@ export const Header = ({ startLogout }) => (
         
         <NavLink
           to="/createposting"
-          style={{color: 'white', textDecoration: 'none'}}
+          style={{color: 'white', textDecoration: 'none', fontSize: '14px'}}
           activeStyle={{color: 'red', textDecoration: 'none'}}
           >New posting
         </NavLink>
@@ -39,11 +41,22 @@ export const Header = ({ startLogout }) => (
         <span className="horIndent"></span>|<span className="horIndent"></span>
         
         <NavLink
-          to="/help"
-          style={{color: 'white', textDecoration: 'none'}}
+          to="#"
+          style={{color: 'white', textDecoration: 'none', fontSize: '14px'}}
           activeStyle={{color: 'red', textDecoration: 'none'}}
-          >Help
+          >Link to Github repo
         </NavLink>
+
+        <span className="horIndent"></span>|<span className="horIndent"></span>
+        
+        <NavLink
+          to="#"
+          onClick={startLogout}
+          style={{color: 'white', textDecoration: 'none', fontSize: '14px', float:'right'}}
+          activeStyle={{color: 'red', textDecoration: 'none'}}
+          >Logout
+        </NavLink>
+
         
         <span className="horIndent"></span><span className="horIndent"></span>
         {/*<button className="button button--link" onClick={startLogout}>Logout</button>*/}
@@ -52,7 +65,12 @@ export const Header = ({ startLogout }) => (
   </header>
 );
 
-export default Header;
+const mapDispatchToProps = (dispatch) => ({
+  startLogout: () => dispatch(startLogout())
+});
+
+export default connect(undefined, mapDispatchToProps)(Header);
+
 
 
 
