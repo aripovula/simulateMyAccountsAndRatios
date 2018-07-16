@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import { removePosting } from '../actions/postings';
-import { editPosting } from '../actions/postings';
-import { unpostPosting } from '../actions/postings';
-import { repostPosting } from '../actions/postings';
+import { startRemovePosting } from '../actions/postings';
+import { startEditPosting } from '../actions/postings';
+import { startUnPostPosting } from '../actions/postings';
+import { startRePostPosting } from '../actions/postings';
 
 let uniqCount = 0;
 const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, postingDate, countP }) => (
@@ -24,7 +24,7 @@ const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, postingDat
 
       <span className="horIndent"></span>
       <Link to="#" className="addnlightbg" onClick={() => {
-        dispatch(removePosting({ id }));
+        dispatch(startRemovePosting({ id }));
       }}>delete</Link>
 
     </h4>

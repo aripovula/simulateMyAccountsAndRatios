@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
 import PostingForm from './PostingForm';
-import { removePosting, editPosting } from '../actions/postings';
+import { startEditPosting, startRemovePosting, startUnPostPosting, startRePostPosting } from '../actions/postings';
 
 let actButtons;
 
@@ -25,28 +25,28 @@ class EditPosting extends React.Component {
                     <PostingForm
                         posting={this.props.posting}
                         onSubmit={(posting) => {
-                            this.props.dispatch(editPosting(this.props.posting.id, posting));
-                            this.props.history.push('/');
+                            this.props.dispatch(startEditPosting(this.props.posting.id, posting));
+                            this.props.history.push('/postings');
                         }}
                     />
                     <span className="verIndent"></span>
                     <span className="horIndent"></span>
-                    <button 
-                    className="button1"        
-                    onClick={() => {
-                        this.props.dispatch(removePosting({ id: this.props.posting.id }));
-                        this.props.history.push('/postings');
-                    }}>Permanently delete</button>
+                    <button
+                        className="button1"
+                        onClick={() => {
+                            this.props.dispatch(startRemovePosting({ id: this.props.posting.id }));
+                            this.props.history.push('/postings');
+                        }}>Permanently delete</button>
 
                     <span className="horIndent"></span>
 
-                    <button 
-                    className="button1"        
-                    onClick={() => {
-                        this.props.dispatch(removePosting({ id: this.props.posting.id }));
-                        this.props.history.push('/postings');
-                    }}>Temporarily un-post</button>
-                    
+                    <button
+                        className="button1"
+                        onClick={() => {
+                            this.props.dispatch(removePosting({ id: this.props.posting.id }));
+                            this.props.history.push('/postings');
+                        }}>Temporarily un-post</button>
+
                     <span className="verIndent"></span>
                 </div>
             </div>
