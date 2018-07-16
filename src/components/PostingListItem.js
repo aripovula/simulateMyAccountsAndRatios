@@ -5,11 +5,9 @@ import moment from 'moment';
 
 import { startRemovePosting } from '../actions/postings';
 import { startEditPosting } from '../actions/postings';
-import { startUnPostPosting } from '../actions/postings';
-import { startRePostPosting } from '../actions/postings';
 
 let uniqCount = 0;
-const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, postingDate, countP }) => (
+const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, postingDate, isUnPosted, totalAmount, countP }) => (
   <div className="boxed">
     <h4><span className="postingNote">{countP}. {note}</span>
       <span className="horIndent"></span>
@@ -18,10 +16,32 @@ const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, postingDat
       
       <span className="horIndent"></span>
       
+      { !isUnPosted &&
       <Link to="#" className="addnlightbg" onClick={() => {
-        //dispatch(removePosting({ id }));
-      }}>un-post</Link>
+        const newPosting = {
+          linesData,
+          note,
+          totalAmount,
+          createdAt,
+          postingDate,
+          isUnPosted: true
+        }
+        dispatch(startEditPosting(id, newPosting));
+      }}>un-post</Link>}
 
+      { isUnPosted &&
+        <Link to="#" className="addnlightbg" onClick={() => {
+          const newPosting = {
+            linesData,
+            note,
+            totalAmount,
+            createdAt,
+            postingDate,
+            isUnPosted: false
+          }  
+          dispatch(startEditPosting(id, newPosting));
+        }}>re-post</Link>}
+    
       <span className="horIndent"></span>
       <Link to="#" className="addnlightbg" onClick={() => {
         dispatch(startRemovePosting({ id }));
@@ -37,6 +57,7 @@ const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, postingDat
         {line.isDr ? 'Dr ' : '\xa0 \xa0   Cr '} 
         {line.lineItem} &nbsp; - &nbsp;&nbsp;
         {(parseFloat(line.amount, 10) / 100).toLocaleString('en-US')}
+        {isUnPosted && <span style={{color:'red', fontSize: '12px'}}> &nbsp; &nbsp; ( un-posted )</span>}
         </p>)
     })}
     <span className="smalltext">( posted on&nbsp;

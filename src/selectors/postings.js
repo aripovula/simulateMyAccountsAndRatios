@@ -28,6 +28,8 @@ export default (postings, { text, lineItem, amountF, amountFType='includes', sor
         return a.postingDate < b.postingDate ? -1 : 1;
       } else if (sortBy === 'amount') {
         return a.totalAmount < b.totalAmount ? 1 : -1;
+      } else if (sortBy === 'status') {
+        return a.isUnPosted * 1 < b.isUnPosted * 1 ? 1 : -1;
       }
     });
   };

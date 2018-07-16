@@ -1,7 +1,7 @@
 import uuid from 'uuid';
 
 // SEPARATE POSTING LINE
-export const separatePostingLines = (enid, endate, crdate, isDr, lineItem, amount) => ({
+export const separatePostingLines = (enid, endate, crdate, isDr, lineItem, amount, isUnPosted) => ({
 
       type: 'ADD_SEPARATED_LINE',
       separatedLine: {
@@ -11,7 +11,8 @@ export const separatePostingLines = (enid, endate, crdate, isDr, lineItem, amoun
         lineItem,
         amount,
         createdAt: crdate,
-        postingDate: endate
+        postingDate: endate,
+        isUnPosted
       }
 });
 

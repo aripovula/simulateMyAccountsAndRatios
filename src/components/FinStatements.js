@@ -231,17 +231,17 @@ class FinStatements extends React.Component {
   }
 
   findUpdatedOnes = (dataTemp, dataPrev) => {
-    console.log('findUpdatedOnes dataTemp='+dataTemp.length+' dataPrev='+dataPrev.length);
-    console.log(dataTemp);
+    // console.log('findUpdatedOnes dataTemp='+dataTemp.length+' dataPrev='+dataPrev.length);
+    // console.log(dataTemp);
     if (dataTemp != null && dataPrev != null) {
-      console.log('findUpdatedOnes 2');
+      // console.log('findUpdatedOnes 2');
       for (let x = 0; x < dataTemp.length; x++) {
         let tempItem = dataTemp[x];
         for (let y = 0; y < dataPrev.length; y++) {
           let prevItem = dataPrev[y];
-          console.log(tempItem.TBLineItems.lineItem+ ' - '+ prevItem.TBLineItems.lineItem);
+          // console.log(tempItem.TBLineItems.lineItem+ ' - '+ prevItem.TBLineItems.lineItem);
           if (tempItem.TBLineItems.lineItem === prevItem.TBLineItems.lineItem) {
-            console.log(tempItem.amounts_current.balance+ ' - '+ prevItem.amounts_current.balance);
+            //console.log(tempItem.amounts_current.balance+ ' - '+ prevItem.amounts_current.balance);
             if (tempItem.amounts_current.balance != prevItem.amounts_current.balance) {
               dataTemp[x].TBLineItems.isUpdated = true;
               dataTemp[x].amounts_current.isUpdated = true;
@@ -252,8 +252,8 @@ class FinStatements extends React.Component {
         }
       }
     }
-    console.log('dataTemp');
-    console.log(dataTemp);
+    //console.log('dataTemp');
+    //console.log(dataTemp);
     return dataTemp;
   }
 }

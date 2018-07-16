@@ -8,7 +8,7 @@ import { formatDate, parseDate } from 'react-day-picker/moment';
 import { Link } from 'react-router-dom';
 
 import selectPostings from '../selectors/postings';
-import { setTextFilter, setLineItemFilter, setAmountFilter, setAmountFilterType, sortByCreatedDate, sortByPostingDate, sortByAmount, setStartDate, setEndDate } from '../actions/filters';
+import { setTextFilter, setLineItemFilter, setAmountFilter, setAmountFilterType, sortByCreatedDate, sortByPostingDate, sortByAmount, sortByStatus, setStartDate, setEndDate } from '../actions/filters';
 
 class PostingsListFilter extends React.Component {
   constructor(props) {
@@ -127,12 +127,15 @@ class PostingsListFilter extends React.Component {
                 this.props.dispatch(sortByPostingDate());
               } else if (e.target.value === 'amount') {
                 this.props.dispatch(sortByAmount());
+              } else if (e.target.value === 'status') {
+                this.props.dispatch(sortByStatus());
               }
             }}
           >
             <option value="createdDate">creation date</option>
             <option value="postingDate">posting date</option>
             <option value="amount">total amount</option>
+            <option value="status">posting status</option>
           </select>
           <br/>
 

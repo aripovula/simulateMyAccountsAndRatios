@@ -32,8 +32,9 @@ class PostingsList extends React.Component {
         let enid = posting.id;
         let endate = posting.postingDate;
         let crdate = posting.createdAt;
+        let isUnPosted = posting.isUnPosted;
         posting.linesData.map(lineData => {
-          this.props.dispatch(separatePostingLines(enid, endate, crdate, lineData.isDr, lineData.lineItem, lineData.amount));
+          this.props.dispatch(separatePostingLines(enid, endate, crdate, lineData.isDr, lineData.lineItem, lineData.amount, isUnPosted));
         });
       });
     } else {

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
 import PostingForm from './PostingForm';
-import { startEditPosting, startRemovePosting, startUnPostPosting, startRePostPosting } from '../actions/postings';
+import { startEditPosting, startRemovePosting } from '../actions/postings';
 
 let actButtons;
 
@@ -40,12 +40,31 @@ class EditPosting extends React.Component {
 
                     <span className="horIndent"></span>
 
-                    <button
+                    {!this.props.posting.isUnPosted && <button
                         className="button1"
                         onClick={() => {
-                            this.props.dispatch(removePosting({ id: this.props.posting.id }));
-                            this.props.history.push('/postings');
-                        }}>Temporarily un-post</button>
+                            const newPosting = {
+                                ...this.props.posting,
+                                isUnPosted: true
+                            }
+                            console.log('newPosting');
+                            console.log(newPosting);
+                            this.props.dispatch(startEditPosting(this.props.posting.id, newPosting));
+                            this.props.history.push(`/editposting/${this.props.posting.id}`);
+                        }}>Temporarily un-post</button>}
+
+                    {this.props.posting.isUnPosted && <button
+                        className="button1"
+                        onClick={() => {
+                            const newPosting = {
+                                ...this.props.posting,
+                                isUnPosted: false
+                            }
+                            this.props.dispatch(startEditPosting(this.props.posting.id, newPosting));
+                            this.props.history.push(`/editposting/${this.props.posting.id}`);
+                        }}>Re-Post</button>}
+
+                        {this.props.posting.isUnPosted && <span style={{color:'red', fontSize: '14px'}}> &nbsp; &nbsp; ( Un-Posted )</span>}
 
                     <span className="verIndent"></span>
                 </div>

@@ -34,6 +34,11 @@ export const sortByAmount = () => ({
   type: 'SORT_BY_AMOUNT'
 });
 
+// SORT_BY_STATUS
+export const sortByStatus = () => ({
+  type: 'SORT_BY_STATUS'
+});
+
 // SET_START_DATE
 export const setStartDate = (startDate) => ({
   type: 'SET_START_DATE',
