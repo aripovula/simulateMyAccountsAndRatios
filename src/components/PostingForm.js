@@ -11,6 +11,7 @@ import PostingOneLine from './PostingOneLine';
 let idCounter = 1, countP = 0;
 let is2go2list = true;
 let isEditMode = false;
+let isNewLIused = false;
 
 export default class PostingForm extends React.Component {
   constructor(props) {
@@ -44,6 +45,7 @@ export default class PostingForm extends React.Component {
     idCounter = this.props.posting ? this.props.posting.linesData.length + 1 : 4;
     isEditMode = this.props.posting ? true : false;
     is2go2list = true;
+    isNewLIused = false;
   }
 
   onActionButtonSelected = (posting) => {
@@ -60,6 +62,7 @@ export default class PostingForm extends React.Component {
 
   onStayHereSelected = () => {
     idCounter = 2;
+    isNewLIused = false;
     this.setState(() => {
       return {
         note: "",
@@ -69,7 +72,9 @@ export default class PostingForm extends React.Component {
         linesData: [
           { idu: 0, isDr: true, lineItem: '', amount: 0 },
           { idu: 1, isDr: false, lineItem: '', amount: 0 }
-        ]
+        ],
+        offeredFSLIs: '',
+        offeredFSLIindex: ''
       }
     });
   }
@@ -121,14 +126,19 @@ export default class PostingForm extends React.Component {
         //console.log('FSLIs[x].lineItem ='+FSLIs[x].lineItem+' lineItem='+lineItem);
         if (FSLIs[x].lineItem.toLowerCase().includes(lineItem.toLowerCase())) FSLIs2offer.push(FSLIs[x].lineItem);
       }
-      this.setState(() => {
-        return {
-          offeredFSLIs: FSLIs2offer,
-          offeredFSLIindex: index2change
-        }
-      });
-      console.log('FSLIs2offer');
-      console.log(FSLIs2offer);
+      if (FSLIs2offer.length > 0) {
+        this.setState(() => {
+          return {
+            offeredFSLIs: FSLIs2offer,
+            offeredFSLIindex: index2change
+          }
+        });
+        console.log('FSLIs2offer');
+        console.log(FSLIs2offer);
+      } else {
+        isNewLIused = true;
+        this.onErrorChange('This line item is not found. Only admin can add new line items !');
+      }
     } else {
       this.setState(() => {
         return {
@@ -278,6 +288,7 @@ export default class PostingForm extends React.Component {
     if (entryAbsValue == 0) { errorText = `${errorText} add amounts; `; isValidEntry = false; }
     if (this.state.note.length == 0) { errorText = `${errorText} add description; `; isValidEntry = false; }
     if (totalAmnt != 0) { errorText = `${errorText} not balanced: ${totalAmnt.toFixed(2)}; `; isValidEntry = false; }
+    if (isNewLIused) {errorText = 'One of line items is not found. Only admin can add new line items';isValidEntry = false;}
     this.onErrorChange(errorText);
     return isValidEntry;
   }
@@ -294,7 +305,7 @@ export default class PostingForm extends React.Component {
   onSubmit = (e) => {
     e.preventDefault();
     console.log('is2go2list=' + is2go2list);
-    
+
     if (this.checkSum()) {
       this.onErrorChange('');
       if (!is2go2list) this.onSuccessChange('Entry has been posted !');
@@ -365,7 +376,7 @@ export default class PostingForm extends React.Component {
           <input
             type="text"
             autoComplete="off"
-            placeholder="Description (optional)"
+            placeholder="Description"
             className="text-input forComment"
             value={this.state.note}
             onChange={this.onNoteChange}
