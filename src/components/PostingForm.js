@@ -127,6 +127,7 @@ export default class PostingForm extends React.Component {
         if (FSLIs[x].lineItem.toLowerCase().includes(lineItem.toLowerCase())) FSLIs2offer.push(FSLIs[x].lineItem);
       }
       if (FSLIs2offer.length > 0) {
+        isNewLIused = false;
         this.setState(() => {
           return {
             offeredFSLIs: FSLIs2offer,
@@ -140,6 +141,7 @@ export default class PostingForm extends React.Component {
         this.onErrorChange('This line item is not found. Only admin can add new line items !');
       }
     } else {
+      isNewLIused = false;
       this.setState(() => {
         return {
           offeredFSLIs: '',
@@ -174,6 +176,7 @@ export default class PostingForm extends React.Component {
         offeredFSLIindex: ''
       }
     });
+    isNewLIused = false;
     console.log('this.state.linesData IN FUNCTION');
     console.log(this.state.linesData);
   }
