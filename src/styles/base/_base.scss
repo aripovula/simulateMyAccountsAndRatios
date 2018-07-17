@@ -252,7 +252,7 @@ a.addnlightbg:active {
 
 .forNumber{width: 25%}
 
-.forComment{width: 80%}
+.forComment{width: 70%}
 
 .smalltext {font-size: 12px; margin-left: 15px}
 
@@ -308,4 +308,20 @@ a.addnlightbg:active {
 .noDecor {
   text-decoration: none;
   font-size: 12px;
+  cursor: pointer;
+}
+.noDecor:hover{
+  text-decoration: none;
+  color:  rgb(48, 190, 238)!important; 
+  cursor: pointer;
+}
+.noDecor2 {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.noDecor2:hover{
+  text-decoration: none;
+  color:  rgb(48, 190, 238)!important; 
+  cursor: pointer;
 }

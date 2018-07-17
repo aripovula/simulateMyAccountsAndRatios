@@ -3,17 +3,19 @@ import moment from 'moment';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { formatDate, parseDate } from 'react-day-picker/moment';
+import { Link } from 'react-router-dom';
 
+import { getPYbalances } from "../utils/getFinData";
 import PostingOneLine from './PostingOneLine';
 
-let idCounter = 1;
+let idCounter = 1, countP = 0;
 let is2go2list = true;
 let isEditMode = false;
 
 export default class PostingForm extends React.Component {
   constructor(props) {
     super(props);
-    console.log('this.props.postingForm');
+    console.log('PostingForm CONSTRUCTOR this.props.postingForm');
     console.log(this.props.posting);
     this.state = {
       note: this.props.posting ? this.props.posting.note : '',
@@ -22,6 +24,8 @@ export default class PostingForm extends React.Component {
       postingDate: this.props.posting ? moment(this.props.posting.postingDate) : moment(),
       success: '',
       error: '',
+      offeredFSLIs: '',
+      offeredFSLIindex: '',
       linesData: this.props.posting ? this.props.posting.linesData : [
         { idu: 0, isDr: true, lineItem: '', amount: 0 },
         { idu: 1, isDr: false, lineItem: '', amount: 0 }
@@ -36,6 +40,7 @@ export default class PostingForm extends React.Component {
     this.onLineItemChange = this.onLineItemChange.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.onStayHereSelected = this.onStayHereSelected.bind(this);
+    this.handleOfferSelection = this.handleOfferSelection.bind(this);
     idCounter = this.props.posting ? this.props.posting.linesData.length + 1 : 4;
     isEditMode = this.props.posting ? true : false;
     is2go2list = true;
@@ -47,7 +52,7 @@ export default class PostingForm extends React.Component {
     idCounter = 4;
     this.setState(() => {
       return {
-        note: `entry to reflect ${posting.name.substring(5).replace("\n\r","")}`,
+        note: `entry to reflect ${posting.name.substring(5).replace("\n\r", "")}`,
         linesData: posting.lines
       }
     }, this.checkSum);
@@ -66,7 +71,7 @@ export default class PostingForm extends React.Component {
           { idu: 1, isDr: false, lineItem: '', amount: 0 }
         ]
       }
-    }, () => this.onSuccessChange('Entry has been posted !'));
+    });
   }
 
   onNoteChange = (e) => {
@@ -86,18 +91,82 @@ export default class PostingForm extends React.Component {
       counterF++;
     });
     if (!lineItem || lineItem.match(/^[a-zA-Z\d-\s]+$/)) {
-      this.setState((prevState) => {
-        prevState.linesData[index2change].lineItem = lineItem;
-        return {
-          linesData: prevState.linesData
+      const selNum = parseInt(lineItem.replace(/^\D+/g, ''));
+      //console.log('selNum='+selNum);
+      if (selNum > 0 && this.state.offeredFSLIs.length > 0) {
+        this.handleOfferSelection(selNum);
+      } else {
+        if (!lineItem || lineItem.match(/^[a-zA-Z-\s]+$/)) {
+          this.setState((prevState) => {
+            prevState.linesData[index2change].lineItem = lineItem;
+            return {
+              linesData: prevState.linesData
+            }
+          });
+          this.onErrorChange('');
+          this.offerFSLI(lineItem, id2locate);
+        } else {
+          e.target.value = this.state.linesData[index2change].lineItem;
+          this.onErrorChange('Please use only letters, hyphen or space');
         }
-      });
-      this.onErrorChange('');
-    } else {
-      e.target.value = this.state.linesData[index2change].lineItem;
-      this.onErrorChange('Please use only letters, numbers, hyphen and space');
+      }
     }
   };
+
+  offerFSLI = (lineItem, index2change) => {
+    if (lineItem.length > 1) {
+      let FSLIs = getPYbalances();
+      let FSLIs2offer = [];
+      for (let x = 0; x < FSLIs.length; x++) {
+        //console.log('FSLIs[x].lineItem ='+FSLIs[x].lineItem+' lineItem='+lineItem);
+        if (FSLIs[x].lineItem.toLowerCase().includes(lineItem.toLowerCase())) FSLIs2offer.push(FSLIs[x].lineItem);
+      }
+      this.setState(() => {
+        return {
+          offeredFSLIs: FSLIs2offer,
+          offeredFSLIindex: index2change
+        }
+      });
+      console.log('FSLIs2offer');
+      console.log(FSLIs2offer);
+    } else {
+      this.setState(() => {
+        return {
+          offeredFSLIs: '',
+          offeredFSLIindex: ''
+        }
+      });
+    }
+  }
+
+  handleOfferSelection = (selectionNum) => {
+    const idSel = selectionNum - 1;
+    console.log('idSel = ' + idSel);
+    // console.log('this.state.linesData');
+    // console.log(this.state.linesData);
+    // console.log('e.target.id = ' + e.target.id);
+    // console.log('this.state.offeredFSLIs[e.target.id] = ' + this.state.offeredFSLIs[idSel]);
+    let newLinesData = [];
+    this.setState((prevState) => {
+      prevState.linesData.map(lineData => {
+        // console.log('lineData.idu=' + lineData.idu);
+        // console.log('prevState.offeredFSLIindex=' + prevState.offeredFSLIindex);
+        // console.log('prevState.offeredFSLIs[idSel]=' + prevState.offeredFSLIs[idSel]);
+        if (lineData.idu == prevState.offeredFSLIindex) { lineData.lineItem = prevState.offeredFSLIs[idSel] }
+        newLinesData.push(lineData);
+      });
+      // console.log('newLinesData');
+      // console.log(newLinesData);
+
+      return {
+        linesData: newLinesData,
+        offeredFSLIs: '',
+        offeredFSLIindex: ''
+      }
+    });
+    console.log('this.state.linesData IN FUNCTION');
+    console.log(this.state.linesData);
+  }
 
   onAmountChanged = (e) => {
     const id2locate = e.target.id;
@@ -214,7 +283,7 @@ export default class PostingForm extends React.Component {
   }
 
   onErrorChange = (text) => {
-    this.setState(() => { return { error: text, success:'' } });
+    this.setState(() => { return { error: text, success: '' } });
   }
 
   onSuccessChange = (text) => {
@@ -224,9 +293,11 @@ export default class PostingForm extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-
+    console.log('is2go2list=' + is2go2list);
+    
     if (this.checkSum()) {
       this.onErrorChange('');
+      if (!is2go2list) this.onSuccessChange('Entry has been posted !');
       this.props.onSubmit({
         linesData: this.state.linesData,
         createdAt: this.state.createdAt.valueOf(),
@@ -242,8 +313,9 @@ export default class PostingForm extends React.Component {
 
 
   render() {
-    console.log("postingDate");
-    console.log(this.state.postingDate);
+    console.log('this.state.linesData in RENDER');
+    console.log(this.state.linesData);
+    { countP = 0 }
     return (
       <form className="form" onSubmit={this.onSubmit}>
 
@@ -299,6 +371,9 @@ export default class PostingForm extends React.Component {
             onChange={this.onNoteChange}
           />
 
+          <span className="horIndent"></span>
+          <span className="noDecor" onClick={this.onStayHereSelected}>clear form</span>
+
           <span className="verIndentFive"></span>
           <span className="horIndent"></span>
 
@@ -322,15 +397,41 @@ export default class PostingForm extends React.Component {
           {!isEditMode && <span>
             <label className="text14black">&amp; stay here &nbsp;
             <input
-              name="is2go2list"
-              type="checkbox"
-              onChange={this.handleCheckboxChange} />
-              </label>
+                name="is2go2list"
+                type="checkbox"
+                onChange={this.handleCheckboxChange} />
+            </label>
           </span>
           }
 
 
           <br /><span className="smalltext">* click Dr or Cr buttons to toggle between Dr and Cr. Total check is auto re-counted.</span>
+
+          <div>
+            <br />
+            {console.log('this.state.offeredFSLIs.length = ' + this.state.offeredFSLIs.length)}
+            {this.state.offeredFSLIs.length > 0 &&
+
+              this.state.offeredFSLIs.map(offeredFSLI => {
+                return (
+                  <div key={++countP}>
+                    <span className="horIndent"></span>
+                    <span>
+
+                      <span style={{ color: 'red' }}>{countP}. {offeredFSLI}</span>
+
+                      <span className="horIndent"></span>
+
+                      <span id={countP} className="noDecor2" onClick={(e) => this.handleOfferSelection(e.target.id)}>click to select or type {countP}</span>
+                    </span>
+                  </div>
+                )
+              })
+              //offeredFSLIindex
+            }
+
+          </div>
+
         </div>
       </form>
     )

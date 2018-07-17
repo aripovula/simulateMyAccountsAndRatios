@@ -9,17 +9,15 @@ import EditPosting from './EditPosting';
 export default class MainAddPosting extends React.Component {
   constructor(props) {
     super(props);
-    console.log('in MainAddPosting - props:');
+    console.log('in MainAddPosting CONSTRUCTOR - props:');
     console.log(props);
     console.log(props.match.path);
     console.log(props.match.path == '/createposting');
-
   }
 
   render() {
     return (
       <div>
-
         <SplitterLayout primaryIndex={0} percentage={true} primaryMinSize={30} secondaryInitialSize={50} secondaryMinSize={40}>
           <div>
             {this.props.match.path == "/createposting" && <AddPosting />}

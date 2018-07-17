@@ -42,12 +42,12 @@ export default class PostingOneLine extends React.Component {
       />
 
       <span className="horIndent"></span>
-      <Link
-        to="#"
+      <span
+        //to="#"
         id={this.props.idu}
         onClick={this.props.processDeleteLine}
         className="noDecor"
-      >&#10060;</Link>
+      >&#10060;</span>
 
     </div>
   }
