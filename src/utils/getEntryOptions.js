@@ -54,7 +54,7 @@ export const getEntryOptions = () => {
         ]
       },
       {
-        idu: 6, name: 'repay part of\n\r borrowings',
+        idu: 6, name: 'book Repayment\n\r of borrowings',
         lines: [
           { idu: 0, isDr: true, lineItem: 'Borrowings - current portion', amount: 20000000 },
           { idu: 1, isDr: false, lineItem: 'Cash and cash equivalents', amount: 20000000 }
@@ -70,8 +70,8 @@ export const getEntryOptions = () => {
       {
         idu: 8, name: 'book receipt of\n\r receivables',
         lines: [
-          { idu: 0, isDr: true, lineItem: 'Cash and cash equivalents', amount: 44500000 },
-          { idu: 1, isDr: false, lineItem: 'Accounts receivable', amount: 44500000 }
+          { idu: 0, isDr: true, lineItem: 'Cash and cash equivalents', amount: 46500000 },
+          { idu: 1, isDr: false, lineItem: 'Accounts receivable', amount: 46500000 }
         ]
       },
       {

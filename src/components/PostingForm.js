@@ -12,6 +12,8 @@ let idCounter = 1, countP = 0;
 let is2go2list = true;
 let isEditMode = false;
 let isNewLIused = false;
+let lineItemPrev = '';
+let lineItem = '';
 
 export default class PostingForm extends React.Component {
   constructor(props) {
@@ -28,8 +30,8 @@ export default class PostingForm extends React.Component {
       offeredFSLIs: '',
       offeredFSLIindex: '',
       linesData: this.props.posting ? this.props.posting.linesData : [
-        { idu: 0, isDr: true, lineItem: '', amount: 0 },
-        { idu: 1, isDr: false, lineItem: '', amount: 0 }
+        { idu: 0, lineItemID: 0, isDr: true, lineItem: '', amount: 0 },
+        { idu: 1, lineItemID: 0, isDr: false, lineItem: '', amount: 0 }
       ]
     };
     this.processDateChange = this.processDateChange.bind(this);
@@ -70,8 +72,8 @@ export default class PostingForm extends React.Component {
         createdAt: moment(),
         postingDate: moment(),
         linesData: [
-          { idu: 0, isDr: true, lineItem: '', amount: 0 },
-          { idu: 1, isDr: false, lineItem: '', amount: 0 }
+          { idu: 0, lineItemID: 0, isDr: true, lineItem: '', amount: 0 },
+          { idu: 1, lineItemID: 0, isDr: false, lineItem: '', amount: 0 }
         ],
         offeredFSLIs: '',
         offeredFSLIindex: ''
@@ -86,18 +88,28 @@ export default class PostingForm extends React.Component {
   };
 
   onLineItemChange = (e) => {
-    const id2locate = e.target.id;
-    const lineItem = e.target.value;
-    console.log('id = ' + id2locate + ' lineItem = ' + lineItem);
+    let id2locate = e.target.id;
+    lineItemPrev = lineItem;
+    lineItem = e.target.value;
+    // because line item text accuracy is important not to create mess by using incorrect entries 
+    // line item text is only allowed by autocompletion when partial match is achieved.
+    // autocompletion works in three ways:
+    // 1. if only one option is left based on partial match that option is auto-used to fill the field
+    // 2 and 3. when more than one options - user can select to type number or click one of options
+    // typed arbitrary text not matching offered options will not be accepted.
+    if (lineItem.length == lineItemPrev.length-1 && lineItem.length>4) lineItem = '';
+    console.log('id 22 = ' + id2locate + ' lineItem = ' + lineItem+ ' lineItemPrev = ' + lineItemPrev);
     let index2change;
     let counterF = 0;
+    // because some entry lines could have been deleted we need to find right index to change
+    // e.g. if idu=1, idu=2 and idu=3 added and then idu=2 deleted second index (i.e. 1) in this.state.linesData should change (not index 2)
     this.state.linesData.map((lineData) => {
       if (lineData.idu == id2locate) index2change = counterF;
       counterF++;
     });
     if (!lineItem || lineItem.match(/^[a-zA-Z\d-\s]+$/)) {
       const selNum = parseInt(lineItem.replace(/^\D+/g, ''));
-      //console.log('selNum='+selNum);
+      // if offered FSLIs exist and user typed a number this sets lineItem text (corresponding to that number) to the lineItem field
       if (selNum > 0 && this.state.offeredFSLIs.length > 0) {
         this.handleOfferSelection(selNum);
       } else {
@@ -109,7 +121,7 @@ export default class PostingForm extends React.Component {
             }
           });
           this.onErrorChange('');
-          this.offerFSLI(lineItem, id2locate);
+          this.offerFSLI(id2locate, index2change);
         } else {
           e.target.value = this.state.linesData[index2change].lineItem;
           this.onErrorChange('Please use only letters, hyphen or space');
@@ -118,27 +130,59 @@ export default class PostingForm extends React.Component {
     }
   };
 
-  offerFSLI = (lineItem, index2change) => {
+  offerFSLI = (id2locate, index2change) => {
+    let isFound = false;
     if (lineItem.length > 1) {
       let FSLIs = getPYbalances();
       let FSLIs2offer = [];
       for (let x = 0; x < FSLIs.length; x++) {
         //console.log('FSLIs[x].lineItem ='+FSLIs[x].lineItem+' lineItem='+lineItem);
         if (FSLIs[x].lineItem.toLowerCase().includes(lineItem.toLowerCase())) FSLIs2offer.push(FSLIs[x].lineItem);
+
+        // this part prevents to add more text than initially set in the pre-added line item texts.
+        // i.e. if line item matching typed text is already found you can not added any other letters
+        if (lineItem.includes(FSLIs[x].lineItem)) {
+          isFound = true;
+          lineItem = FSLIs[x].lineItem;
+          prevState.linesData[index2change].lineItem = lineItem;
+          this.setState(() => {
+            return {
+              linesData: prevState.linesData,
+              offeredFSLIs: '',
+              offeredFSLIindex: ''
+            }
+          });
+        }
       }
-      if (FSLIs2offer.length > 0) {
-        isNewLIused = false;
-        this.setState(() => {
-          return {
-            offeredFSLIs: FSLIs2offer,
-            offeredFSLIindex: index2change
-          }
-        });
-        console.log('FSLIs2offer');
-        console.log(FSLIs2offer);
-      } else {
-        isNewLIused = true;
-        this.onErrorChange('This line item is not found. Only admin can add new line items !');
+      console.log('FSLIs2offer.length='+FSLIs2offer.length);
+      if (!isFound) {
+        // if matching text not yet found and only one line item that is contained in 
+        // pre-added line items is found auto-use it as selected line item and add it to the input field
+        if (FSLIs2offer.length == 1) {
+          this.setState(() => {
+            return {
+              offeredFSLIs: FSLIs2offer,
+              offeredFSLIindex: id2locate
+            }
+          });
+          this.handleOfferSelection(1);
+          // if more than one options are found show a list of options to the user so that
+          // user can select one
+        } else if (FSLIs2offer.length > 1) {
+          isNewLIused = false;
+          this.setState(() => {
+            return {
+              offeredFSLIs: FSLIs2offer,
+              offeredFSLIindex: id2locate
+            }
+          });
+          console.log('FSLIs2offer');
+          console.log(FSLIs2offer);
+        // if no match warn the user
+        } else {
+          isNewLIused = true;
+          this.onErrorChange('This line item is not found. Only admin can add new line items !');
+        }
       }
     } else {
       isNewLIused = false;
@@ -167,6 +211,8 @@ export default class PostingForm extends React.Component {
         if (lineData.idu == prevState.offeredFSLIindex) { lineData.lineItem = prevState.offeredFSLIs[idSel] }
         newLinesData.push(lineData);
       });
+      lineItem = prevState.offeredFSLIs[idSel];
+      console.log('lineItemPrev = '+lineItemPrev);
       // console.log('newLinesData');
       // console.log(newLinesData);
 
@@ -291,7 +337,7 @@ export default class PostingForm extends React.Component {
     if (entryAbsValue == 0) { errorText = `${errorText} add amounts; `; isValidEntry = false; }
     if (this.state.note.length == 0) { errorText = `${errorText} add description; `; isValidEntry = false; }
     if (totalAmnt != 0) { errorText = `${errorText} not balanced: ${totalAmnt.toFixed(2)}; `; isValidEntry = false; }
-    if (isNewLIused) {errorText = 'One of line items is not found. Only admin can add new line items';isValidEntry = false;}
+    if (isNewLIused) { errorText = 'One of line items is not found. Only admin can add new line items'; isValidEntry = false; }
     this.onErrorChange(errorText);
     return isValidEntry;
   }
@@ -308,6 +354,8 @@ export default class PostingForm extends React.Component {
   onSubmit = (e) => {
     e.preventDefault();
     console.log('is2go2list=' + is2go2list);
+
+
 
     if (this.checkSum()) {
       this.onErrorChange('');

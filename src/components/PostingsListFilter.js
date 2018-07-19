@@ -16,9 +16,12 @@ class PostingsListFilter extends React.Component {
     this.handleFromChange = this.handleFromChange.bind(this);
     this.handleToChange = this.handleToChange.bind(this);
     this.clearDateRange = this.clearDateRange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.state = {
       from: undefined,
       to: undefined,
+      isOnlyToday: true,
+      isOnlyUnPosted: false
     };
   }
   showFromMonth() {
@@ -50,6 +53,16 @@ class PostingsListFilter extends React.Component {
     this.setState({ from: undefined, to: undefined }, () => {
       this.props.dispatch(setStartDate(moment(1)));
       this.props.dispatch(setEndDate(moment(2000000000000)));
+    });
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
     });
   }
 
@@ -178,7 +191,7 @@ class PostingsListFilter extends React.Component {
                 }}
                 onDayChange={this.handleToChange}
               />
-              <Link to="#" className="addnlightbg" onClick={this.clearDateRange}>&nbsp; &nbsp; clear</Link>
+              <span to="#" className="noDecor" onClick={this.clearDateRange}>&nbsp; &nbsp; clear dates</span>
             </span>
             <Helmet>
               <style>{`
@@ -206,6 +219,36 @@ class PostingsListFilter extends React.Component {
           `}
               </style>
             </Helmet>
+          </div>
+          <br/>
+          {/* LINE FOUR*/}
+
+          <div>
+          <span className="horIndent"></span>
+
+          <label>
+          only today's postings:&nbsp;
+          <input
+            name="isOnlyToday"
+            type="checkbox"
+            checked={this.state.isOnlyToday}
+            onChange={this.handleInputChange} />
+        </label>
+        
+        <span className="horIndent"></span>
+        
+        <label>
+          only un-posted entries:&nbsp;
+          <input
+            name="isOnlyUnPosted"
+            type="checkbox"
+            checked={this.state.isOnlyUnPosted}
+            onChange={this.handleInputChange} />
+        </label>
+
+        <span className="horIndent"></span>
+        
+        <span to="#" className="noDecor" onClick={this.clearDateRange}>&nbsp; &nbsp; clear form</span>
           </div>
         </div>
         <span className="verIndentFive"></span>

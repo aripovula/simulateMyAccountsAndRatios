@@ -13,6 +13,7 @@ export const getFinData = (postings) => {
 
   var mySet = new Set();
 
+  // creates a set of unique line items
   broughtForward.map(lineData => {
     mySet.add(lineData.lineItem);
   });
