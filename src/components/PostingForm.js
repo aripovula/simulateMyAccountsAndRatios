@@ -97,8 +97,8 @@ export default class PostingForm extends React.Component {
     // 1. if only one option is left based on partial match that option is auto-used to fill the field
     // 2 and 3. when more than one options - user can select to type number or click one of options
     // typed arbitrary text not matching offered options will not be accepted.
-    if (lineItem.length == lineItemPrev.length-1 && lineItem.length>4) lineItem = '';
-    console.log('id 22 = ' + id2locate + ' lineItem = ' + lineItem+ ' lineItemPrev = ' + lineItemPrev);
+    if (lineItem.length == lineItemPrev.length - 1 && lineItem.length > 4) lineItem = '';
+    console.log('id 22 = ' + id2locate + ' lineItem = ' + lineItem + ' lineItemPrev = ' + lineItemPrev);
     let index2change;
     let counterF = 0;
     // because some entry lines could have been deleted we need to find right index to change
@@ -140,7 +140,7 @@ export default class PostingForm extends React.Component {
         if (FSLIs[x].lineItem.toLowerCase().includes(lineItem.toLowerCase())) FSLIs2offer.push(FSLIs[x].lineItem);
 
         // this part prevents to add more text than initially set in the pre-added line item texts.
-        // i.e. if line item matching typed text is already found you can not added any other letters
+        // i.e. if line item matching typed text is already found you can not add any other letters
         if (lineItem.includes(FSLIs[x].lineItem)) {
           isFound = true;
           lineItem = FSLIs[x].lineItem;
@@ -154,7 +154,7 @@ export default class PostingForm extends React.Component {
           });
         }
       }
-      console.log('FSLIs2offer.length='+FSLIs2offer.length);
+      console.log('FSLIs2offer.length=' + FSLIs2offer.length);
       if (!isFound) {
         // if matching text not yet found and only one line item that is contained in 
         // pre-added line items is found auto-use it as selected line item and add it to the input field
@@ -178,7 +178,7 @@ export default class PostingForm extends React.Component {
           });
           console.log('FSLIs2offer');
           console.log(FSLIs2offer);
-        // if no match warn the user
+          // if no match warn the user
         } else {
           isNewLIused = true;
           this.onErrorChange('This line item is not found. Only admin can add new line items !');
@@ -212,7 +212,7 @@ export default class PostingForm extends React.Component {
         newLinesData.push(lineData);
       });
       lineItem = prevState.offeredFSLIs[idSel];
-      console.log('lineItemPrev = '+lineItemPrev);
+      console.log('lineItemPrev = ' + lineItemPrev);
       // console.log('newLinesData');
       // console.log(newLinesData);
 
@@ -255,7 +255,7 @@ export default class PostingForm extends React.Component {
     idCounter++;
     this.setState((prevState) => {
       return {
-        linesData: prevState.linesData.concat({ idu: idCounter, isDr: true, lineItem: '', amount: 0 })
+        linesData: prevState.linesData.concat({ idu: idCounter, lineItemID: 0, isDr: true, lineItem: '', amount: 0 })
       }
     });
     this.onErrorChange('');
@@ -265,7 +265,7 @@ export default class PostingForm extends React.Component {
     idCounter++;
     this.setState((prevState) => {
       return {
-        linesData: prevState.linesData.concat({ idu: idCounter, isDr: false, lineItem: '', amount: 0 })
+        linesData: prevState.linesData.concat({ idu: idCounter, lineItemID: 0, isDr: false, lineItem: '', amount: 0 })
       }
     });
     this.onErrorChange('');
@@ -337,7 +337,7 @@ export default class PostingForm extends React.Component {
     if (entryAbsValue == 0) { errorText = `${errorText} add amounts; `; isValidEntry = false; }
     if (this.state.note.length == 0) { errorText = `${errorText} add description; `; isValidEntry = false; }
     if (totalAmnt != 0) { errorText = `${errorText} not balanced: ${totalAmnt.toFixed(2)}; `; isValidEntry = false; }
-    if (isNewLIused) { errorText = 'One of line items is not found. Only admin can add new line items'; isValidEntry = false; }
+    if (isNewLIused) { errorText = 'One or more line item is not found. Only admin can add new one'; isValidEntry = false; }
     this.onErrorChange(errorText);
     return isValidEntry;
   }
@@ -355,148 +355,183 @@ export default class PostingForm extends React.Component {
     e.preventDefault();
     console.log('is2go2list=' + is2go2list);
 
+    let isRejectedBasedOnLineItemIDs = false;
+    let verificationCounter = 0;
+    let FSLIs = getPYbalances();
+    let linesDataNew;
+    this.setState((prevState) => {
+      console.log('prevState.linesData');
+      console.log(prevState.linesData);
+      linesDataNew = prevState.linesData;
+
+      for (let x = 0; x < this.state.linesData.length; x++) {
+        let lineData = this.state.linesData[x];
+        for (let y = 0; y < FSLIs.length; y++) {
+          // console.log('x=' + x + ' y=' + y);
+          // console.log(FSLIs[y].lineItem + '  ' + lineData.lineItem);
+          // console.log(FSLIs[y].lineItem == lineData.lineItem);
+          if (FSLIs[y].lineItem == lineData.lineItem) {
+            verificationCounter++;
+            linesDataNew[x].lineItemID = FSLIs[y].lid;
+            y = FSLIs.length;
+          }
+        }
+      }
+  
+      return {
+        linesData: linesDataNew
+      }
+    }, () => {
+      console.log('AFTER ASSIGNING LIDs');
+      console.log(this.state.linesData);
+
+      console.log('verificationCounter=' + verificationCounter);
+      if (verificationCounter != this.state.linesData.length) {
+        this.onErrorChange('Please double check correctness of all line items');
+        isRejectedBasedOnLineItemIDs = true;
+      }
+
+      if (this.checkSum() && !isRejectedBasedOnLineItemIDs) {
+        this.onErrorChange('');
+        if (!is2go2list) this.onSuccessChange('Entry has been posted !');
+        this.props.onSubmit({
+          linesData: this.state.linesData,
+          createdAt: this.state.createdAt.valueOf(),
+          postingDate: this.state.postingDate.valueOf(),
+          note: this.state.note,
+          totalAmount: this.state.totalAmount,
+          isUnPosted: false,
+          is2go2list
+        });
+
+      };
+    });
+  }
 
 
-    if (this.checkSum()) {
-      this.onErrorChange('');
-      if (!is2go2list) this.onSuccessChange('Entry has been posted !');
-      this.props.onSubmit({
-        linesData: this.state.linesData,
-        createdAt: this.state.createdAt.valueOf(),
-        postingDate: this.state.postingDate.valueOf(),
-        note: this.state.note,
-        totalAmount: this.state.totalAmount,
-        isUnPosted: false,
-        is2go2list
-      });
-    }
-  };
+      render() {
+        console.log('this.state.linesData in RENDER');
+        console.log(this.state.linesData);
+        { countP = 0 }
+        return (
+          <form className="form" onSubmit={this.onSubmit}>
 
+            {this.state.linesData.map((lineData) => {
+              return <PostingOneLine
+                key={lineData.idu}
+                idu={lineData.idu}
+                isDr={lineData.isDr}
+                lineItem={lineData.lineItem}
+                amount={lineData.amount}
+                processDeleteLine={this.processDeleteLine}
+                processEntryTypeChange={this.processEntryTypeChange}
+                onAmountChanged={this.onAmountChanged}
+                onLineItemChange={this.onLineItemChange}
+              />
+            })}
 
+            <div>
+              <span className="verIndent"></span>
+              <span className="horIndent"></span>
 
-  render() {
-    console.log('this.state.linesData in RENDER');
-    console.log(this.state.linesData);
-    { countP = 0 }
-    return (
-      <form className="form" onSubmit={this.onSubmit}>
-
-        {this.state.linesData.map((lineData) => {
-          return <PostingOneLine
-            key={lineData.idu}
-            idu={lineData.idu}
-            isDr={lineData.isDr}
-            lineItem={lineData.lineItem}
-            amount={lineData.amount}
-            processDeleteLine={this.processDeleteLine}
-            processEntryTypeChange={this.processEntryTypeChange}
-            onAmountChanged={this.onAmountChanged}
-            onLineItemChange={this.onLineItemChange}
-          />
-        })}
-
-        <div>
-          <span className="verIndent"></span>
-          <span className="horIndent"></span>
-
-          <button
-            className="button1"
-            type="button"
-            onClick={this.processAddDrLine}
-          >+ Dr line
+              <button
+                className="button1"
+                type="button"
+                onClick={this.processAddDrLine}
+              >+ Dr line
             </button>
 
-          <span className="horIndent"></span>
+              <span className="horIndent"></span>
 
-          <button
-            className="button1"
-            type="button"
-            onClick={this.processAddCrLine}
-          >+ Cr line
+              <button
+                className="button1"
+                type="button"
+                onClick={this.processAddCrLine}
+              >+ Cr line
           </button>
 
+              <span className="horIndent"></span>
+
+              <span className="warning">{this.state.error != null && this.state.error}</span>
+              <span className="success"><strong>{this.state.success != null && this.state.success}</strong></span>
+
+              <br />
+              <span className="verIndentFive"></span>
+              <span className="horIndent"></span>
+
+              <input
+                type="text"
+                autoComplete="off"
+                placeholder="Description"
+                className="text-input forComment"
+                value={this.state.note}
+                onChange={this.onNoteChange}
+              />
+
+              <span className="horIndent"></span>
+              <span className="noDecor" onClick={this.onStayHereSelected}>clear form</span>
+
+              <span className="verIndentFive"></span>
+              <span className="horIndent"></span>
+
+              <span>Date of posting:
           <span className="horIndent"></span>
+                <DayPickerInput
+                  value={this.state.postingDate.format('MMMM D, YYYY')}
+                  selectedDays={this.state.postingDate}
+                  format="LL"
+                  formatDate={formatDate}
+                  onDayClick={day => this.processDateChange(day)}
+                  onDayChange={day => this.processDateChange(day)}
+                  placeholder={this.state.postingDate.format('MMMM D, YYYY')}
+                />
+              </span>
+              <span className="horIndent"></span>
 
-          <span className="warning">{this.state.error != null && this.state.error}</span>
-          <span className="success"><strong>{this.state.success != null && this.state.success}</strong></span>
+              <button className="button button1 buttonwide">Post Entry</button>
 
-          <br />
-          <span className="verIndentFive"></span>
-          <span className="horIndent"></span>
-
-          <input
-            type="text"
-            autoComplete="off"
-            placeholder="Description"
-            className="text-input forComment"
-            value={this.state.note}
-            onChange={this.onNoteChange}
-          />
-
-          <span className="horIndent"></span>
-          <span className="noDecor" onClick={this.onStayHereSelected}>clear form</span>
-
-          <span className="verIndentFive"></span>
-          <span className="horIndent"></span>
-
-          <span>Date of posting:
-          <span className="horIndent"></span>
-            <DayPickerInput
-              value={this.state.postingDate.format('MMMM D, YYYY')}
-              selectedDays={this.state.postingDate}
-              format="LL"
-              formatDate={formatDate}
-              onDayClick={day => this.processDateChange(day)}
-              onDayChange={day => this.processDateChange(day)}
-              placeholder={this.state.postingDate.format('MMMM D, YYYY')}
-            />
-          </span>
-          <span className="horIndent"></span>
-
-          <button className="button button1 buttonwide">Post Entry</button>
-
-          {console.log('this.isEditMode' + isEditMode)}
-          {!isEditMode && <span>
-            <label className="text14black">&amp; stay here &nbsp;
+              {console.log('this.isEditMode' + isEditMode)}
+              {!isEditMode && <span>
+                <label className="text14black">&amp; stay here &nbsp;
             <input
-                name="is2go2list"
-                type="checkbox"
-                onChange={this.handleCheckboxChange} />
-            </label>
-          </span>
-          }
+                    name="is2go2list"
+                    type="checkbox"
+                    onChange={this.handleCheckboxChange} />
+                </label>
+              </span>
+              }
 
 
-          <br /><span className="smalltext">* click Dr or Cr buttons to toggle between Dr and Cr. Total check is auto re-counted.</span>
+              <br /><span className="smalltext">* click Dr or Cr buttons to toggle between Dr and Cr. Total check is auto re-counted.</span>
 
-          <div>
-            <br />
-            {console.log('this.state.offeredFSLIs.length = ' + this.state.offeredFSLIs.length)}
-            {this.state.offeredFSLIs.length > 0 &&
+              <div>
+                <br />
+                {console.log('this.state.offeredFSLIs.length = ' + this.state.offeredFSLIs.length)}
+                {this.state.offeredFSLIs.length > 0 &&
 
-              this.state.offeredFSLIs.map(offeredFSLI => {
-                return (
-                  <div key={++countP}>
-                    <span className="horIndent"></span>
-                    <span>
+                  this.state.offeredFSLIs.map(offeredFSLI => {
+                    return (
+                      <div key={++countP}>
+                        <span className="horIndent"></span>
+                        <span>
 
-                      <span style={{ color: 'red' }}>{countP}. {offeredFSLI}</span>
+                          <span style={{ color: 'red' }}>{countP}. {offeredFSLI}</span>
 
-                      <span className="horIndent"></span>
+                          <span className="horIndent"></span>
 
-                      <span id={countP} className="noDecor2" onClick={(e) => this.handleOfferSelection(e.target.id)}>click to select or type {countP}</span>
-                    </span>
-                  </div>
-                )
-              })
-              //offeredFSLIindex
-            }
+                          <span id={countP} className="noDecor2" onClick={(e) => this.handleOfferSelection(e.target.id)}>click to select or type {countP}</span>
+                        </span>
+                      </div>
+                    )
+                  })
+                  //offeredFSLIindex
+                }
 
-          </div>
+              </div>
 
-        </div>
-      </form>
-    )
-  }
-  //render();
-}
+            </div>
+          </form>
+        )
+      }
+      //render();
+    }
