@@ -38,19 +38,19 @@ export const getEntryOptions = () => {
           { idu: 1, isDr: false, lineItem: 'Other current liabilities', amount: 1432400 },
           { idu: 2, isDr: false, lineItem: 'Long-term accrued liabilities', amount: 1010200 }
         ]
-      },
+      },      
       {
-        idu: 4, name: 'book Inventory\n\r purchase',
-        lines: [
-          { idu: 0, isDr: true, lineItem: 'Inventory', amount: 91000000 },
-          { idu: 1, isDr: false, lineItem: 'Cash and cash equivalents', amount: 91000000 },
-        ]
-      },
-      {
-        idu: 5, name: 'book Prepaid\n\r charges',
+        idu: 4, name: 'book Earnings from\n\r joint venture',
         lines: [
           { idu: 0, isDr: true, lineItem: 'Cash and cash equivalents', amount: 100000 },
           { idu: 1, isDr: false, lineItem: 'Earnings from share in joint venture', amount: 100000 }
+        ]
+      },
+      {
+        idu: 5, name: 'book Inventory\n\r purchase',
+        lines: [
+          { idu: 0, isDr: true, lineItem: 'Inventory', amount: 91000000 },
+          { idu: 1, isDr: false, lineItem: 'Cash and cash equivalents', amount: 91000000 },
         ]
       },
       {

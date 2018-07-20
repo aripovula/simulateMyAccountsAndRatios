@@ -54,13 +54,11 @@ class FinStatements extends React.Component {
   }
 
   render() {
-    //const { data } = this.props;
-
     const dataTemp = this.props.data;
     // console.log('postingsInFinStatementUpdated Render DATA');
     // console.log(this.props);
-    console.log('data prev');
-    console.log(dataPrev);
+    // console.log('data prev');
+    // console.log(dataPrev);
     // console.log('BEFORE CallinG findUpdatedOnes');
     const data = dataPrev != null ? this.findUpdatedOnes(dataTemp, dataPrev) : this.props.data;
     dataPrev = this.props.data;
@@ -115,7 +113,7 @@ class FinStatements extends React.Component {
                       </span>}
 
                       {row.value.isUpdated == true && <span style={{
-                        color: '#41caf4',
+                        color: '#0bb4e2',
                         transition: 'all .3s ease'
                       }}>
                         {row.value.lineItem}
@@ -138,7 +136,7 @@ class FinStatements extends React.Component {
                       </span>}
 
                       {row.value.isUpdated == true && <span style={{
-                        color: '#41caf4',
+                        color: '#0bb4e2',
                         transition: 'all .3s ease'
                       }}>
                         {row.value.balance}
@@ -163,7 +161,7 @@ class FinStatements extends React.Component {
                       </span>}
 
                       {row.value.isUpdated == true && <span style={{
-                        color: '#41caf4',
+                        color: '#0bb4e2',
                         transition: 'all .3s ease'
                       }}>
                         {row.value.openingBalance}
@@ -237,19 +235,23 @@ class FinStatements extends React.Component {
       // console.log('findUpdatedOnes 2');
       for (let x = 0; x < dataTemp.length; x++) {
         let tempItem = dataTemp[x];
-        for (let y = 0; y < dataPrev.length; y++) {
-          let prevItem = dataPrev[y];
-          // console.log(tempItem.TBLineItems.lineItem+ ' - '+ prevItem.TBLineItems.lineItem);
-          if (tempItem.TBLineItems.lineItem === prevItem.TBLineItems.lineItem) {
-            //console.log(tempItem.amounts_current.balance+ ' - '+ prevItem.amounts_current.balance);
-            if (tempItem.amounts_current.balance != prevItem.amounts_current.balance) {
-              dataTemp[x].TBLineItems.isUpdated = true;
-              dataTemp[x].amounts_current.isUpdated = true;
-              dataTemp[x].amounts_comparatives.isUpdated = true;
-            }
-            y = dataPrev.length;
+        // console.log('tempItem');
+        // console.log(tempItem);
+        //for (let y = 0; y < dataPrev.length; y++) {
+        let y = tempItem.TBLineItemsID - 1;
+        // console.log(y);
+        let prevItem = dataPrev[y];
+        // console.log(tempItem.TBLineItems.lineItem + ' - ' + prevItem.TBLineItems.lineItem);
+        if (tempItem.TBLineItems.lineItem === prevItem.TBLineItems.lineItem) {
+          //console.log(tempItem.amounts_current.balance+ ' - '+ prevItem.amounts_current.balance);
+          if (tempItem.amounts_current.balance != prevItem.amounts_current.balance) {
+            dataTemp[x].TBLineItems.isUpdated = true;
+            dataTemp[x].amounts_current.isUpdated = true;
+            dataTemp[x].amounts_comparatives.isUpdated = true;
           }
+          //y = dataPrev.length;
         }
+        //}
       }
     }
     //console.log('dataTemp');

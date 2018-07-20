@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FinStatements from './FinStatements';
+import RatioSummary from './RatioSummary';
 import SimpleBarChart from './ReChartBars';
 import ReChartRadialBar from './ReChartRadialBar';
 import ReChartPieChart from './ReChartPieChart';
@@ -66,6 +67,7 @@ export default class ThreeInfoTypeComp extends React.Component {
 
                 <div className="boxedExact">
                     {this.state.infoType == 1 && <FinStatements />}
+                    {this.state.infoType == 2 && <RatioSummary />}
                     {this.state.infoType == 3 &&
                         <div>
                             <SimpleBarChart />
