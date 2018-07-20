@@ -48,11 +48,21 @@ export default class ThreeInfoTypeComp extends React.Component {
                 &nbsp;
 
                 <button
+                    id="1"
+                    className={this.state.button3Color}
+                    type="button"
+                    onClick={this.handleInfoType}
+                >Fin. charts
+                </button>
+
+                &nbsp;
+
+                <button
                     id="2"
                     className={this.state.button2Color}
                     type="button"
                     onClick={this.handleInfoType}
-                >Covenants' list
+                >Covenants
                 </button>
 
                 &nbsp;
@@ -62,12 +72,24 @@ export default class ThreeInfoTypeComp extends React.Component {
                     className={this.state.button3Color}
                     type="button"
                     onClick={this.handleInfoType}
-                >Charts
+                >Covenant charts
                 </button>
 
                 <div className="boxedExact">
-                    {this.state.infoType == 1 && <FinStatements />}
-                    {this.state.infoType == 2 && <RatioSummary />}
+                    {this.state.infoType == 1 &&
+                        <FinStatements
+                            numberColumnsWidth='120'
+                            isDataSelectionEnabled='true'
+                            fontSize='14'
+                            isFullDateFormat='true'
+                        />}
+                    {this.state.infoType == 2 &&
+                        <RatioSummary
+                            numberColumnsWidth='120'
+                            isDataSelectionEnabled='true'
+                            fontSize='14'
+                            isFullDateFormat='true'
+                        />}
                     {this.state.infoType == 3 &&
                         <div>
                             <SimpleBarChart />

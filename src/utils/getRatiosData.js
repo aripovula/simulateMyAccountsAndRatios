@@ -9,14 +9,9 @@ export const getRatiosData = (postings) => {
   let data = [];
 
   postings.map(posting => {
-    // console.log('posting');
-    // console.log(posting);
     if (!posting.isUnPosted) {
       posting.linesData.map(lineData => {
         let x = lineData.lineItemID - 1;
-        // console.log('x='+x);
-        // console.log('accounts[x].lineItem='+accounts[x].lineItem);
-        // console.log('lineData.lineItem='+lineData.lineItem);
         if (accounts[x].lineItem == lineData.lineItem) {
           let amt = parseFloat(lineData.amount, 10);
           if (lineData.isDr) { accounts[x].amount = accounts[x].amount + amt; }
@@ -25,9 +20,6 @@ export const getRatiosData = (postings) => {
       });
     }
   });
-
-  console.log('AccountS');
-  console.log(accounts);
 
   let assets = 0, assetsOp = 0;
   let equity = 0, equityOp = 0;
@@ -82,9 +74,6 @@ export const getRatiosData = (postings) => {
     if (account.type.includes('IncTax,')) {
       tax += account.amount; taxOp += account.amountOpening;
     }
-    // if (account.type.includes(',debt')) {
-    //   debt += account.amount; debtOp += account.amountOpening;
-    // }
 
   });
 
@@ -106,10 +95,11 @@ export const getRatiosData = (postings) => {
     ratioDesc: {title: 'Current Ratio', isCompliant },
     ratio_current: { ratio, isCompliant },
     ratio_comparatives: { ratioOp, isCompliantOp },
-    ratioMin: ratioMin + " <"
+    ratioMin: ratioMin + " <",
+    ratioMinN: ratioMin
   });
 
-  ratioMin = 0.67;
+  ratioMin = 0.6;
   ratio = (currentAssets - inventory) / currentLiabs * -1;
   ratioOp = (currentAssetsOp - inventoryOp) / currentLiabsOp * -1;
   isCompliant = ratio > ratioMin;
@@ -120,7 +110,8 @@ export const getRatiosData = (postings) => {
     ratioDesc: {title: 'Quick Ratio', isCompliant },
     ratio_current: { ratio, isCompliant },
     ratio_comparatives: { ratioOp, isCompliantOp },
-    ratioMin: ratioMin + " <"
+    ratioMin: ratioMin + " <",
+    ratioMinN: ratioMin
   });
 
   ratioMin = 3;
@@ -134,7 +125,8 @@ export const getRatiosData = (postings) => {
     ratioDesc: {title: 'Debt-to-Equity Ratio', isCompliant },
     ratio_current: { ratio, isCompliant },
     ratio_comparatives: { ratioOp, isCompliantOp },
-    ratioMin: "< " + ratioMin
+    ratioMin: "< " + ratioMin,
+    ratioMinN: ratioMin
   });
 
   ratioMin = 1;
@@ -148,7 +140,8 @@ export const getRatiosData = (postings) => {
     ratioDesc: {title: 'Leverage Ratio (debt / assets)', isCompliant },
     ratio_current: { ratio, isCompliant },
     ratio_comparatives: { ratioOp, isCompliantOp },
-    ratioMin: "< " + ratioMin
+    ratioMin: "< " + ratioMin,
+    ratioMinN: ratioMin
   });
 
   ratioMin = 3;
@@ -162,7 +155,8 @@ export const getRatiosData = (postings) => {
     ratioDesc: {title: 'Debt to EBITDA', isCompliant },
     ratio_current: { ratio, isCompliant },
     ratio_comparatives: { ratioOp, isCompliantOp },
-    ratioMin: "< " + ratioMin
+    ratioMin: "< " + ratioMin,
+    ratioMinN: ratioMin
   });
 
   ratioMin = 15;
@@ -176,15 +170,10 @@ export const getRatiosData = (postings) => {
     ratioDesc: {title: 'Interest Coverage (EBITDA / Interest)', isCompliant },
     ratio_current: { ratio, isCompliant },
     ratio_comparatives: { ratioOp, isCompliantOp },
-    ratioMin: ratioMin + " <"
+    ratioMin: ratioMin + " <",
+    ratioMinN: ratioMin
   });
-
   
-
-  
-  console.log('data in RATIO');
-  console.log(data);
-
   return data;
 }
 

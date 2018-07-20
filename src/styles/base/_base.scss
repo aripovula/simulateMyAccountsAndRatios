@@ -325,3 +325,28 @@ a.addnlightbg:active {
   color:  rgb(48, 190, 238)!important; 
   cursor: pointer;
 }
+
+.column3 {
+  float: left;
+  width: 28%;
+  height: 180px;
+  text-align: center;
+  border-bottom: 2px solid rgb(30, 218, 208);
+  border-left: 2px solid rgb(30, 218, 208);
+}
+
+.column3w {
+  float: left;
+  width: 38%;
+  min-width: 370px;
+  height: 180px;
+  text-align: center;
+  border-bottom: 2px solid rgb(30, 218, 208);
+}
+
+/* Clear floats after the columns */
+.row3:after {
+  content: "";
+  display: table;
+  clear: both;
+}

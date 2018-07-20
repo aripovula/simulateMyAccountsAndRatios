@@ -77,16 +77,16 @@ export const startSetPostings = () => {
     return database.ref(`users/${uid}/postings`).once('value').then((snapshot) => {
       const postings = [];
 
-      console.log('snapshot');
-      console.log(snapshot);
+      // console.log('snapshot');
+      // console.log(snapshot);
       snapshot.forEach((childSnapshot) => {
         postings.push({
           id: childSnapshot.key,
           ...childSnapshot.val()
         });
-        console.log(childSnapshot);
-        console.log(postings);
-        console.log('After postings');
+        // console.log(childSnapshot);
+        // console.log(postings);
+        // console.log('After postings');
       });
 
       dispatch(setPostings(postings));

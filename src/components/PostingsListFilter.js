@@ -227,7 +227,7 @@ class PostingsListFilter extends React.Component {
           <span className="horIndent"></span>
 
           <label>
-          only today's postings:&nbsp;
+          today's postings only:&nbsp;
           <input
             name="isOnlyToday"
             type="checkbox"
@@ -238,7 +238,7 @@ class PostingsListFilter extends React.Component {
         <span className="horIndent"></span>
         
         <label>
-          only un-posted entries:&nbsp;
+          un-posted entries only:&nbsp;
           <input
             name="isOnlyUnPosted"
             type="checkbox"

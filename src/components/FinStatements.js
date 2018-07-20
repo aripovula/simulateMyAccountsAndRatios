@@ -35,7 +35,10 @@ class FinStatements extends React.Component {
       classNameLeft: "left",
       classNameRight: "right",
       classNameCenter: "center",
-      numberColumnsWidth: 120
+      numberColumnsWidth: parseInt(this.props.numberColumnsWidth),
+      fontSize:parseInt(this.props.fontSize),
+      isDataSelectionEnabled: (this.props.isDataSelectionEnabled == 'true'),
+      isFullDateFormat: (this.props.isFullDateFormat == 'true')
     };
   }
 
@@ -63,32 +66,35 @@ class FinStatements extends React.Component {
     const data = dataPrev != null ? this.findUpdatedOnes(dataTemp, dataPrev) : this.props.data;
     dataPrev = this.props.data;
     return (
-      <div>
-        <span className="horIndent"></span>
+      <div style={{fontSize: this.state.fontSize}}>
+        {this.state.isDataSelectionEnabled &&
+          <div>
+            <span className="horIndent"></span>
 
-        <span>Trial Balance as at:
-        <span className="horIndent"></span>
-          <DayPickerInput
-            value={this.state.reportDate2}
-            selectedDays={this.state.reportDate}
-            format="LL"
-            formatDate={formatDate}
-            onDayClick={day => this.processReportDateChange(day)}
-            onDayChange={day => this.processReportDateChange(day)}
-            placeholder="pick report date"
-          />
-        </span>
-        &nbsp;&nbsp;&amp;&nbsp;&nbsp;
+            <span>Balances as at:
+            <span className="horIndent"></span>
+              <DayPickerInput
+                value={this.state.reportDate2}
+                selectedDays={this.state.reportDate}
+                format="LL"
+                formatDate={formatDate}
+                onDayClick={day => this.processReportDateChange(day)}
+                onDayChange={day => this.processReportDateChange(day)}
+                placeholder="pick report date"
+              />
+            </span>
+            &nbsp;&nbsp;&amp;&nbsp;&nbsp;
 
           <DayPickerInput
-          value={this.state.openingDate2}
-          selectedDays={this.state.openingDate}
-          format="LL"
-          formatDate={formatDate}
-          onDayClick={day => this.processOpeningDateChange(day)}
-          onDayChange={day => this.processOpeningDateChange(day)}
-          placeholder="pick comparatives date"
-        />
+              value={this.state.openingDate2}
+              selectedDays={this.state.openingDate}
+              format="LL"
+              formatDate={formatDate}
+              onDayClick={day => this.processOpeningDateChange(day)}
+              onDayChange={day => this.processOpeningDateChange(day)}
+              placeholder="pick comparatives date"
+            />
+          </div>}
 
         <ReactTable
           data={data}
@@ -97,7 +103,7 @@ class FinStatements extends React.Component {
 
               columns: [
                 {
-                  Header: "Line items, in US$",
+                  Header: "Trial Balance items, in US$",
                   id: "TBLineItems",
                   accessor: d => d.TBLineItems,
                   //accessor: "TBLineItems",
@@ -121,7 +127,7 @@ class FinStatements extends React.Component {
                     </span>)
                 },
                 {
-                  Header: this.state.reportDate.format('MMM D, YYYY').toString(),
+                  Header: this.state.isFullDateFormat ? this.state.reportDate.format('MMM D, YYYY').toString() : this.state.reportDate.format('MMM D, YY').toString(),
                   id: "amounts_current",
                   accessor: d => d.amounts_current,
                   width: this.state.numberColumnsWidth,
@@ -145,7 +151,7 @@ class FinStatements extends React.Component {
 
                 },
                 {
-                  Header: this.state.openingDate.format('MMM D, YYYY').toString(),
+                  Header: this.state.isFullDateFormat ? this.state.openingDate.format('MMM D, YYYY').toString() : this.state.openingDate.format('MMM D, YY').toString(),
                   id: "amounts_comparatives",
                   accessor: d => d.amounts_comparatives,
                   width: this.state.numberColumnsWidth,
@@ -219,7 +225,7 @@ class FinStatements extends React.Component {
                 </span>)
             }
           ]}
-          defaultPageSize={10}
+          defaultPageSize={20}
           className="-striped -highlight"
         />
         <br />
