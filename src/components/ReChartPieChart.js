@@ -29,7 +29,7 @@ export default class ReChartPieChart extends React.Component {
             <Pie
               dataKey="value"
               data={data}
-              cx={100}
+              cx={130}
               cy={75}
               labelLine={false}
               label={renderCustomizedLabel}

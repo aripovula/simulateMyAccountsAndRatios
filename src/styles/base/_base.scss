@@ -196,6 +196,10 @@ input[type=text], input[type=number], input[type=date] {
 
 .postLineList {color: green; font-size: 14px}
 
+.plan {color: rgb(43, 191, 250); font-size: 12px}
+
+.fact {color: rgb(41, 194, 41); font-size: 12px}
+
 a.addn{
 	color: white;
 	font-size: 14px;
@@ -220,7 +224,7 @@ a.addn:active {
     text-decoration: none;
 }
 
-a.addnlightbg{
+.addnlightbg, a.addnlightbg{
 	color: lightslategray;
 	font-size: 14px;
 }
@@ -233,7 +237,7 @@ a.addnlightbg:visited {
     text-decoration: none;
 }
 
-a.addnlightbg:hover {
+.addnlightbg:hover, a.addnlightbg:hover {
   color: deepskyblue;
 	transition-duration: 0.4s;
   font-size: 14px;
@@ -350,3 +354,4 @@ a.addnlightbg:active {
   display: table;
   clear: both;
 }
+

@@ -34,7 +34,7 @@
     "react-day-picker": "^7.1.10",
     "react-dom": "^16.4.1",
     "react-helmet": "^5.2.0",
-    "react-modal": "2.2.2",
+    "react-modal": "^3.5.1",
     "react-redux": "5.0.5",
     "react-router-dom": "4.1.2",
     "react-splitter-layout": "^3.0.0",

@@ -73,7 +73,7 @@ class PostingsListFilter extends React.Component {
     return (
       <div className="card-4">
         <span className="verIndentFive"></span>
-        <div className="boxed">
+        <div className="boxed" style={{ fontSize: 14 }}>
 
           {/* LINE ONE */}
           <span className="horIndent"></span>

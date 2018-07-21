@@ -5,66 +5,113 @@ import moment from 'moment';
 
 import { startRemovePosting } from '../actions/postings';
 import { startEditPosting } from '../actions/postings';
+import DeleteModal from './DeleteModal';
 
 let uniqCount = 0;
-const PostingsListItem = ({ dispatch, id, linesData, note, createdAt, postingDate, isUnPosted, totalAmount, countP }) => (
-  <div className="boxed">
-    <h4><span className="postingNote">{countP}. {note}</span>
-      <span className="horIndent"></span>
+class PostingsListItem extends React.Component {
+  constructor(props) {
+    super(props);
+    let date = new Date();
+    let pydate = moment('' + (date.getFullYear() - 1) + '-12-31');
+    //console.log('pydate=' + pydate.format('MMMM D, YYYY'));
 
-      <Link to={`/editposting/${id}`} className="addnlightbg">edit</Link>
-      
-      <span className="horIndent"></span>
-      
-      { !isUnPosted &&
-      <Link to="#" className="addnlightbg" onClick={() => {
-        const newPosting = {
-          linesData,
-          note,
-          totalAmount,
-          createdAt,
-          postingDate,
-          isUnPosted: true
-        }
-        dispatch(startEditPosting(id, newPosting));
-      }}>un-post</Link>}
+    this.state = {
+      mainText: undefined,
+      shortText: undefined
+    };
+    this.handleModalCancelOptionSelected = this.handleModalCancelOptionSelected.bind(this);
+    this.handleModalYesOptionSelected = this.handleModalYesOptionSelected.bind(this);
+  }
 
-      { isUnPosted &&
-        <Link to="#" className="addnlightbg" onClick={() => {
-          const newPosting = {
-            linesData,
-            note,
-            totalAmount,
-            createdAt,
-            postingDate,
-            isUnPosted: false
-          }  
-          dispatch(startEditPosting(id, newPosting));
-        }}>re-post</Link>}
-    
-      <span className="horIndent"></span>
-      <Link to="#" className="addnlightbg" onClick={() => {
-        dispatch(startRemovePosting({ id }));
-      }}>delete</Link>
+  handleModalCancelOptionSelected = () => {
+    this.setState(() => ({ mainText: undefined }));
+  }
 
-    </h4>
+  handleModalYesOptionSelected = (id) => {
+    this.setState(() => ({ mainText: undefined }));
+    this.props.dispatch(startRemovePosting({ id }));
+  }
 
-    {linesData.map((line) => { { uniqCount++ } 
-    return (<p
-        key={uniqCount}
-        className="postLineList"
-        >
-        {line.isDr ? 'Dr ' : '\xa0 \xa0   Cr '} 
-        {line.lineItem} &nbsp; - &nbsp;&nbsp;
+  render() {
+    let { dispatch, id, linesData, note, createdAt, postingDate, isUnPosted, totalAmount, countP } = this.props;
+
+    return (
+      <div className="boxed">
+        <h4><span className="postingNote">{countP}. {note}</span>
+          <span className="horIndent"></span>
+
+          <Link to={`/editposting/${id}`} className="addnlightbg">edit</Link>
+
+          <span className="horIndent"></span>
+
+          {!isUnPosted &&
+            <span className="addnlightbg" onClick={() => {
+              const newPosting = {
+                linesData,
+                note,
+                totalAmount,
+                createdAt,
+                postingDate,
+                isUnPosted: true
+              }
+              dispatch(startEditPosting(id, newPosting));
+            }}>un-post</span>}
+
+          {isUnPosted &&
+            <span className="addnlightbg" onClick={() => {
+              const newPosting = {
+                linesData,
+                note,
+                totalAmount,
+                createdAt,
+                postingDate,
+                isUnPosted: false
+              }
+              dispatch(startEditPosting(id, newPosting));
+            }}>re-post</span>}
+
+          <span className="horIndent"></span>
+
+          <span className="addnlightbg" onClick={() => {
+            this.setState(() => ({
+              shortText: 'Confirm delete',
+              mainText: "Permanently delete the selected posting ?"
+            }));
+          }}>delete</span>
+          <DeleteModal
+            // selectedOption = {this.state.selectedOption}
+            lid={id}
+            mainText={this.state.mainText}
+            shortText={this.state.shortText}
+            handleModalYesOptionSelected={this.handleModalYesOptionSelected}
+            handleModalCancelOptionSelected={this.handleModalCancelOptionSelected}
+          />
+
+        </h4>
+
+        {linesData.map((line) => {
+          { uniqCount++ }
+          return (<p
+            key={uniqCount}
+            className="postLineList"
+          >
+            {line.isDr ? 'Dr ' : '\xa0 \xa0   Cr '}
+            {line.lineItem} &nbsp; - &nbsp;&nbsp;
         {(parseFloat(line.amount, 10) / 100).toLocaleString('en-US')}
-        {isUnPosted && <span style={{color:'red', fontSize: '12px'}}> &nbsp; &nbsp; ( un-posted )</span>}
-        </p>)
-    })}
-    <span className="smalltext">( posted on&nbsp;
-      {moment(createdAt).format('MMMM D, YYYY')}; &nbsp; posted for date of&nbsp;
-      {moment(postingDate).format('MMMM D, YYYY')} )
-      </span>
-  </div>
-);
+            {isUnPosted && <span style={{ color: 'red', fontSize: '12px' }}> &nbsp; &nbsp; ( un-posted )</span>}
+          </p>)
+        })}
+
+        <span className="smalltext">( posted on&nbsp;
+          {moment(createdAt).format('MMMM D, YYYY')}; &nbsp; posted for date of&nbsp;
+          {moment(postingDate).format('MMMM D, YYYY')} )
+        </span>
+
+
+
+      </div>
+    );
+  }
+}
 
 export default connect()(PostingsListItem);

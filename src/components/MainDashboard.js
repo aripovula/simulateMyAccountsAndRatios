@@ -27,26 +27,38 @@ class MainDashboard extends React.Component {
         <SplitterLayout primaryIndex={0} percentage={true} primaryMinSize={60} secondaryInitialSize={30} secondaryMinSize={30}>
           <div>
             <div>
-            <div className="row3">
-  <div className="column3w">
-  <span className="verIndentFive"></span>
-    <span>market share</span>
-    <ReChartPieMarket />
-  </div>
-  <div className="column3">
-  <span className="verIndentFive"></span>
-    <span>geographic presence</span>
-    <ReChartPieChart />
-  </div>
-  <div className="column3">
-    <h2>Column 3</h2>
-    <p>Some text..</p>
-  </div>
-</div>
+              <div className="row3">
+                <div className="column3w">
+                  <span className="verIndentFive"></span>
+                  <span>market share</span>
+                  <ReChartPieMarket />
+                </div>
+                <div className="column3">
+                  <span className="verIndentFive"></span>
+                  <span>geographic presence</span>
+                  <ReChartPieChart />
+                </div>
+                <div className="column3">
+                  <span className="verIndentFive"></span>
+                  <span>monthly KPI status</span>
+                  <div style={{ fontSize: 12 }}>
+                  <span className="verIndentFive"></span>
+                    <span>( <span className="plan">target</span> / <span className="fact">actual</span> )</span><br />
+                    <span><span style={{color:'#57d500'}}> &#x25cf;</span>&nbsp;all covenants in compliance: <span className="plan">6</span> / <span className="fact">6</span></span><br />
+                    <span><span style={{color:'#57d500'}}> &#x25cf;</span>&nbsp;redeem receivables: <span className="plan">14%</span> / <span className="fact">16.5%</span></span><br />
+                    <span><span style={{color:'#57d500'}}> &#x25cf;</span>&nbsp;covenants in compliance: <span className="plan">6</span> / <span className="fact">6</span></span><br />
+                    <span><span style={{color:'#57d500'}}> &#x25cf;</span>&nbsp;redeem receivables: <span className="plan">14%</span> / <span className="fact">16.5%</span></span><br />
+                    <span><span style={{color:'#57d500'}}> &#x25cf;</span>&nbsp;covenants in compliance: <span className="plan">6</span> / <span className="fact">6</span></span><br />
+                    <span><span style={{color:'#57d500'}}> &#x25cf;</span>&nbsp;redeem receivables: <span className="plan">14%</span> / <span className="fact">16.5%</span></span><br />
+                    <h1>6 / 6<span style={{ fontSize: 12 }}>&nbsp;&nbsp;= 100% meet</span></h1>
+                  </div>
+                </div>
+              </div>
               <SimpleBarChart
                 rawData={this.props.data}
               />
               <ReChartRadialBar />
+              <ReChartStackedBars />
               {/*<ReChartRadialBar />
                 <ReChartPieMarket />
               <ReChartPieChart />

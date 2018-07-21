@@ -20,7 +20,7 @@ export default class SimpleBarChart extends React.Component {
     constructor(props) {
         super(props);
         let { rawData } = this.props;
-        let smalls = rawData.slice(0, 5);
+        let smalls = rawData.slice(0, 3);
         smalls.map(item => {
             let newItem = {
                 name: item.ratioDesc.title,

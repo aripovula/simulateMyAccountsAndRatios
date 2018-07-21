@@ -1,6 +1,8 @@
 import React from 'react';
 import { PieChart, Pie, Sector, Cell, Legend, ResponsiveContainer } from 'recharts';
 
+let countT = 1;
+let isMounted = false;
 const data = [{ name: 'Our Group', value: 246 }, { name: 'C-Corp', value: 550 },
 { name: 'SamCo', value: 200 }];
 
@@ -56,16 +58,33 @@ export default class ReChartPieMarket extends React.Component {
       activeIndex: 0
     }
     this.onPieEnter = this.onPieEnter.bind(this);
+
   }
 
+  componentDidMount = () => {
+    isMounted = true;
+    this.scheduleMarketShare();
+  }
+
+  componentWillUnmount = () => {
+    isMounted = false;
+  }
 
   onPieEnter(data, index) {
     this.setState({
       activeIndex: index,
     });
-    console.log("activeIndex=" + this.state.activeIndex);
-    console.log('index=' + index);
   }
+
+  scheduleMarketShare = () => {
+    if (isMounted) {
+      countT--;
+      if (countT < 0) countT = 2;
+      this.setState(() => { return { activeIndex: countT } });
+      setTimeout(this.scheduleMarketShare, 4 * 1000);
+    }
+  }
+
 
   render() {
     return (

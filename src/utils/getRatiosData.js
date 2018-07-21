@@ -114,21 +114,6 @@ export const getRatiosData = (postings) => {
     ratioMinN: ratioMin
   });
 
-  ratioMin = 3;
-  ratio = debt / equity;
-  ratioOp = debtOp / equityOp;
-  isCompliant = ratio < ratioMin;
-  isCompliantOp = ratioOp < ratioMin;
-
-  data.push({
-    ratioID: 3,
-    ratioDesc: {title: 'Debt-to-Equity Ratio', isCompliant },
-    ratio_current: { ratio, isCompliant },
-    ratio_comparatives: { ratioOp, isCompliantOp },
-    ratioMin: "< " + ratioMin,
-    ratioMinN: ratioMin
-  });
-
   ratioMin = 1;
   ratio = debt / assets * -1;
   ratioOp = debtOp / assetsOp * -1;
@@ -136,8 +121,23 @@ export const getRatiosData = (postings) => {
   isCompliantOp = ratioOp < ratioMin;
 
   data.push({
-    ratioID: 4,
+    ratioID: 3,
     ratioDesc: {title: 'Leverage Ratio (debt / assets)', isCompliant },
+    ratio_current: { ratio, isCompliant },
+    ratio_comparatives: { ratioOp, isCompliantOp },
+    ratioMin: "< " + ratioMin,
+    ratioMinN: ratioMin
+  });
+
+  ratioMin = 3;
+  ratio = debt / equity;
+  ratioOp = debtOp / equityOp;
+  isCompliant = ratio < ratioMin;
+  isCompliantOp = ratioOp < ratioMin;
+
+  data.push({
+    ratioID: 4,
+    ratioDesc: {title: 'Debt-to-Equity Ratio', isCompliant },
     ratio_current: { ratio, isCompliant },
     ratio_comparatives: { ratioOp, isCompliantOp },
     ratioMin: "< " + ratioMin,
