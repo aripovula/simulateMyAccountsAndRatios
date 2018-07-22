@@ -23,9 +23,9 @@ export default (postings, { text, lineItem, amountF, amountFType='includes', sor
 
     }).sort((a, b) => {
       if (sortBy === 'createdDate') {
-        return a.createdAt < b.createdAt ? -1 : 1;
+        return a.createdAt < b.createdAt ? 1 : -1;
       } else if (sortBy === 'postingDate') {
-        return a.postingDate < b.postingDate ? -1 : 1;
+        return a.postingDate < b.postingDate ? 1 : -1;
       } else if (sortBy === 'amount') {
         return a.totalAmount < b.totalAmount ? 1 : -1;
       } else if (sortBy === 'status') {
