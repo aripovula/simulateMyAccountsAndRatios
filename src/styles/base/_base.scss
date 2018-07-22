@@ -330,6 +330,11 @@ a.addnlightbg:active {
   cursor: pointer;
 }
 
+.notbold{
+  font-weight:normal;
+  font-size: 14px;
+}​
+
 .column3 {
   float: left;
   width: 28%;
@@ -355,3 +360,6 @@ a.addnlightbg:active {
   clear: both;
 }
 
+.cursorpointer{
+  cursor: pointer;
+}

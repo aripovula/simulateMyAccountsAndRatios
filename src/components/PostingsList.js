@@ -2,12 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip'
 
 import PostingListItem from './PostingListItem';
 import SeparateLineItem from './SeparateLineItem';
 import selectPostings from '../selectors/postings';
 import selectSeparateLines from '../selectors/separateLines';
 import { separatePostingLines, removeSeparatedPostingLine } from '../actions/separateLines';
+import addSimulatedEntries from '../utils/addSimulatedEntries';
+
 
 let countP;
 
@@ -45,30 +48,44 @@ class PostingsList extends React.Component {
   }
 
   render() {
-    // console.log("from PList PROPs =");
-    // console.log(this.props);
+    console.log("from PList PROPs =");
+    console.log(this.props.postings);
     // console.log('amountF=' + this.props.postings.amountF)
     countP = 0;
     return (
 
       <div>
+        <ReactTooltip place="bottom" type="info" effect="float" />
         <div className="card-4">
           <div className="bggreen">
             <h4>Postings List
           <span className="horIndent"></span>
-              <Link to="/createposting" className="addn" >add new</Link>
+              <span className="notbold"> &nbsp; &nbsp;
+                <Link to="/createposting" className="addn" >add new</Link>
 
-              <span className="horIndent"></span>
-              <span className="text14white">apply filter data to: &nbsp; &nbsp;
+                <span className="horIndent"></span>
+                <span
+                  data-tip="Filter by 'Line item' above to use 'entry lines' option - shows all entries on one lineitem"
+                  className="text14white">show &nbsp;
 
-              <span onChange={this.togglePostingsAndLines.bind(this)}>
-                  <input type="radio" value="postings" name="filterby" defaultChecked /> &nbsp;postings &nbsp; &nbsp; &nbsp; &nbsp;
-              <input type="radio" value="lines" name="filterby" /> &nbsp;entry lines
-              </span>
+
+
+                  <span onChange={this.togglePostingsAndLines.bind(this)}>
+                    <input type="radio" value="postings" name="filterby" defaultChecked /> &nbsp;postings &nbsp;
+                    <input type="radio" value="lines" name="filterby" /> &nbsp;entry lines
+                  </span>
+                </span>
+                <span className="horIndent"></span>
+                <span
+                  className="text14white cursorpointer"
+                  data-tip="Since other users could have posted blah blah Test entries this option deletes all postings from the database and adds / restores default entries"
+                  onClick={() => addSimulatedEntries(this.props)}
+                >restore defaults</span>
               </span>
             </h4>
           </div>
           <div>
+
             {this.props.postings.length == 0 && this.props.separateLines.length == 0 && <div className="boxedtransp"><br />No entries have been found !<br /><br /></div>}
 
             {this.state.showLinesOnly == true && this.props.separateLines.map((separateLine) => {

@@ -52,3 +52,5 @@ firebase.auth().onAuthStateChanged((user) => {
     history.push('/');
   }
 });
+
+export default store;

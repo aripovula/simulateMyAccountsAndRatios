@@ -6,12 +6,13 @@ import PostingsList from './PostingsList';
 import PostingsListFilter from './PostingsListFilter';
 import ThreeInfoTypeComp from './ThreeInfoTypeComp';
 
-const MainAllPostings = () => (
+const MainAllPostings = (props) => (
   <div>
 
     <SplitterLayout primaryIndex={0} percentage={true} primaryMinSize={30} secondaryInitialSize={50} secondaryMinSize={40}>
       <div>
         <PostingsListFilter />
+
         <PostingsList />
 
       </div>
