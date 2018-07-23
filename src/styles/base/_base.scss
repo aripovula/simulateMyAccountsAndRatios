@@ -309,6 +309,12 @@ a.addnlightbg:active {
 
 .center{text-align: center;}
 
+.centerObj {
+  display: flex!important; 
+  align-items: center!important; 
+  justify-content: center!important; 
+}
+
 .noDecor {
   text-decoration: none;
   font-size: 12px;

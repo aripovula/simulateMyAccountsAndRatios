@@ -10,6 +10,7 @@ import selectPostings from '../selectors/postings';
 import selectSeparateLines from '../selectors/separateLines';
 import { separatePostingLines, removeSeparatedPostingLine } from '../actions/separateLines';
 import addSimulatedEntries from '../utils/addSimulatedEntries';
+import LoadingModal from './LoadingModal';
 
 
 let countP;
@@ -18,9 +19,33 @@ class PostingsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLinesOnly: false
+      showLinesOnly: false,
+      mainText: undefined,
+      shortText: undefined
     }
+    this.startRestoreDefaults = this.startRestoreDefaults.bind(this);
+    // this.restoreDefaultsDone = this.restoreDefaultsDone.bind(this);
   }
+
+  startRestoreDefaults = () => {
+
+    <LoadingModal
+      mainText={this.state.mainText}
+      shortText={this.state.shortText}
+    />
+    this.setState(() => ({
+      shortText: 'Loading ...',
+      mainText: "Loading. Please wait"
+    }));
+    addSimulatedEntries(this.props);
+  }
+
+  componentWillReceiveProps = () => {
+    this.setState(() => ({
+      shortText: undefined,
+      mainText: undefined
+    }));
+  } 
 
   togglePostingsAndLines(event) {
     //console.log(event.target.value);
@@ -46,8 +71,10 @@ class PostingsList extends React.Component {
     // console.log('REDUX STATE=');
     // console.log(this.props);
   }
+  
 
   render() {
+    
     console.log("from PList PROPs =");
     console.log(this.props.postings);
     // console.log('amountF=' + this.props.postings.amountF)
@@ -55,6 +82,11 @@ class PostingsList extends React.Component {
     return (
 
       <div>
+      <LoadingModal
+      mainText={this.state.mainText}
+      shortText={this.state.shortText}
+    />
+
         <ReactTooltip place="bottom" type="info" effect="float" />
         <div className="card-4">
           <div className="bggreen">
@@ -79,7 +111,7 @@ class PostingsList extends React.Component {
                 <span
                   className="text14white cursorpointer"
                   data-tip="Since other users could have posted blah blah Test entries this option deletes all postings from the database and adds / restores default entries"
-                  onClick={() => addSimulatedEntries(this.props)}
+                  onClick={this.startRestoreDefaults}
                 >restore defaults</span>
               </span>
             </h4>

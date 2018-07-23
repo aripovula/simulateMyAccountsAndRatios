@@ -37,6 +37,7 @@
     "react-modal": "^3.5.1",
     "react-redux": "5.0.5",
     "react-router-dom": "4.1.2",
+    "react-spinners": "^0.3.2",
     "react-splitter-layout": "^3.0.0",
     "react-table": "^6.8.6",
     "react-tooltip": "^3.6.1",
