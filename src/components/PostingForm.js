@@ -181,7 +181,7 @@ export default class PostingForm extends React.Component {
           // if no match warn the user
         } else {
           isNewLIused = true;
-          this.onErrorChange('This line item is not found. Only admin can add new line items !');
+          this.onErrorChange('Line item is not found. Can add one from the table on the right');
         }
       }
     } else {
@@ -431,6 +431,31 @@ export default class PostingForm extends React.Component {
             })}
 
             <div>
+            <br />
+            {console.log('this.state.offeredFSLIs.length = ' + this.state.offeredFSLIs.length)}
+            {this.state.offeredFSLIs.length > 0 &&
+
+              this.state.offeredFSLIs.map(offeredFSLI => {
+                return (
+                  <div key={++countP}>
+                    <span className="horIndent"></span>
+                    <span>
+
+                      <span style={{ color: 'red' }}>{countP}. {offeredFSLI}</span>
+
+                      <span className="horIndent"></span>
+
+                      <span id={countP} className="noDecor2" onClick={(e) => this.handleOfferSelection(e.target.id)}>click to select or type {countP}</span>
+                    </span>
+                  </div>
+                )
+              })
+              //offeredFSLIindex
+            }
+
+          </div>
+          
+            <div>
               <span className="verIndent"></span>
               <span className="horIndent"></span>
 
@@ -503,32 +528,6 @@ export default class PostingForm extends React.Component {
 
 
               <br /><span className="smalltext">* click Dr or Cr buttons to toggle between Dr and Cr. Total check is auto re-counted.</span>
-
-              <div>
-                <br />
-                {console.log('this.state.offeredFSLIs.length = ' + this.state.offeredFSLIs.length)}
-                {this.state.offeredFSLIs.length > 0 &&
-
-                  this.state.offeredFSLIs.map(offeredFSLI => {
-                    return (
-                      <div key={++countP}>
-                        <span className="horIndent"></span>
-                        <span>
-
-                          <span style={{ color: 'red' }}>{countP}. {offeredFSLI}</span>
-
-                          <span className="horIndent"></span>
-
-                          <span id={countP} className="noDecor2" onClick={(e) => this.handleOfferSelection(e.target.id)}>click to select or type {countP}</span>
-                        </span>
-                      </div>
-                    )
-                  })
-                  //offeredFSLIindex
-                }
-
-              </div>
-
             </div>
           </form>
         )

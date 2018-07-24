@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export default (postings, { text, lineItem, amountF, amountFType='includes', sortBy, startDate, endDate }) => {
-    
+    console.log('startDate = '+moment(startDate).format('DD-MMM-YY')+'   endDate = ' + moment(endDate).format('DD-MMM-YY'));
     return postings.filter((posting) => {
       const postDateAtMoment = moment(posting.postingDate);
       const startDateMatch = startDate ? startDate.isSameOrBefore(postDateAtMoment, 'day') : true;

@@ -11,9 +11,11 @@ import selectSeparateLines from '../selectors/separateLines';
 import { separatePostingLines, removeSeparatedPostingLine } from '../actions/separateLines';
 import addSimulatedEntries from '../utils/addSimulatedEntries';
 import LoadingModal from './LoadingModal';
-
+import LoadFailedModal from './LoadFailedModal';
 
 let countP;
+let isSecondTime = false;
+let isRestored = false;
 
 class PostingsList extends React.Component {
   constructor(props) {
@@ -21,31 +23,42 @@ class PostingsList extends React.Component {
     this.state = {
       showLinesOnly: false,
       mainText: undefined,
+      mainTextFail: undefined,
       shortText: undefined
     }
     this.startRestoreDefaults = this.startRestoreDefaults.bind(this);
+    this.restoreTimedOut = this.restoreTimedOut.bind(this);
     // this.restoreDefaultsDone = this.restoreDefaultsDone.bind(this);
   }
 
   startRestoreDefaults = () => {
 
-    <LoadingModal
-      mainText={this.state.mainText}
-      shortText={this.state.shortText}
-    />
     this.setState(() => ({
-      shortText: 'Loading ...',
-      mainText: "Loading. Please wait"
+      shortText: 'In process ...',
+      mainText: "Restoring defaults. Please wait"
     }));
+    isRestored = false;
+    setTimeout(this.restoreTimedOut, 8 * 1000);
     addSimulatedEntries(this.props);
+  }
+
+  restoreTimedOut = () => {
+    if (!isRestored) {
+      this.setState(() => ({
+        mainText: undefined,
+        mainTextFail: 'Restoring defaults failed. Please check your INTERNET connection !'
+      }));
+    }
   }
 
   componentWillReceiveProps = () => {
     this.setState(() => ({
       shortText: undefined,
-      mainText: undefined
+      mainText: undefined,
+      mainTextFail: undefined
     }));
-  } 
+    isRestored = true;
+  }
 
   togglePostingsAndLines(event) {
     //console.log(event.target.value);
@@ -71,10 +84,9 @@ class PostingsList extends React.Component {
     // console.log('REDUX STATE=');
     // console.log(this.props);
   }
-  
+
 
   render() {
-    
     console.log("from PList PROPs =");
     console.log(this.props.postings);
     // console.log('amountF=' + this.props.postings.amountF)
@@ -82,10 +94,14 @@ class PostingsList extends React.Component {
     return (
 
       <div>
-      <LoadingModal
-      mainText={this.state.mainText}
-      shortText={this.state.shortText}
-    />
+        <LoadingModal
+          mainText={this.state.mainText}
+          shortText={this.state.shortText}
+        />
+        <LoadFailedModal
+          mainTextFail={this.state.mainTextFail}
+          shortText={this.state.shortText}
+        />
 
         <ReactTooltip place="bottom" type="info" effect="float" />
         <div className="card-4">

@@ -14,6 +14,7 @@ import { formatDate, parseDate } from 'react-day-picker/moment';
 
 import { Tips } from "../utils/tableUtils";
 import { getFinData, getPYbalances } from "../utils/getFinData";
+import { setStartDate, setEndDate } from '../actions/filters';
 
 let date = new Date();
 let pydate = moment();
@@ -47,6 +48,7 @@ class FinStatements extends React.Component {
       reportDate: moment(date),
       reportDate2: this.state.reportDate2 == ' pick report date' ? 'pick report date' : ' pick report date'
     });
+    this.props.dispatch(setStartDate(this.state.reportDate));
   }
 
   processOpeningDateChange(date) {

@@ -24,7 +24,7 @@ export default class ReChartPieChart extends React.Component {
     return (
       <ResponsiveContainer width='100%' aspect={1.0}>
         <div style={{ fontSize: 12 }}>
-          <PieChart width={400} height={400} onMouseEnter={this.onPieEnter}>
+          <PieChart width={200} height={170} onMouseEnter={this.onPieEnter}>
           <Label value="Pages of my website" offset={0} position="outside" />
             <Pie
               dataKey="value"

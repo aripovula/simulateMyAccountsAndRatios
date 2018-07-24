@@ -22,7 +22,6 @@ const jsx = (
 );
 
 let hasRendered = false;
-let isSecondTime = false;
 
 const renderApp = () => {
   if (!hasRendered) {
@@ -33,28 +32,28 @@ const renderApp = () => {
 
 const loading = (
   <LoadingModal
-    mainText='App loading. Please wait'
+    mainText='Loading app related DATA. Please wait'
     shortText='Loading ...'
   />
 );
 
-if (!hasRendered) ReactDOM.render(loading, document.getElementById('app'));
+if (!hasRendered) {
+  console.log('before setting TO hasRendered = '+hasRendered);
+  setTimeout(()=>restoreTimedOut(), 10 * 1000);
+  ReactDOM.render(loading, document.getElementById('app'));
+}
 
-const scheduleTimeOut = () => {
-  // console.log('in scheduleTimeOut isSecondTime='+isSecondTime+'   hasRendered='+hasRendered);
-  if (!hasRendered && isSecondTime) {
+const restoreTimedOut = () => {
+  console.log('restoreTimedOut hasRendered = '+hasRendered);
+  if (!hasRendered ) {
     const loadingF = (
       <LoadFailedModal
-        mainText='App loading FAILED. Please check your INTERNET connection !'
+        mainTextFail='Loading app related DATA failed. Please check your INTERNET connection !'
         shortText=''
       />);
     ReactDOM.render(loadingF, document.getElementById('app'));
   }
-  setTimeout(scheduleTimeOut, 10 * 1000);
-  isSecondTime = true;
 }
-scheduleTimeOut();
-
 
 firebase.auth().onAuthStateChanged((user) => {
   console.log('user' + user);

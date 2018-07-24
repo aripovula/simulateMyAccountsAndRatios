@@ -89,7 +89,7 @@ export default class ReChartPieMarket extends React.Component {
   render() {
     return (
       <ResponsiveContainer width='100%' aspect={1.0}>
-        <PieChart width={800} height={400}>
+        <PieChart width={400} height={200}>
           <Pie
             dataKey="value"
             activeIndex={this.state.activeIndex}

@@ -342,7 +342,7 @@ a.addnlightbg:active {
 }​
 
 .column3 {
-  float: left;
+  float: right;
   width: 28%;
   height: 180px;
   text-align: center;
@@ -365,6 +365,33 @@ a.addnlightbg:active {
   display: table;
   clear: both;
 }
+
+#container{
+  width: 100%;
+  overflow:hidden;
+  text-align: center;
+  border-bottom: 2px solid rgb(30, 218, 208);
+}
+#container > div{
+  height:180px;
+  float:left;
+}
+#left {
+  width:40%;
+  // background:red;
+}
+#content {
+  width: 29.5%;
+  border-left: 2px solid rgb(30, 218, 208);
+  // background:green;
+}
+#right {
+  width: 29.5%;
+  border-left: 2px solid rgb(30, 218, 208);
+  // background:yellow;
+}
+
+
 
 .cursorpointer{
   cursor: pointer;

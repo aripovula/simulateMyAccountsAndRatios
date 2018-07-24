@@ -2,6 +2,8 @@ import React from "react";
 import numeral from 'numeral';
 
 export const getFinData = (postings) => {
+    // console.log('postings');
+    // console.log(postings);
 
   let accounts = getPYbalances();
   let data = [];
