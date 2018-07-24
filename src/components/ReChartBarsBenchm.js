@@ -14,7 +14,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 
 let data = [];
 
-export default class SimpleBarChart extends React.Component {
+export default class SimpleBarsBenchm extends React.Component {
 
 
     constructor(props) {

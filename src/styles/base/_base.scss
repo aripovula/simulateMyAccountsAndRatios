@@ -192,6 +192,8 @@ input[type=text], input[type=number], input[type=date] {
 
 .success {color:#4CAF50!important; font-size: 14px; background-color: lightyellow;}
 
+.dtitle {color:#4CAF50!important; }
+
 .warning {color: red; font-size: 14px}
 
 .postLineList {color: green; font-size: 14px}
@@ -341,46 +343,22 @@ a.addnlightbg:active {
   font-size: 14px;
 }​
 
-.column3 {
-  float: right;
-  width: 28%;
-  height: 180px;
-  text-align: center;
-  border-bottom: 2px solid rgb(30, 218, 208);
-  border-left: 2px solid rgb(30, 218, 208);
-}
-
-.column3w {
-  float: left;
-  width: 38%;
-  min-width: 370px;
-  height: 180px;
-  text-align: center;
-  border-bottom: 2px solid rgb(30, 218, 208);
-}
-
-/* Clear floats after the columns */
-.row3:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
 #container{
   width: 100%;
   overflow:hidden;
-  text-align: center;
-  border-bottom: 2px solid rgb(30, 218, 208);
 }
+
 #container > div{
   height:180px;
   float:left;
+  text-align: center;
+  border-bottom: 2px solid rgb(30, 218, 208);
 }
 #left {
   width:40%;
   // background:red;
 }
-#content {
+#middle {
   width: 29.5%;
   border-left: 2px solid rgb(30, 218, 208);
   // background:green;
@@ -391,7 +369,35 @@ a.addnlightbg:active {
   // background:yellow;
 }
 
+#container2{
+  width: 100%;
+  overflow:hidden;
+  text-align: center;
+  border-bottom: 2px solid rgb(30, 218, 208);
+}
+#container2 > div{
+  height:320px;
+  float:left;
+}
+#left2 {
+  width:50%;
+  // background:red;
+}
+#middle2 {
+  width: 24.5%;
+  border-left: 2px solid rgb(30, 218, 208);
+  // background:green;
+}
+#right2 {
+  width: 24.5%;
+  border-left: 2px solid rgb(30, 218, 208);
+  // background:yellow;
+}
 
+.benchmark{
+  text-align: center;
+  border-bottom: 2px solid rgb(30, 218, 208); 
+}
 
 .cursorpointer{
   cursor: pointer;

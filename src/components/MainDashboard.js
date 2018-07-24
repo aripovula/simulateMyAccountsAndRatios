@@ -7,12 +7,15 @@ import FinStatements from './FinStatements';
 import RatioSummary from './RatioSummary';
 
 import { getRatiosData } from "../utils/getRatiosData";
-import SimpleBarChart from './ReChartBars';
-import ReChartRadialBar from './ReChartRadialBar';
+import ReChartLineBench from './ReChartLineBench';
+import ReChartBarsRatio from './ReChartBarsRatio';
+//import ReChartRadialBar from './ReChartRadialBar';
 import ReChartPieChart from './ReChartPieChart';
-import ReChartStackedBars from './ReChartStackedBars';
-import ReChartPieMarket from './ReChartPieMarket';
-import DashboardPies from './DashboardPies';
+// import ReChartStackBarAL from './ReChartStackedBars';
+// import ReChartStackBarEL from './ReChartStackedBars';
+// import ReChartPieMarket from './ReChartPieMarket';
+import DashboardLineOne from './DashboardLineOne';
+import DashboardLineThree from './DashboardLineThree';
 
 class MainDashboard extends React.Component {
   constructor(props) {
@@ -27,16 +30,22 @@ class MainDashboard extends React.Component {
       <div>
         <SplitterLayout primaryIndex={0} percentage={true} primaryMinSize={60} secondaryInitialSize={30} secondaryMinSize={30}>
           <div>
-          <DashboardPies/>
-          <SimpleBarChart
-          rawData={this.props.data}
-        />
-        <ReChartRadialBar />
-        <ReChartStackedBars />
-        {/*<ReChartRadialBar />
-          <ReChartPieMarket />
-        <ReChartPieChart />
-        <ReChartStackedBars />*/}
+            <DashboardLineOne />
+            <div className="benchmark">
+              <span className="verIndentFive"></span>
+              <span className="dtitle">competitor benchmarking</span>
+              <ReChartLineBench
+                rawData={this.props.data}
+              />
+            </div>
+            <DashboardLineThree />
+            <div className="benchmark">
+              <span className="verIndentFive"></span>
+              <span className="dtitle">covenant compliance</span>
+              <ReChartBarsRatio
+                rawData={this.props.data}
+              />
+            </div>
 
           </div>
           <div>

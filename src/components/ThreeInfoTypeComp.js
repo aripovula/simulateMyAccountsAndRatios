@@ -2,10 +2,10 @@ import React from 'react';
 
 import FinStatements from './FinStatements';
 import RatioSummary from './RatioSummary';
-import SimpleBarChart from './ReChartBars';
-import ReChartRadialBar from './ReChartRadialBar';
-import ReChartPieChart from './ReChartPieChart';
-import ReChartStackedBars from './ReChartStackedBars';
+// import SimpleBarChart from './ReChartBars';
+// import ReChartRadialBar from './ReChartRadialBar';
+// import ReChartPieChart from './ReChartPieChart';
+// import ReChartStackedBars from './ReChartStackedBars';
 
 
 export default class ThreeInfoTypeComp extends React.Component {
@@ -92,10 +92,6 @@ export default class ThreeInfoTypeComp extends React.Component {
                         />}
                     {this.state.infoType == 3 &&
                         <div>
-                            <SimpleBarChart />
-                            <ReChartRadialBar />
-                            <ReChartPieChart />
-                            <ReChartStackedBars />
                         </div>
                     }
                 </div>
