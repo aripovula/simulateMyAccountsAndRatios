@@ -157,6 +157,8 @@ class PostingsList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  //console.log("state.filters = ");
+  //console.log(state.filters);
   return {
     postings: selectPostings(state.postings, state.filters),
     separateLines: selectSeparateLines(state.separateLines, state.filters)

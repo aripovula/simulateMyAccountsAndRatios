@@ -17,22 +17,16 @@ import { getFinData, getPYbalances } from "../utils/getFinData";
 import { setStartDate, setEndDate } from '../actions/filters';
 
 let date = new Date();
-let pydate = moment();
+const pydate = moment('' + (date.getFullYear() - 1) + '-12-31');
 let dataPrev;
 
 class FinStatements extends React.Component {
   constructor(props) {
     super(props);
-    let date = new Date();
-    let pydate = moment('' + (date.getFullYear() - 1) + '-12-31');
-    //console.log('pydate=' + pydate.format('MMMM D, YYYY'));
-
+    this.props.dispatch(setStartDate(moment(pydate)));
+    this.props.dispatch(setEndDate(moment()));
     this.state = {
-      //data: getFinData(this.props.postings),
-      reportDate: this.props.posting ? moment(this.props.posting.reportDate) : moment(),
       reportDate2: ' pick report date',
-      openingDate: this.props.posting ? moment(this.props.posting.openingDate) : pydate,
-      openingDate2: ' comparatives date',
       classNameLeft: "left",
       classNameRight: "right",
       classNameCenter: "center",
@@ -41,43 +35,42 @@ class FinStatements extends React.Component {
       isDataSelectionEnabled: (this.props.isDataSelectionEnabled == 'true'),
       isFullDateFormat: (this.props.isFullDateFormat == 'true')
     };
+    //{this.props.dispatch(setEndDate(moment()))}
   }
 
   processReportDateChange(date) {
     this.setState({
-      reportDate: moment(date),
       reportDate2: this.state.reportDate2 == ' pick report date' ? 'pick report date' : ' pick report date'
+    }, ()=>{
+      this.props.dispatch(setEndDate(moment(date)));
+      this.props.dispatch(setStartDate(moment(pydate)));
     });
-    this.props.dispatch(setStartDate(this.state.reportDate));
   }
 
-  processOpeningDateChange(date) {
-    this.setState({
-      openingDate: moment(date),
-      openingDate2: this.state.openingDate2 == ' comparatives date' ? 'comparatives date' : ' comparatives date'
-    });
-  }
+  // componentDidMount = () => {
+  //   this.props.dispatch(setEndDate(moment()));
+  // }
 
   render() {
-    const dataTemp = this.props.data;
-    // console.log('postingsInFinStatementUpdated Render DATA');
-    // console.log(this.props);
+    const dataTemp = getFinData(this.props.postings);
+    console.log('postingsInFinStatementUpdated Render DATA');
+    console.log(this.props);
     // console.log('data prev');
     // console.log(dataPrev);
     // console.log('BEFORE CallinG findUpdatedOnes');
-    const data = dataPrev != null ? this.findUpdatedOnes(dataTemp, dataPrev) : this.props.data;
-    dataPrev = this.props.data;
+    const data = dataPrev != null ? this.findUpdatedOnes(dataTemp, dataPrev) : dataTemp;
+    dataPrev = dataTemp;
     return (
       <div style={{fontSize: this.state.fontSize}}>
         {this.state.isDataSelectionEnabled &&
           <div>
             <span className="horIndent"></span>
 
-            <span>Balances as at:
+            <span>Change reporting date to:
             <span className="horIndent"></span>
               <DayPickerInput
                 value={this.state.reportDate2}
-                selectedDays={this.state.reportDate}
+                selectedDays={this.props.filters.endDate}
                 format="LL"
                 formatDate={formatDate}
                 onDayClick={day => this.processReportDateChange(day)}
@@ -85,17 +78,6 @@ class FinStatements extends React.Component {
                 placeholder="pick report date"
               />
             </span>
-            &nbsp;&nbsp;&amp;&nbsp;&nbsp;
-
-          <DayPickerInput
-              value={this.state.openingDate2}
-              selectedDays={this.state.openingDate}
-              format="LL"
-              formatDate={formatDate}
-              onDayClick={day => this.processOpeningDateChange(day)}
-              onDayChange={day => this.processOpeningDateChange(day)}
-              placeholder="pick comparatives date"
-            />
           </div>}
 
         <ReactTable
@@ -129,7 +111,7 @@ class FinStatements extends React.Component {
                     </span>)
                 },
                 {
-                  Header: this.state.isFullDateFormat ? this.state.reportDate.format('MMM D, YYYY').toString() : this.state.reportDate.format('MMM D, YY').toString(),
+                  Header: this.props.filters.endDate ? (this.state.isFullDateFormat ? this.props.filters.endDate.format('MMM D, YYYY').toString() : this.props.filters.endDate.format('MMM D, YY').toString()) : '' ,
                   id: "amounts_current",
                   accessor: d => d.amounts_current,
                   width: this.state.numberColumnsWidth,
@@ -153,7 +135,7 @@ class FinStatements extends React.Component {
 
                 },
                 {
-                  Header: this.state.isFullDateFormat ? this.state.openingDate.format('MMM D, YYYY').toString() : this.state.openingDate.format('MMM D, YY').toString(),
+                  Header: this.state.isFullDateFormat ? pydate.format('MMM D, YYYY').toString() : pydate.format('MMM D, YY').toString(),
                   id: "amounts_comparatives",
                   accessor: d => d.amounts_comparatives,
                   width: this.state.numberColumnsWidth,
@@ -269,10 +251,9 @@ class FinStatements extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('FinStatement mapStateToProps');
   return {
-    postings: state.postings,
-    data: getFinData(state.postings)
+    postings: selectPostings(state.postings, state.filters),
+    filters: state.filters
   };
 };
 

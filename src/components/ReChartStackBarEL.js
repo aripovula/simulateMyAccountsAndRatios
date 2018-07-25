@@ -11,8 +11,8 @@ export default class ReChartStackBarEL extends React.Component {
 
   render() {
     return (
-      <BarChart width={240} height={280} data={data}
-        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+      <BarChart width={200} height={280} data={data}
+        margin={{ top: 20, right: 10, left: 0, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />

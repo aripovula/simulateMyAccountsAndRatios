@@ -2,8 +2,8 @@ import React from "react";
 import numeral from 'numeral';
 
 export const getFinData = (postings) => {
-    // console.log('postings');
-    // console.log(postings);
+  console.log('postings in getFinData');
+  console.log(postings);
 
   let accounts = getPYbalances();
   let data = [];
@@ -19,15 +19,15 @@ export const getFinData = (postings) => {
         // console.log('lineData.lineItem='+lineData.lineItem);
         if (accounts[x].lineItem == lineData.lineItem) {
           let amt = parseFloat(lineData.amount, 10);
-          if (lineData.isDr) {accounts[x].amount = accounts[x].amount + amt;}
-          if (!lineData.isDr) {accounts[x].amount = accounts[x].amount - amt;}
+          if (lineData.isDr) { accounts[x].amount = accounts[x].amount + amt; }
+          if (!lineData.isDr) { accounts[x].amount = accounts[x].amount - amt; }
         }
       });
     }
   });
 
-  console.log('AccountS');
-  console.log(accounts);
+  // console.log('AccountS');
+  // console.log(accounts);
 
   accounts.map(account => {
     // console.log('acc');
@@ -45,11 +45,11 @@ export const getFinData = (postings) => {
       if (account.amountOpening < 0 && percentChange > 0) arrowType = 2;
       if (account.amountOpening > 0 && percentChange > 0) arrowType = 1;
       if (account.amountOpening < 0 && percentChange < 0) arrowType = -1;
-      if (account.amountOpening > 0 && percentChange < 0) arrowType = -2;      
+      if (account.amountOpening > 0 && percentChange < 0) arrowType = -2;
     }
 
-    let balance = account.amount != null ? numeral(account.amount/100).format('0,0') : '';
-    let openingBalance = account.amountOpening != null ? numeral(account.amountOpening/100).format('0,0') : '';
+    let balance = account.amount != null ? numeral(account.amount / 100).format('0,0') : '';
+    let openingBalance = account.amountOpening != null ? numeral(account.amountOpening / 100).format('0,0') : '';
 
     // console.log(percentChange);
     data.push(
@@ -72,12 +72,12 @@ export const getPYbalances = () => {
   return [
     { lid: 1, isDr: true, lineItem: 'Cash and cash equivalents', amount: 42616000, amountOpening: 42616000, type: 'STA,a,' },
     { lid: 2, isDr: true, lineItem: 'Accounts receivable', amount: 230488000, amountOpening: 230488000, type: 'STA,a,' },
-    { lid: 3, isDr: true, lineItem: 'Inventory', amount: 134524000,  amountOpening: 134524000, type: 'STA,a,Inventory' },
+    { lid: 3, isDr: true, lineItem: 'Inventory', amount: 134524000, amountOpening: 134524000, type: 'STA,a,Inventory' },
     { lid: 4, isDr: true, lineItem: 'Prepaid charges', amount: 16576000, amountOpening: 16576000, type: 'STA,a,' },
     { lid: 5, isDr: true, lineItem: 'Equity in joint venture', amount: 28784000, amountOpening: 28784000, type: 'LTA,a,' },
     { lid: 6, isDr: true, lineItem: 'Long-term lendings', amount: 24500000, amountOpening: 24500000, type: 'LTA,a,' },
     { lid: 7, isDr: true, lineItem: 'Property and equipment, gbv', amount: 505044000, amountOpening: 505044000, type: 'LTA,a,' },
-    { lid: 8, isDr: false, lineItem: 'Accumulated depreciation', amount: -168348000,  amountOpening: -168348000, type: 'LTA,a,' },
+    { lid: 8, isDr: false, lineItem: 'Accumulated depreciation', amount: -168348000, amountOpening: -168348000, type: 'LTA,a,' },
     { lid: 9, isDr: false, lineItem: 'Trade payables', amount: -24157000, amountOpening: -24157000, type: 'STL,l,' },
     { lid: 10, isDr: false, lineItem: 'Borrowings - current portion', amount: -356034000, amountOpening: -356034000, type: 'STL,l,debt' },
     { lid: 11, isDr: false, lineItem: 'Advances received', amount: -33880000, amountOpening: -33880000, type: 'STL,l,' },

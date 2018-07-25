@@ -10,6 +10,10 @@ import { Link } from 'react-router-dom';
 import selectPostings from '../selectors/postings';
 import { setTextFilter, setLineItemFilter, setAmountFilter, setAmountFilterType, sortByCreatedDate, sortByPostingDate, sortByAmount, sortByStatus, setStartDate, setEndDate } from '../actions/filters';
 
+let date = new Date();
+let isFirstTime = true;
+const pydate = moment('' + (date.getFullYear() - 1) + '-12-31');
+
 class PostingsListFilter extends React.Component {
   constructor(props) {
     super(props);
@@ -18,15 +22,9 @@ class PostingsListFilter extends React.Component {
     this.clearDateRange = this.clearDateRange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.state = {
-      from: undefined,
-      to: undefined,
-      isOnlyToday: true,
-      isOnlyUnPosted: false
+      from: pydate,
+      to: moment()
     };
-  }
-
-  componentDidMount = () => {
-    this.clearDateRange();
   }
 
   showFromMonth() {
@@ -37,7 +35,7 @@ class PostingsListFilter extends React.Component {
     }
     if (moment(to).diff(moment(from), 'months') < 2) {
       this.to.getDayPicker().showMonth(from);
-      console.log('PICKER FROM TO = ' + from+'  '+to);
+      console.log('PICKER FROM TO = ' + from + '  ' + to);
     }
   }
   handleFromChange(from) {
@@ -58,8 +56,8 @@ class PostingsListFilter extends React.Component {
 
   clearDateRange = () => {
     this.setState({ from: undefined, to: undefined }, () => {
-      this.props.dispatch(setStartDate(moment(1)));
-      this.props.dispatch(setEndDate(moment(2000000000000)));
+      this.props.dispatch(setStartDate(moment(pydate)));
+      this.props.dispatch(setEndDate(moment()));
     });
   }
 
@@ -72,6 +70,13 @@ class PostingsListFilter extends React.Component {
       [name]: value
     });
   }
+
+  // componentWillReceiveProps = () => {
+  //   if (isFirstTime) {
+  //     this.props.dispatch(setEndDate(moment()));
+  //     isFirstTime = false;
+  //   }
+  // }
 
   render() {
     const { from, to } = this.state;
@@ -165,7 +170,7 @@ class PostingsListFilter extends React.Component {
             Date range:
             <span className="horIndent"></span>
             <DayPickerInput
-              value={from}
+              value={this.props.filters.startDate ? moment(this.props.filters.startDate).format('MMM D, YYYY') : from}
               placeholder=" from"
               format="LL"
               formatDate={formatDate}
@@ -183,14 +188,14 @@ class PostingsListFilter extends React.Component {
             <span className="InputFromTo-to">
               <DayPickerInput
                 ref={el => (this.to = el)}
-                value={to}
+                value={this.props.filters.endDate ? moment(this.props.filters.endDate).format('MMM D, YYYY') : to}
                 placeholder=" to"
                 format="LL"
                 formatDate={formatDate}
                 parseDate={parseDate}
                 dayPickerProps={{
                   selectedDays: [from, { from, to }],
-                  disabledDays: { before: from },
+                  //disabledDays: { before: from },
                   modifiers,
                   month: from,
                   fromMonth: from,
@@ -228,7 +233,7 @@ class PostingsListFilter extends React.Component {
             </Helmet>
           </div>
           <br />
-       
+
         </div>
         <span className="verIndentFive"></span>
       </div>

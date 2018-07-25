@@ -38,17 +38,15 @@ const loading = (
 );
 
 if (!hasRendered) {
-  console.log('before setting TO hasRendered = '+hasRendered);
   setTimeout(()=>restoreTimedOut(), 10 * 1000);
   ReactDOM.render(loading, document.getElementById('app'));
 }
 
 const restoreTimedOut = () => {
-  console.log('restoreTimedOut hasRendered = '+hasRendered);
   if (!hasRendered ) {
     const loadingF = (
       <LoadFailedModal
-        mainTextFail='Loading app related DATA failed. Please check your INTERNET connection !'
+        mainTextFail='Either (1) DATA loading failed, (2) no connection or (3) other error occurred !'
         shortText=''
       />);
     ReactDOM.render(loadingF, document.getElementById('app'));
@@ -56,9 +54,9 @@ const restoreTimedOut = () => {
 }
 
 firebase.auth().onAuthStateChanged((user) => {
-  console.log('user' + user);
+  // console.log('user' + user);
   if (user) {
-    console.log('logged in - user - ' + user);
+    // console.log('logged in - user - ' + user);
     store.dispatch(login(user.uid));
     store.dispatch(startSetPostings()).then(() => {
       renderApp();
@@ -67,7 +65,7 @@ firebase.auth().onAuthStateChanged((user) => {
       }
     });
   } else {
-    console.log('logged out - user - ' + user);
+    // console.log('logged out - user - ' + user);
     store.dispatch(logout());
     renderApp();
     history.push('/');

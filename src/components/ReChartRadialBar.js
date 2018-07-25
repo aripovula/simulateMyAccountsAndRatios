@@ -12,8 +12,8 @@ const data = [
 ];
 
 const style = {
-  top: 0,
-  left: 350,
+  top: 20,
+  left: 300,
   lineHeight: '24px'
 };
 

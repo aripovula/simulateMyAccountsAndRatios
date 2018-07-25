@@ -32,7 +32,7 @@ class MainDashboard extends React.Component {
           <div>
             <DashboardLineOne />
             <div className="benchmark">
-              <span className="verIndentFive"></span>
+              <span className="verIndent"></span>
               <span className="dtitle">competitor benchmarking</span>
               <ReChartLineBench
                 rawData={this.props.data}

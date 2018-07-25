@@ -41,6 +41,7 @@ export default class ReChartPieChart extends React.Component {
                 data.map((entry, index) => <Cell key={index} fill={COLORS[index % COLORS.length]} />)
               }
             </Pie>
+            
           </PieChart>
         </div>
       </ResponsiveContainer>

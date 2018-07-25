@@ -1,7 +1,9 @@
 import moment from 'moment';
 
 export default (postings, { text, lineItem, amountF, amountFType='includes', sortBy, startDate, endDate }) => {
-    console.log('startDate = '+moment(startDate).format('DD-MMM-YY')+'   endDate = ' + moment(endDate).format('DD-MMM-YY'));
+    // console.log('postings from Selector Filter');
+    // console.log(postings);
+    // console.log('startDate = '+moment(startDate).format('DD-MMM-YY')+'   endDate = ' + moment(endDate).format('DD-MMM-YY'));
     return postings.filter((posting) => {
       const postDateAtMoment = moment(posting.postingDate);
       const startDateMatch = startDate ? startDate.isSameOrBefore(postDateAtMoment, 'day') : true;
@@ -10,7 +12,7 @@ export default (postings, { text, lineItem, amountF, amountFType='includes', sor
 
       let lineItemMatch = lineItem ? false : true;
       let lineAmountMatch = amountF ? false : true;
-
+      // console.log(text, textMatch, posting.note);
       posting.linesData.map(lineData =>  {
         if (lineData.lineItem.toLowerCase().includes(lineItem.toLowerCase())) lineItemMatch = true;
         if (amountFType=='includes' && (''+lineData.amount).includes(''+amountF)) lineAmountMatch = true;
