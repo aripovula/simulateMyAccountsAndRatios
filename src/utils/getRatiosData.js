@@ -1,5 +1,6 @@
 import React from "react";
 import numeral from 'numeral';
+import moment from 'moment';
 
 import { getPYbalances } from './getFinData';
 
@@ -80,9 +81,21 @@ export const getRatiosData = (postings) => {
   equity = equity + earnings;
   equityOp = equityOp + earningsOp;
 
+  let date = new Date();
+  const pyend = moment('' + (date.getFullYear() - 1) + '-12-31');
+  const cyend = moment('' + date.getFullYear() + '-12-31');
+  const now = moment();
+  const annualizationFactor = ( cyend - pyend ) / ( now - pyend );
+  
 
-  let ebitda = earnings - adminEx * 0.27 - interest - tax;
+  // adminEx * 0.27 is approximation of depreciation cost
+  let ebitda = (earnings - earningsOp) - adminEx * 0.27 - interest - tax;
   let ebitdaOp = earningsOp - adminExOp * 0.27 - interestOp - taxOp;
+  console.log('ebitda 1 = '+ ebitda, ebitdaOp, annualizationFactor);
+  // annualizing ebitda
+  ebitda = ebitda * annualizationFactor;
+  console.log('ebitda 2 = '+ ebitda, ebitdaOp, annualizationFactor);
+
   let ratioMin = 1;
   let ratio = currentAssets / currentLiabs * -1;
   let ratioOp = currentAssetsOp / currentLiabsOp * -1;

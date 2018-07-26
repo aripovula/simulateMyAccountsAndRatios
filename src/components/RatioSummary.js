@@ -10,6 +10,7 @@ import moment from 'moment';
 import numeral from 'numeral';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
+import { disabledDays } from 'react-day-picker';
 import { formatDate, parseDate } from 'react-day-picker/moment';
 
 import { Tips } from "../utils/tableUtils";
@@ -30,15 +31,19 @@ class RatioSummary extends React.Component {
       classNameCenter: "center",
       numberColumnsWidth: parseInt(this.props.numberColumnsWidth),
       fontSize: parseInt(this.props.fontSize),
-      isDataSelectionEnabled: (this.props.isDataSelectionEnabled == 'true'),
-      isFullDateFormat: (this.props.isFullDateFormat == 'true')
+      isFullDateFormat: (this.props.isFullDateFormat == 'true'),
+      cColor: (this.props.isFullDateFormat == 'true') ? '' : '#FF8042'
     };
   }
 
-  processReportDateChange(date) {
+  processReportDateChange(date, modifiers = {}) {
+    console.log('modifiers.disabled = ' + modifiers.disabled);
+    if (modifiers.disabled) {
+      return;
+    }
     this.setState({
       reportDate2: this.state.reportDate2 == ' pick report date' ? 'pick report date' : ' pick report date'
-    }, ()=>{
+    }, () => {
       this.props.dispatch(setEndDate(moment(date)));
       this.props.dispatch(setStartDate(moment(pydate)));
     });
@@ -53,24 +58,31 @@ class RatioSummary extends React.Component {
     const data = getRatiosData(this.props.postings);
     return (
       <div style={{ fontSize: this.state.fontSize }}>
-        
-          <div>
 
+        <div>
+
+          <span className="horIndent"></span>
+
+          <span style={{ color: this.state.cColor }}>{this.state.isFullDateFormat ? 'Change reporting date to:' : 'Update dashboard info for date of :'}
             <span className="horIndent"></span>
-
-            <span>Generate data for the date of :
-              <span className="horIndent"></span>
-              <DayPickerInput
-                value={this.state.reportDate2}
-                selectedDays={this.props.filters.endDate}
-                format="LL"
-                formatDate={formatDate}
-                onDayClick={day => this.processReportDateChange(day)}
-                onDayChange={day => this.processReportDateChange(day)}
-                placeholder="pick report date"
-              />
-            </span>
-          </div>
+            <DayPickerInput
+              value={this.state.reportDate2}
+              selectedDays={this.props.filters.endDate}
+              format="LL"
+              formatDate={formatDate}
+              onDayClick={day => this.processReportDateChange(day)}
+              onDayChange={day => this.processReportDateChange(day)}
+              placeholder="pick report date"
+              dayPickerProps={{
+                enableOutsideDays: false,
+                disabledDays: {
+                  before: pydate.toDate(),
+                  after: date,
+                },
+              }}
+            />
+          </span>
+        </div>
         <ReactTable
           data={data}
           columns={[

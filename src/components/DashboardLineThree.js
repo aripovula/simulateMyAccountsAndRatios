@@ -14,18 +14,18 @@ export default class DashboardLineThree extends React.Component {
 
     render() {
         return (
-            <div id="container2">
-                <div id="left2">
+            <div id="container3">
+                <div id="left3">
                     <span className="verIndentFive"></span>
                     <span className="dtitle">change structure</span>
                     <ReChartRadialBar />
                 </div>
-                <div id="middle2">
+                <div id="middle3">
                     <span className="verIndentFive"></span>
                     <span className="dtitle">funding structure</span>
                     <ReChartStackBarEL />
                 </div>
-                <div id="right2">
+                <div id="right3">
                     <span className="verIndentFive"></span>
                     <span className="dtitle">current a/l</span>
                     <ReChartStackBarAL />

@@ -1,11 +1,11 @@
 import React from 'react';
 
-import ReChartRadialBar from './ReChartRadialBar';
-import ReChartStackBarAL from './ReChartStackBarAL';
-import ReChartStackBarEL from './ReChartStackBarEL';
+import ReChartLineGM from './ReChartLineGM';
+import ReChartLineSG from './ReChartLineSG';
+import ReChartLineLR from './ReChartLineLR';
 import { ResponsiveContainer } from 'recharts';
 
-export default class DashboardLineThree extends React.Component {
+export default class DashboardLineTwo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,18 +17,18 @@ export default class DashboardLineThree extends React.Component {
             <div id="container2">
                 <div id="left2">
                     <span className="verIndentFive"></span>
-                    <span className="dtitle">change structure</span>
-                    <ReChartRadialBar />
+                    <span className="dtitle">gross margin</span>
+                    <ReChartLineGM />
                 </div>
                 <div id="middle2">
                     <span className="verIndentFive"></span>
-                    <span className="dtitle">funding structure</span>
-                    <ReChartStackBarEL />
+                    <span className="dtitle">sales growth</span>
+                    <ReChartLineSG />
                 </div>
                 <div id="right2">
                     <span className="verIndentFive"></span>
-                    <span className="dtitle">current a/l</span>
-                    <ReChartStackBarAL />
+                    <span className="dtitle">leverage ratio</span>
+                    <ReChartLineLR />
                 </div>
 
             </div>
