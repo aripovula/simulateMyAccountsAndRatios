@@ -76,6 +76,14 @@ class FinStatements extends React.Component {
                 onDayClick={day => this.processReportDateChange(day)}
                 onDayChange={day => this.processReportDateChange(day)}
                 placeholder="pick report date"
+                dayPickerProps={{
+                  enableOutsideDays: false,
+                  disabledDays: {
+                    before: pydate.toDate(),
+                    after: date,
+                  }
+                }}
+  
               />
             </span>
           </div>}

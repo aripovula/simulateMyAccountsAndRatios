@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import { getPYbalances } from './getFinData';
 
-export const getRatiosData = (postings) => {
+export const getRatiosData = (postings, endDate) => {
 
   let accounts = getPYbalances();
   let data = [];
@@ -45,6 +45,7 @@ export const getRatiosData = (postings) => {
     }
     if (account.type.includes(',p,')) {
       earnings += account.amount; earningsOp += account.amountOpening;
+      console.log('part of p = '+account.amountOpening);
     }
 
     if (account.type.includes('STA,')) {
@@ -84,13 +85,15 @@ export const getRatiosData = (postings) => {
   let date = new Date();
   const pyend = moment('' + (date.getFullYear() - 1) + '-12-31');
   const cyend = moment('' + date.getFullYear() + '-12-31');
-  const now = moment();
-  const annualizationFactor = ( cyend - pyend ) / ( now - pyend );
+  
+  const annualizationFactor = ( cyend - pyend ) / ( moment(endDate) - pyend );
   
 
   // adminEx * 0.27 is approximation of depreciation cost
-  let ebitda = (earnings - earningsOp) - adminEx * 0.27 - interest - tax;
+  let ebitda = (earnings - earningsOp) - (adminEx - adminExOp) * 0.27 - (interest - interestOp) - (tax - taxOp);
   let ebitdaOp = earningsOp - adminExOp * 0.27 - interestOp - taxOp;
+  console.log('earnings='+earnings+'  earningsOp='+earningsOp);
+  console.log('ebitda   earnings = '+ earnings + '  depn = ' + (adminEx * 0.27) + '  interest = '+ interest + '  tax = '+ tax);
   console.log('ebitda 1 = '+ ebitda, ebitdaOp, annualizationFactor);
   // annualizing ebitda
   ebitda = ebitda * annualizationFactor;
@@ -157,7 +160,7 @@ export const getRatiosData = (postings) => {
     ratioMinN: ratioMin
   });
 
-  ratioMin = 3;
+  ratioMin = 3.5;
   ratio = debt / ebitda;
   ratioOp = debtOp / ebitdaOp;
   isCompliant = ratio < ratioMin;
@@ -173,7 +176,7 @@ export const getRatiosData = (postings) => {
   });
 
   ratioMin = 15;
-  ratio = ebitda / interest * -1;
+  ratio = ebitda / (interest - interestOp) * annualizationFactor * -1;
   ratioOp = ebitdaOp / interestOp * -1;
   isCompliant = ratio > ratioMin;
   isCompliantOp = ratioOp > ratioMin;

@@ -22,14 +22,16 @@ class PostingsListFilter extends React.Component {
     this.clearDateRange = this.clearDateRange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.state = {
-      from: pydate,
-      to: moment()
+      from: pydate.toDate(),
+      to: moment().toDate()
     };
   }
 
   showFromMonth() {
-    const { from, to } = this.state;
+    let { from, to } = this.state;
 
+    from = from.toDate();
+    to = to.toDate();
     if (!from) {
       return;
     }
@@ -181,6 +183,11 @@ class PostingsListFilter extends React.Component {
                 modifiers,
                 numberOfMonths: 2,
                 onDayClick: () => this.to.getInput().focus(),
+                enableOutsideDays: false,
+                disabledDays: {
+                  before: pydate.toDate(),
+                  after: date,
+                }
               }}
               onDayChange={this.handleFromChange}
             />{' '}
@@ -195,7 +202,11 @@ class PostingsListFilter extends React.Component {
                 parseDate={parseDate}
                 dayPickerProps={{
                   selectedDays: [from, { from, to }],
-                  //disabledDays: { before: from },
+                  enableOutsideDays: false,
+                  disabledDays: {
+                    before: pydate.toDate(),
+                    after: date,
+                  },
                   modifiers,
                   month: from,
                   fromMonth: from,

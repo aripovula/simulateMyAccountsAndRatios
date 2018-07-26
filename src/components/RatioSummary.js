@@ -55,7 +55,7 @@ class RatioSummary extends React.Component {
 
   render() {
     //const { data } = this.props;
-    const data = getRatiosData(this.props.postings);
+    const data = getRatiosData(this.props.postings, this.props.filters.endDate);
     return (
       <div style={{ fontSize: this.state.fontSize }}>
 
@@ -78,7 +78,7 @@ class RatioSummary extends React.Component {
                 disabledDays: {
                   before: pydate.toDate(),
                   after: date,
-                },
+                }
               }}
             />
           </span>
