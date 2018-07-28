@@ -73,7 +73,6 @@ class MainDashboard extends React.Component {
               />
               <FinStatements
                 numberColumnsWidth='80'
-                isDataSelectionEnabled='false'
                 fontSize='12'
                 isFullDateFormat='false'
               />

@@ -55,7 +55,7 @@ class RatioSummary extends React.Component {
 
   render() {
     //const { data } = this.props;
-    const data = getRatiosData(this.props.postings, this.props.filters.endDate);
+    const data = getRatiosData(this.props.postings);
     return (
       <div style={{ fontSize: this.state.fontSize }}>
 

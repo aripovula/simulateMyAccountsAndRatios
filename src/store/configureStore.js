@@ -5,6 +5,7 @@ import postingsReducer from '../reducers/postings';
 import filtersReducer from '../reducers/filters';
 import separateLinesReducer from '../reducers/separateLines';
 import authReducer from '../reducers/auth';
+import finDataReducer from '../reducers/financialData';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -12,6 +13,7 @@ export default () => {
   const store = createStore(
     combineReducers({
       postings: postingsReducer,
+      financialData: finDataReducer,
       filters: filtersReducer,
       separateLines: separateLinesReducer,
       auth: authReducer

@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export default (postings, { text, lineItem, amountF, amountFType='includes', sortBy, startDate, endDate }) => {
-    // console.log('postings from Selector Filter');
+    console.log('postings from Selector Filter');
     // console.log(postings);
     // console.log('startDate = '+moment(startDate).format('DD-MMM-YY')+'   endDate = ' + moment(endDate).format('DD-MMM-YY'));
     return postings.filter((posting) => {
