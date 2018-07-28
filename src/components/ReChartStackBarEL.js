@@ -4,7 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 
 //const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
 let date = new Date();
-const pydate = moment('' + (date.getFullYear() - 1) + '-12-31');
+const pydate = moment().subtract(1,'years').endOf('year');
 
 const data = [
   { name: `${pydate.format('MM/D/YY')}`, uv: 30, pv: 70, amt: 100 },
@@ -12,7 +12,6 @@ const data = [
 ];
 
 export default class ReChartStackBarEL extends React.Component {
-
   render() {
     return (
       <div style={{ fontSize: "12px" }}>

@@ -15,9 +15,7 @@ export const selectSeparateLines = createSelector(
   getPostings,
   getText, getLineItem, getAmountF, getAmountFType, getSortBy, getStartDate, getEndDate,
   (postings, text, lineItem, amountF, amountFType, sortBy, startDate, endDate) => {
-
-    //export default (separateLines, {lineItem, amountF, amountFType='includes', sortBy, startDate, endDate}) => {
-
+    console.log('postings from ABC separateLines');
     // 1. Re-builds from a posting to a separateLine
     let separateLines = [];
     postings.map(posting => {
@@ -39,8 +37,6 @@ export const selectSeparateLines = createSelector(
       });
     });
 
-    console.log('postings from ABC separateLines');
-    // console.log(separateLines);
     // 2. Filters
     return separateLines.filter((posting) => {
       const postDateAtMoment = moment(posting.postingDate);
@@ -60,7 +56,7 @@ export const selectSeparateLines = createSelector(
 
       return startDateMatch && endDateMatch && lineItemMatch && lineAmountMatch;
 
-      // Sorts
+      // 3. Sorts
     }).sort((a, b) => {
       if (sortBy === 'createdDate') {
         return a.createdAt < b.createdAt ? 1 : -1;

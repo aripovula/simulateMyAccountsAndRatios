@@ -3,7 +3,7 @@ import moment from 'moment';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 let date = new Date();
-const pydate = moment('' + (date.getFullYear() - 1) + '-12-31');
+const pydate = moment().subtract(1,'years').endOf('year');
 
 const data = [
   { name: `${pydate.format('MM/D/YY')}`, uv: 60, pv: 40, amt: 100 },

@@ -3,18 +3,17 @@ import numeral from 'numeral';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 
+import { selectPostings } from './postings';
 import { getPYbalances } from '../utils/getPYbalances';
 
-const getPostings = (state) => state.postings;
+const getPostings = (state) => selectPostings(state);
 const getEndDate = (state) => state.filters.endDate;
 
 export const selectRatioData = createSelector(
   getPostings, getEndDate,
   (postings, endDate) => {
 
-    //export const getRatiosData = (postings, endDate) => {
-
-    console.log('in selectRatioData');
+    console.log('in selectRatioData postings.length = '+postings.length);
     let accounts = getPYbalances();
     let data = [];
 
@@ -54,7 +53,6 @@ export const selectRatioData = createSelector(
       }
       if (account.type.includes(',p,')) {
         earnings += account.amount; earningsOp += account.amountOpening;
-        console.log('part of p = ' + account.amountOpening);
       }
 
       if (account.type.includes('STA,')) {
@@ -101,12 +99,8 @@ export const selectRatioData = createSelector(
     // adminEx * 0.27 is approximation of depreciation cost
     let ebitda = (earnings - earningsOp) - (adminEx - adminExOp) * 0.27 - (interest - interestOp) - (tax - taxOp);
     let ebitdaOp = earningsOp - adminExOp * 0.27 - interestOp - taxOp;
-    console.log('earnings=' + earnings + '  earningsOp=' + earningsOp);
-    console.log('ebitda   earnings = ' + earnings + '  depn = ' + (adminEx * 0.27) + '  interest = ' + interest + '  tax = ' + tax);
-    console.log('ebitda 1 = ' + ebitda, ebitdaOp, annualizationFactor);
     // annualizing ebitda
     ebitda = ebitda * annualizationFactor;
-    console.log('ebitda 2 = ' + ebitda, ebitdaOp, annualizationFactor);
 
     let ratioMin = 1;
     let ratio = currentAssets / currentLiabs * -1;
@@ -169,7 +163,7 @@ export const selectRatioData = createSelector(
       ratioMinN: ratioMin
     });
 
-    ratioMin = 3.5;
+    ratioMin = 3.6;
     ratio = debt / ebitda;
     ratioOp = debtOp / ebitdaOp;
     isCompliant = ratio < ratioMin;
@@ -184,11 +178,14 @@ export const selectRatioData = createSelector(
       ratioMinN: ratioMin
     });
 
-    ratioMin = 15;
-    ratio = ebitda / (interest - interestOp) * annualizationFactor * -1;
+    ratioMin = 8;
+    ratio = ebitda / ((interest - interestOp) * annualizationFactor * -1);
     ratioOp = ebitdaOp / interestOp * -1;
     isCompliant = ratio > ratioMin;
     isCompliantOp = ratioOp > ratioMin;
+
+    //console.log('ratio 6 = '+numeral((interest - interestOp)/100).format('0,0')+' annualiz. factor = '+numeral(annualizationFactor).format('0,0.0000'));
+    //console.log('ratio 6 = '+ ratio +'  ebitda = '+numeral(ebitda/100).format('0,0')+'  annualized interest = '+numeral(((interest - interestOp) * annualizationFactor * -1)/100).format('0,0'));
 
     data.push({
       ratioID: 6,

@@ -12,7 +12,7 @@ import { setTextFilter, setLineItemFilter, setAmountFilter, setAmountFilterType,
 
 let date = new Date();
 let isFirstTime = true;
-const pydate = moment('' + (date.getFullYear() - 1) + '-12-31');
+const pydate = moment().subtract(1,'years').endOf('year');
 
 class PostingsListFilter extends React.Component {
   constructor(props) {
@@ -37,13 +37,11 @@ class PostingsListFilter extends React.Component {
     }
     if (moment(to).diff(moment(from), 'months') < 2) {
       this.to.getDayPicker().showMonth(from);
-      console.log('PICKER FROM TO = ' + from + '  ' + to);
     }
   }
   handleFromChange(from) {
     // Change the from date and focus the "to" input field
     this.setState({ from }, () => {
-      console.log('PICKER FROM = ' + this.state.from);
       this.props.dispatch(setStartDate(moment(this.state.from)));
     });
 
@@ -51,7 +49,6 @@ class PostingsListFilter extends React.Component {
   handleToChange(to) {
     this.setState({ to }, () => {
       this.showFromMonth();
-      console.log('PICKER TO = ' + this.state.to);
       this.props.dispatch(setEndDate(moment(this.state.to)));
     });
   }
@@ -73,12 +70,6 @@ class PostingsListFilter extends React.Component {
     });
   }
 
-  // componentWillReceiveProps = () => {
-  //   if (isFirstTime) {
-  //     this.props.dispatch(setEndDate(moment()));
-  //     isFirstTime = false;
-  //   }
-  // }
 
   render() {
     const { from, to } = this.state;

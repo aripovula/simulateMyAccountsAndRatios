@@ -10,21 +10,18 @@ import numeral from 'numeral';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { formatDate, parseDate } from 'react-day-picker/moment';
-
-import {selectPostings} from '../selectors/postings';
+// local imports
 import {selectFinancialData} from '../selectors/financialData';
 import { Tips } from "../utils/tableUtils";
 import { setStartDate, setEndDate } from '../actions/filters';
 
 let date = new Date();
-const pydate = moment('' + (date.getFullYear() - 1) + '-12-31');
+const pydate = moment().subtract(1,'years').endOf('year');
 let dataPrev;
 
 class FinStatements extends React.Component {
   constructor(props) {
     super(props);
-    // this.props.dispatch(setStartDate(moment(pydate)));
-    // this.props.dispatch(setEndDate(moment()));
     this.state = {
       reportDate2: ' pick report date',
       classNameLeft: "left",
@@ -47,10 +44,6 @@ class FinStatements extends React.Component {
     });
   }
 
-  // componentDidMount = () => {
-  //   this.props.dispatch(setEndDate(moment()));
-  // }
-
   render() {
     const dataTemp = this.props.financialData;
     console.log('postingsInFinStatementUpdated Render DATA');
@@ -65,7 +58,6 @@ class FinStatements extends React.Component {
         {this.state.isDataSelectionEnabled &&
           <div>
             <span className="horIndent"></span>
-
             <span>Change reporting date to:
             <span className="horIndent"></span>
               <DayPickerInput
@@ -83,7 +75,6 @@ class FinStatements extends React.Component {
                     after: date,
                   }
                 }}
-  
               />
             </span>
           </div>}
@@ -92,16 +83,13 @@ class FinStatements extends React.Component {
           data={data}
           columns={[
             {
-
               columns: [
                 {
                   Header: "Trial Balance items, in US$",
                   id: "TBLineItems",
                   accessor: d => d.TBLineItems,
-                  //accessor: "TBLineItems",
                   className: this.state.classNameLeft,
                   Cell: row => (
-
                     <span>
                       {row.value.isUpdated == false && <span style={{
                         color: '#000000',
@@ -247,20 +235,15 @@ class FinStatements extends React.Component {
             dataTemp[x].amounts_current.isUpdated = true;
             dataTemp[x].amounts_comparatives.isUpdated = true;
           }
-          //y = dataPrev.length;
         }
-        //}
       }
     }
-    //console.log('dataTemp');
-    //console.log(dataTemp);
     return dataTemp;
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-//    postings: selectPostings(state),
     financialData: selectFinancialData(state),
     filters: state.filters
   };

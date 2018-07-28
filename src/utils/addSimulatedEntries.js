@@ -8,8 +8,6 @@ import { startAddPosting, startSetPostings } from '../actions/postings';
 import { getEntryOptions } from "./getEntryOptions";
 
 const addSimulatedEntries = (props) => {
-  //console.log('props addDim');
-  // console.log(props);
   var user = firebase.auth().currentUser;
   return addAllPostingsInArray()
     .then((postings) => { return database.ref(`users/${user.uid}/postings`).set(postings) })
@@ -60,7 +58,7 @@ const addAllPostingsInArray = () => {
 
         console.log(entry.idu+ '   note = '+entry.name);
         let posting = {
-          linesData: entry.idu == 0 ? newLines : entry.lines,
+          linesData: entry.lines,//entry.idu == 0 ? newLines : entry.lines,
           note: 'to ' + entry.name.replace("\n\r", "") + mon,
           totalAmount: entry.totalAmount,
           createdAt,

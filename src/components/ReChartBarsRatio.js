@@ -7,7 +7,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { selectRatioData } from '../selectors/ratioData';
 
 let date = new Date();
-const pydate = moment('' + (date.getFullYear() - 1) + '-12-31');
+const pydate = moment().subtract(1,'years').endOf('year');
 
 class SimpleBarsRatio extends React.Component {
     constructor(props) {

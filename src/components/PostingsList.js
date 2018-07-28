@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip'
-// import uuid from 'uuid';
-
+// local imports
 import PostingListItem from './PostingListItem';
 import SeparateLineItem from './SeparateLineItem';
 import {selectPostings} from '../selectors/postings';
@@ -28,7 +27,6 @@ class PostingsList extends React.Component {
     }
     this.startRestoreDefaults = this.startRestoreDefaults.bind(this);
     this.restoreTimedOut = this.restoreTimedOut.bind(this);
-    // this.restoreDefaultsDone = this.restoreDefaultsDone.bind(this);
   }
 
   startRestoreDefaults = () => {
@@ -144,8 +142,6 @@ class PostingsList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  //console.log("state.filters = ");
-  //console.log(state.filters);
   return {
     postings: selectPostings(state),
     separateLines: selectSeparateLines(state)

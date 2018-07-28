@@ -19,10 +19,10 @@ export const getPYbalances = () => {
       { lid: 17, isDr: false, lineItem: 'Retained earnings of prior periods', amount: -127050000, amountOpening: -127050000, type: 'ShC,c,' },
       { lid: 18, isDr: false, lineItem: 'Revenue', amount: -1348312000, amountOpening: -1348312000, type: 'GM,p,' },
       { lid: 19, isDr: true, lineItem: 'Cost of goods sold', amount: 1041054000, amountOpening: 1041054000, type: 'GM,p,' },
-      { lid: 20, isDr: true, lineItem: 'Selling, general and admin expenses', amount: 125384000, amountOpening: 125384000, type: 'Adm,p,da' },
+      { lid: 20, isDr: true, lineItem: 'Selling, general and admin expenses', amount: 116384000, amountOpening: 116384000, type: 'Adm,p,da' },
       { lid: 21, isDr: false, lineItem: 'Earnings from share in joint venture', amount: -6986000, amountOpening: -6986000, type: 'Other,p,' },
       { lid: 22, isDr: false, lineItem: 'Gain on sale of equipment', amount: -1400000, amountOpening: -1400000, type: 'Other,p,' },
-      { lid: 23, isDr: true, lineItem: 'Interest expense', amount: 9730000, amountOpening: 9730000, type: 'FinEx,p,ebitda' },
+      { lid: 23, isDr: true, lineItem: 'Interest expense', amount: 18730000, amountOpening: 18730000, type: 'FinEx,p,ebitda' },
       { lid: 24, isDr: true, lineItem: 'Income tax expense', amount: 63238000, amountOpening: 63238000, type: 'IncTax,p,ebitda' }
     ];
   }

@@ -7,14 +7,9 @@ const filtersReducerDefaultState = {
   lineItem: '',
   amountF: '',
   sortBy: 'createdDate',
-  startDate: moment().startOf('year'),
+  startDate: moment().subtract(1,'years').endOf('year'),
   endDate: moment()
 };
-
-const getPYdate = () => {
-  let date = new Date();
-  return moment('' + (date.getFullYear() - 1) + '-12-31');
-}
 
 export default (state = filtersReducerDefaultState, action) => {
   switch (action.type) {

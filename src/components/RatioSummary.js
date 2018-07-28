@@ -11,15 +11,13 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { disabledDays } from 'react-day-picker';
 import { formatDate, parseDate } from 'react-day-picker/moment';
-
-// import { selectPostings } from '../selectors/postings';
+// local imports
 import { selectRatioData } from '../selectors/ratioData';
 import { Tips } from "../utils/tableUtils";
-// import { getRatiosData } from "../utils/getRatiosData";
 import { setStartDate, setEndDate } from '../actions/filters';
 
 let date = new Date();
-let pydate = moment('' + (date.getFullYear() - 1) + '-12-31');
+const pydate = moment().subtract(1,'years').endOf('year');
 let dataPrev;
 
 class RatioSummary extends React.Component {
@@ -50,12 +48,7 @@ class RatioSummary extends React.Component {
     });
   }
 
-  // componentDidMount = () => {
-  //   this.props.dispatch(setEndDate(moment()));
-  // }
-
   render() {
-    //const { data } = this.props;
     const data = this.props.ratioData;
     return (
       <div style={{ fontSize: this.state.fontSize }}>
@@ -94,7 +87,6 @@ class RatioSummary extends React.Component {
                   Header: "Ratio description",
                   id: "ratioDesc",
                   accessor: d => d.ratioDesc,
-                  //accessor: "TBLineItems",
                   className: this.state.classNameLeft,
                   Cell: row => (
 
@@ -171,14 +163,12 @@ class RatioSummary extends React.Component {
         <br />
       </div>
     );
-    //{this.props.dispatch(setEndDate(moment()))}
   }
 
 }
 
 const mapStateToProps = (state) => {
   return {
-    // postings: selectPostings(state),
     ratioData: selectRatioData(state),
     filters: state.filters
   };
