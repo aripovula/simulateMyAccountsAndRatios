@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export default (separateLines, {lineItem, amountF, amountFType='includes', sortBy, startDate, endDate}) => {
-    
+  console.log('postings from ABC separateLines');
     return separateLines.filter((posting) => {
       const postDateAtMoment = moment(posting.postingDate);
       const startDateMatch = startDate ? startDate.isSameOrBefore(postDateAtMoment, 'day') : true;

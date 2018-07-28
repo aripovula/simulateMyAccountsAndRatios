@@ -7,7 +7,7 @@ import 'react-day-picker/lib/style.css';
 import { formatDate, parseDate } from 'react-day-picker/moment';
 import { Link } from 'react-router-dom';
 
-import selectPostings from '../selectors/postings';
+import {selectPostings} from '../selectors/postings';
 import { setTextFilter, setLineItemFilter, setAmountFilter, setAmountFilterType, sortByCreatedDate, sortByPostingDate, sortByAmount, sortByStatus, setStartDate, setEndDate } from '../actions/filters';
 
 let date = new Date();

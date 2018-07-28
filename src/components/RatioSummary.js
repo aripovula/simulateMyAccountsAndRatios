@@ -2,7 +2,6 @@ import React from 'react';
 import ReactTable from "react-table";
 import { render } from "react-dom";
 import { connect } from 'react-redux';
-import selectPostings from '../selectors/postings';
 import "react-table/react-table.css";
 
 // for Date picker
@@ -13,6 +12,7 @@ import 'react-day-picker/lib/style.css';
 import { disabledDays } from 'react-day-picker';
 import { formatDate, parseDate } from 'react-day-picker/moment';
 
+import { selectPostings } from '../selectors/postings';
 import { Tips } from "../utils/tableUtils";
 import { getRatiosData } from "../utils/getRatiosData";
 import { setStartDate, setEndDate } from '../actions/filters';
@@ -177,7 +177,7 @@ class RatioSummary extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    postings: selectPostings(state.postings, state.filters),
+    postings: selectPostings(state),
     filters: state.filters
   };
 };

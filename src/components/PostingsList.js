@@ -6,7 +6,7 @@ import ReactTooltip from 'react-tooltip'
 
 import PostingListItem from './PostingListItem';
 import SeparateLineItem from './SeparateLineItem';
-import selectPostings from '../selectors/postings';
+import {selectPostings} from '../selectors/postings';
 import selectSeparateLines from '../selectors/separateLines';
 import { separatePostingLines, removeSeparatedPostingLine } from '../actions/separateLines';
 import addSimulatedEntries from '../utils/addSimulatedEntries';
@@ -160,7 +160,7 @@ const mapStateToProps = (state) => {
   //console.log("state.filters = ");
   //console.log(state.filters);
   return {
-    postings: selectPostings(state.postings, state.filters),
+    postings: selectPostings(state),
     separateLines: selectSeparateLines(state.separateLines, state.filters)
   };
 };

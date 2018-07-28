@@ -1,8 +1,23 @@
+import { createSelector } from 'reselect';
 import moment from 'moment';
 
-export default (postings, { text, lineItem, amountF, amountFType='includes', sortBy, startDate, endDate }) => {
-    console.log('postings from Selector Filter');
-    // console.log(postings);
+const getPostings = (state) => state.postings;
+const getText = (state) => state.filters.text || '';
+const getLineItem = (state) => state.filters.lineItem || '';
+const getAmountF = (state) => state.filters.amountF || 0;
+const getAmountFType = (state) => state.filters.amountFType || 'includes';
+const getSortBy = (state) => state.filters.sortBy || 'createdDate';
+const getStartDate = (state) => state.filters.startDate ;
+const getEndDate = (state) => state.filters.endDate ;
+
+export const selectPostings = createSelector(
+  getPostings,
+  getText, getLineItem, getAmountF, getAmountFType, getSortBy, getStartDate, getEndDate,
+  (postings, text, lineItem, amountF, amountFType, sortBy, startDate, endDate) => {
+
+//export default (postings, { text, lineItem, amountF, amountFType='includes', sortBy, startDate, endDate }) => {
+    console.log('postings from ABC Selector Filter');
+    console.log(postings);
     // console.log('startDate = '+moment(startDate).format('DD-MMM-YY')+'   endDate = ' + moment(endDate).format('DD-MMM-YY'));
     return postings.filter((posting) => {
       const postDateAtMoment = moment(posting.postingDate);
@@ -34,5 +49,5 @@ export default (postings, { text, lineItem, amountF, amountFType='includes', sor
         return a.isUnPosted * 1 < b.isUnPosted * 1 ? 1 : -1;
       }
     });
-  };
+  });
   
