@@ -12,8 +12,8 @@ import 'react-day-picker/lib/style.css';
 import { formatDate, parseDate } from 'react-day-picker/moment';
 
 import {selectPostings} from '../selectors/postings';
+import {selectFinancialData} from '../selectors/financialData';
 import { Tips } from "../utils/tableUtils";
-import { getFinData, getPYbalances } from "../utils/getFinData";
 import { setStartDate, setEndDate } from '../actions/filters';
 
 let date = new Date();
@@ -52,7 +52,7 @@ class FinStatements extends React.Component {
   // }
 
   render() {
-    const dataTemp = getFinData(this.props.postings);
+    const dataTemp = this.props.financialData;
     console.log('postingsInFinStatementUpdated Render DATA');
     console.log(this.props);
     // console.log('data prev');
@@ -260,7 +260,8 @@ class FinStatements extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    postings: selectPostings(state),
+//    postings: selectPostings(state),
+    financialData: selectFinancialData(state),
     filters: state.filters
   };
 };

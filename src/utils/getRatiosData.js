@@ -2,7 +2,7 @@ import React from "react";
 import numeral from 'numeral';
 import moment from 'moment';
 
-import { getPYbalances } from './getFinData';
+import { getPYbalances } from './getPYbalances';
 
 export const getRatiosData = (postings, endDate) => {
 

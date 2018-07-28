@@ -5,7 +5,7 @@ import 'react-day-picker/lib/style.css';
 import { formatDate, parseDate } from 'react-day-picker/moment';
 import { Link } from 'react-router-dom';
 
-import { getPYbalances } from "../utils/getFinData";
+import { getPYbalances } from "../utils/getPYbalances";
 import PostingOneLine from './PostingOneLine';
 
 let idCounter = 1, countP = 0;

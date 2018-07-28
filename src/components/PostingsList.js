@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip'
+// import uuid from 'uuid';
 
 import PostingListItem from './PostingListItem';
 import SeparateLineItem from './SeparateLineItem';
 import {selectPostings} from '../selectors/postings';
-import selectSeparateLines from '../selectors/separateLines';
-import { separatePostingLines, removeSeparatedPostingLine } from '../actions/separateLines';
+import {selectSeparateLines} from '../selectors/separateLines';
 import addSimulatedEntries from '../utils/addSimulatedEntries';
 import LoadingModal from './LoadingModal';
 import LoadFailedModal from './LoadFailedModal';
@@ -65,19 +65,6 @@ class PostingsList extends React.Component {
 
     if (event.target.value === 'lines') {
       this.setState(() => { return { showLinesOnly: true } });
-      this.props.separateLines.map(separateLine => {
-        this.props.dispatch(removeSeparatedPostingLine(separateLine.id));
-      });
-
-      this.props.postings.map(posting => {
-        let enid = posting.id;
-        let endate = posting.postingDate;
-        let crdate = posting.createdAt;
-        let isUnPosted = posting.isUnPosted;
-        posting.linesData.map(lineData => {
-          this.props.dispatch(separatePostingLines(enid, endate, crdate, lineData.isDr, lineData.lineItem, lineData.amount, isUnPosted));
-        });
-      });
     } else {
       this.setState(() => { return { showLinesOnly: false } });
     }
@@ -161,7 +148,7 @@ const mapStateToProps = (state) => {
   //console.log(state.filters);
   return {
     postings: selectPostings(state),
-    separateLines: selectSeparateLines(state.separateLines, state.filters)
+    separateLines: selectSeparateLines(state)
   };
 };
 

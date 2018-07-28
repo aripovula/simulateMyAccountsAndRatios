@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 
 import postingsReducer from '../reducers/postings';
 import filtersReducer from '../reducers/filters';
-import separateLinesReducer from '../reducers/separateLines';
 import authReducer from '../reducers/auth';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -13,7 +12,6 @@ export default () => {
     combineReducers({
       postings: postingsReducer,
       filters: filtersReducer,
-      separateLines: separateLinesReducer,
       auth: authReducer
     }),
     composeEnhancers(applyMiddleware(thunk))

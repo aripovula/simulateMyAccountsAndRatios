@@ -7,15 +7,13 @@ const getLineItem = (state) => state.filters.lineItem || '';
 const getAmountF = (state) => state.filters.amountF || 0;
 const getAmountFType = (state) => state.filters.amountFType || 'includes';
 const getSortBy = (state) => state.filters.sortBy || 'createdDate';
-const getStartDate = (state) => state.filters.startDate ;
-const getEndDate = (state) => state.filters.endDate ;
+const getStartDate = (state) => state.filters.startDate;
+const getEndDate = (state) => state.filters.endDate;
 
 export const selectPostings = createSelector(
   getPostings,
   getText, getLineItem, getAmountF, getAmountFType, getSortBy, getStartDate, getEndDate,
   (postings, text, lineItem, amountF, amountFType, sortBy, startDate, endDate) => {
-
-//export default (postings, { text, lineItem, amountF, amountFType='includes', sortBy, startDate, endDate }) => {
     console.log('postings from ABC Selector Filter');
     console.log(postings);
     // console.log('startDate = '+moment(startDate).format('DD-MMM-YY')+'   endDate = ' + moment(endDate).format('DD-MMM-YY'));
@@ -28,12 +26,12 @@ export const selectPostings = createSelector(
       let lineItemMatch = lineItem ? false : true;
       let lineAmountMatch = amountF ? false : true;
       // console.log(text, textMatch, posting.note);
-      posting.linesData.map(lineData =>  {
+      posting.linesData.map(lineData => {
         if (lineData.lineItem.toLowerCase().includes(lineItem.toLowerCase())) lineItemMatch = true;
-        if (amountFType=='includes' && (''+lineData.amount).includes(''+amountF)) lineAmountMatch = true;
-        if (amountFType=='equals' && parseFloat(lineData.amount, 10) / 100 == amountF) lineAmountMatch = true;
-        if (amountFType=='grthan' && parseFloat(lineData.amount, 10) / 100 >= amountF) lineAmountMatch = true;
-        if (amountFType=='lsthan' && parseFloat(lineData.amount, 10) / 100 <= amountF) lineAmountMatch = true;
+        if (amountFType == 'includes' && ('' + lineData.amount).includes('' + amountF)) lineAmountMatch = true;
+        if (amountFType == 'equals' && parseFloat(lineData.amount, 10) / 100 == amountF) lineAmountMatch = true;
+        if (amountFType == 'grthan' && parseFloat(lineData.amount, 10) / 100 >= amountF) lineAmountMatch = true;
+        if (amountFType == 'lsthan' && parseFloat(lineData.amount, 10) / 100 <= amountF) lineAmountMatch = true;
       });
 
       return startDateMatch && endDateMatch && textMatch && lineItemMatch && lineAmountMatch;
@@ -50,4 +48,3 @@ export const selectPostings = createSelector(
       }
     });
   });
-  

@@ -12,9 +12,10 @@ import 'react-day-picker/lib/style.css';
 import { disabledDays } from 'react-day-picker';
 import { formatDate, parseDate } from 'react-day-picker/moment';
 
-import { selectPostings } from '../selectors/postings';
+// import { selectPostings } from '../selectors/postings';
+import { selectRatioData } from '../selectors/ratioData';
 import { Tips } from "../utils/tableUtils";
-import { getRatiosData } from "../utils/getRatiosData";
+// import { getRatiosData } from "../utils/getRatiosData";
 import { setStartDate, setEndDate } from '../actions/filters';
 
 let date = new Date();
@@ -55,7 +56,7 @@ class RatioSummary extends React.Component {
 
   render() {
     //const { data } = this.props;
-    const data = getRatiosData(this.props.postings);
+    const data = this.props.ratioData;
     return (
       <div style={{ fontSize: this.state.fontSize }}>
 
@@ -177,7 +178,8 @@ class RatioSummary extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    postings: selectPostings(state),
+    // postings: selectPostings(state),
+    ratioData: selectRatioData(state),
     filters: state.filters
   };
 };

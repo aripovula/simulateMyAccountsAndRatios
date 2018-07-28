@@ -4,6 +4,8 @@ import numeral from 'numeral';
 import { connect } from 'react-redux';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
+import { selectRatioData } from '../selectors/ratioData';
+
 let date = new Date();
 const pydate = moment('' + (date.getFullYear() - 1) + '-12-31');
 
@@ -13,13 +15,13 @@ class SimpleBarsRatio extends React.Component {
     }
 
     render() {
-        let { rawData } = this.props;
+
         let smalls = [];
         let data = [];
-        smalls = rawData.slice(0, 5);
+        smalls = this.props.ratioData.slice(0, 5);
         smalls.map(item => {
             let newItem = {
-                name: item.ratioDesc.title.substring(0,14) + ' ( '+item.ratioMin+' )',
+                name: item.ratioDesc.title.substring(0, 14) + ' ( ' + item.ratioMin + ' )',
                 py: item.ratio_comparatives.ratioOp.toFixed(4),
                 cy: item.ratio_current.ratio.toFixed(4),
                 target: item.ratioMinN
@@ -37,9 +39,9 @@ class SimpleBarsRatio extends React.Component {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="py" fill="#00C49F" name = {`as at ${pydate.format('MMM D, YYYY')}    `} />
-                        <Bar dataKey="target" fill="#FFBB28" name = "Threshold" />
-                        <Bar dataKey="cy" fill="#0088FE" name = {`as at ${moment(this.props.filters.endDate).format('MMM D, YYYY')}    `} />
+                        <Bar dataKey="py" fill="#00C49F" name={`as at ${pydate.format('MMM D, YYYY')}    `} />
+                        <Bar dataKey="target" fill="#FFBB28" name="Threshold" />
+                        <Bar dataKey="cy" fill="#0088FE" name={`as at ${moment(this.props.filters.endDate).format('MMM D, YYYY')}    `} />
                     </BarChart>
                 </ResponsiveContainer>
             </div>
@@ -49,9 +51,9 @@ class SimpleBarsRatio extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-      filters: state.filters
+        ratioData: selectRatioData(state),
+        filters: state.filters
     };
-  };
-  
+};
+
 export default connect(mapStateToProps)(SimpleBarsRatio);
-  
