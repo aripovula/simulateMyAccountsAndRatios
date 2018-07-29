@@ -90,14 +90,14 @@ export const selectRatioData = createSelector(
     equityOp = equityOp + earningsOp;
 
     let date = new Date();
-    const pyend = moment('' + (date.getFullYear() - 1) + '-12-31');
-    const cyend = moment('' + date.getFullYear() + '-12-31');
+    const pyend = moment().subtract(1,'years').endOf('year');
+    const cyend = moment().endOf('year');
 
     const annualizationFactor = (cyend - pyend) / (moment(endDate) - pyend);
 
 
     // adminEx * 0.27 is approximation of depreciation cost
-    let ebitda = (earnings - earningsOp) - (adminEx - adminExOp) * 0.27 - (interest - interestOp) - (tax - taxOp);
+    let ebitda = earnings - adminEx * 0.27 - interest - tax;
     let ebitdaOp = earningsOp - adminExOp * 0.27 - interestOp - taxOp;
     // annualizing ebitda
     ebitda = ebitda * annualizationFactor;
@@ -179,7 +179,7 @@ export const selectRatioData = createSelector(
     });
 
     ratioMin = 8;
-    ratio = ebitda / ((interest - interestOp) * annualizationFactor * -1);
+    ratio = ebitda / (interest  * annualizationFactor * -1);
     ratioOp = ebitdaOp / interestOp * -1;
     isCompliant = ratio > ratioMin;
     isCompliantOp = ratioOp > ratioMin;

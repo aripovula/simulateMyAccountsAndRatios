@@ -5,7 +5,7 @@ import { render } from "react-dom";
 import FinStatements from './FinStatements';
 import RatioSummary from './RatioSummary';
 
-import ReChartLineBench from './ReChartLineBench';
+import ReChartLineSales from './ReChartLineSales';
 import ReChartBarsRatio from './ReChartBarsRatio';
 import ReChartPieChart from './ReChartPieChart';
 import DashboardLineOne from './DashboardLineOne';
@@ -26,8 +26,8 @@ export default class MainDashboard extends React.Component {
             <DashboardLineOne />
             <div className="weeklysales">
               <span className="verIndent"></span>
-              <span className="dtitle">weekly sales</span>
-              <ReChartLineBench/>
+              <span className="dtitle">sales growth, in US$</span>
+              <ReChartLineSales/>
             </div>
             <span className="verIndent"></span>
             <span className="horrIndent"></span>

@@ -3,6 +3,7 @@ import * as firebase from 'firebase';
 import database from '../firebase/firebase';
 import moment from 'moment';
 import uuid from 'uuid';
+import numeral from 'numeral';
 
 import { startAddPosting, startSetPostings } from '../actions/postings';
 import { getEntryOptions } from "./getEntryOptions";
@@ -37,28 +38,30 @@ const addAllPostingsInArray = () => {
         let postingDate = createdAt;
         let mon = ' - ' + moment(createdAt).format('MMM-YYYY');
 
-        // let newLines = [];
-        // if (entry.idu == 0) {
-        //   entry.lines.map(line => {
-        //     let newLine;
-        //     let newAmount = (line.amount * ((cmonth - x) ^ 1.01)) - (line.amount * (((cmonth - x) - 1 ) ^ 1.01));
-        //     console.log('newAmount = '+newAmount);
-        //     newLine = {
-        //       idu: line.idu,
-        //       isDr: line.isDr,
-        //       lineItem: line.lineItem,
-        //       amount: newAmount,
-        //       lineItemID: line.lineItemID
-        //     }
-        //     newLines.push(newLine);
-        //   });
-        //   console.log('newLines posting = ' + mon);
-        //   console.log(newLines);
-        // }
+        let newLines = [];
+        if (entry.idu == 0) {
+          entry.lines.map(line => {
+            let index = cmonth - x;
+            let newAmountGr = (line.amount * Math.pow(index, 1.01)).toFixed(0);
+            let newAmountPr = (line.amount * Math.pow(index-1, 1.01)).toFixed(0);
+            let newAmount = newAmountGr - newAmountPr;
+            console.log('newAmount = index = '+index+ '  newAmountGr='+numeral(newAmountGr/100).format('0,0')+ '  newAmountPr='+numeral(newAmountPr/100).format('0,0'));
+            console.log('newAmount = '+numeral(newAmount/100).format('0,0')+' '+mon+' '+line.lineItem);
+            newLines.push({
+              idu: line.idu,
+              isDr: line.isDr,
+              lineItem: line.lineItem,
+              amount: newAmount,
+              lineItemID: line.lineItemID
+            });
+          });
+          console.log('newLines posting = ' + mon);
+          console.log(newLines);
+        }
 
         console.log(entry.idu+ '   note = '+entry.name);
         let posting = {
-          linesData: entry.lines,//entry.idu == 0 ? newLines : entry.lines,
+          linesData: entry.idu == 0 ? newLines : entry.lines,
           note: 'to ' + entry.name.replace("\n\r", "") + mon,
           totalAmount: entry.totalAmount,
           createdAt,

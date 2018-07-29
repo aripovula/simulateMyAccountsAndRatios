@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import numeral from 'numeral';
 import ReactTooltip from 'react-tooltip'
 
 import { startRemovePosting } from '../actions/postings';
@@ -107,7 +108,7 @@ class PostingsListItem extends React.Component {
           >
             {line.isDr ? 'Dr ' : '\xa0 \xa0   Cr '}
             {line.lineItem} &nbsp; - &nbsp;&nbsp;
-        {(parseFloat(line.amount, 10) / 100).toLocaleString('en-US')}
+        {numeral(parseFloat(line.amount, 10) / 100).format('0,0')}
             {isUnPosted && <span style={{ color: 'red', fontSize: '12px' }}> &nbsp; &nbsp; ( un-posted )</span>}
           </p>)
         })}

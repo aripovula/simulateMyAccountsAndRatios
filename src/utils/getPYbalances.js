@@ -16,13 +16,13 @@ export const getPYbalances = () => {
       { lid: 14, isDr: false, lineItem: 'Borrowings - non-current portion', amount: -69041000, amountOpening: -69041000, type: 'LTL,l,debt' },
       { lid: 15, isDr: false, lineItem: 'Long-term accrued liabilities', amount: -21588000, amountOpening: -21588000, type: 'LTL,l,' },
       { lid: 16, isDr: false, lineItem: 'Share capital', amount: -42000000, amountOpening: -42000000, type: 'ShC,c,' },
-      { lid: 17, isDr: false, lineItem: 'Retained earnings of prior periods', amount: -127050000, amountOpening: -127050000, type: 'ShC,c,' },
-      { lid: 18, isDr: false, lineItem: 'Revenue', amount: -1348312000, amountOpening: -1348312000, type: 'GM,p,' },
-      { lid: 19, isDr: true, lineItem: 'Cost of goods sold', amount: 1041054000, amountOpening: 1041054000, type: 'GM,p,' },
-      { lid: 20, isDr: true, lineItem: 'Selling, general and admin expenses', amount: 116384000, amountOpening: 116384000, type: 'Adm,p,da' },
-      { lid: 21, isDr: false, lineItem: 'Earnings from share in joint venture', amount: -6986000, amountOpening: -6986000, type: 'Other,p,' },
-      { lid: 22, isDr: false, lineItem: 'Gain on sale of equipment', amount: -1400000, amountOpening: -1400000, type: 'Other,p,' },
-      { lid: 23, isDr: true, lineItem: 'Interest expense', amount: 18730000, amountOpening: 18730000, type: 'FinEx,p,ebitda' },
-      { lid: 24, isDr: true, lineItem: 'Income tax expense', amount: 63238000, amountOpening: 63238000, type: 'IncTax,p,ebitda' }
+      { lid: 17, isDr: false, lineItem: 'Retained earnings of prior periods', amount: -244342000, amountOpening: -127050000, type: 'ShC,c,' },
+      { lid: 18, isDr: false, lineItem: 'Revenue', amount: 0, amountOpening: -1348312000, type: 'GM,p,' },
+      { lid: 19, isDr: true, lineItem: 'Cost of goods sold', amount: 0, amountOpening: 1041054000, type: 'GM,p,' },
+      { lid: 20, isDr: true, lineItem: 'Selling, general and admin expenses', amount: 0, amountOpening: 116384000, type: 'Adm,p,da' },
+      { lid: 21, isDr: false, lineItem: 'Earnings from share in joint venture', amount: 0, amountOpening: -6986000, type: 'Other,p,' },
+      { lid: 22, isDr: false, lineItem: 'Gain on sale of equipment', amount: 0, amountOpening: -1400000, type: 'Other,p,' },
+      { lid: 23, isDr: true, lineItem: 'Interest expense', amount: 0, amountOpening: 18730000, type: 'FinEx,p,ebitda' },
+      { lid: 24, isDr: true, lineItem: 'Income tax expense', amount: 0, amountOpening: 63238000, type: 'IncTax,p,ebitda' }
     ];
   }

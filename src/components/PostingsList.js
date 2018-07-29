@@ -73,7 +73,7 @@ class PostingsList extends React.Component {
 
   render() {
     console.log("from PList PROPs =");
-    console.log(this.props.postings);
+    console.log(this.props);
     // console.log('amountF=' + this.props.postings.amountF)
     countP = 0;
     return (

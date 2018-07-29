@@ -205,7 +205,9 @@ class FinStatements extends React.Component {
                 </span>)
             }
           ]}
-          defaultPageSize={20}
+          showPagination={false}
+          defaultPageSize={25}
+
           className="-striped -highlight"
         />
         <br />
