@@ -40,10 +40,15 @@ const addAllPostingsInArray = () => {
 
         let newLines = [];
         if (entry.idu == 0) {
+          let index = cmonth - x;
+          let power = 1.01;
+          if (index == 4 || index == 7 || index == 10) power = 1.012;
+          if (index == 2 || index == 9 || index == 11) power = 1.005;
+          console.log('power= i= '+index);
+          console.log('power= p= '+power);
           entry.lines.map(line => {
-            let index = cmonth - x;
-            let newAmountGr = (line.amount * Math.pow(index, 1.01)).toFixed(0);
-            let newAmountPr = (line.amount * Math.pow(index-1, 1.01)).toFixed(0);
+            let newAmountGr = (line.amount * Math.pow(index, power)).toFixed(0);
+            let newAmountPr = (line.amount * Math.pow(index-1, power)).toFixed(0);
             let newAmount = newAmountGr - newAmountPr;
             console.log('newAmount = index = '+index+ '  newAmountGr='+numeral(newAmountGr/100).format('0,0')+ '  newAmountPr='+numeral(newAmountPr/100).format('0,0'));
             console.log('newAmount = '+numeral(newAmount/100).format('0,0')+' '+mon+' '+line.lineItem);

@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import numeral from 'numeral';
+
 import { editPosting, removePosting } from '../actions/postings';
 
 let uniqCount = 0;
@@ -16,7 +18,7 @@ const SeparateLineItem = ({ dispatch, id, entryId, isDr, lineItem, amount, creat
         
         {lineItem} &nbsp; - &nbsp;&nbsp;
         
-        {(parseFloat(amount, 10) / 100).toLocaleString('en-US')}
+        {numeral(parseFloat(amount, 10) / 100).format('0,0')}
         
         <span className="horIndent"></span>
 

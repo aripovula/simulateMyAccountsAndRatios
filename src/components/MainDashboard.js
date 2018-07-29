@@ -20,13 +20,21 @@ export default class MainDashboard extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="margintop">
         <SplitterLayout primaryIndex={0} percentage={true} primaryMinSize={60} secondaryInitialSize={30} secondaryMinSize={30}>
           <div>
             <DashboardLineOne />
             <div className="weeklysales">
               <span className="verIndent"></span>
-              <span className="dtitle">sales growth, in US$</span>
+              <div className="center">
+              <span style={{ color: '#0088FE', fontSize: '14px' }}>monthly sales trend, in US$ &nbsp; &nbsp;( &nbsp; </span>
+              <span style={{ color: '#82ca9d', fontSize: '20px' }}> &#x7E;</span>
+              <span style={{ color: '#82ca9d', fontSize: '14px' }}> &nbsp;target volume,  &nbsp; &nbsp; &nbsp;</span>
+              <span style={{ color: '#8884d8', fontSize: '20px' }}> &#x7E;</span>
+              <span style={{ color: '#8884d8', fontSize: '14px' }}> &nbsp;actual volume &nbsp; </span>
+              <span style={{ color: '#0088FE', fontSize: '14px' }}>)</span>
+            </div>
+
               <ReChartLineSales/>
             </div>
             <span className="verIndent"></span>

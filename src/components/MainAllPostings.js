@@ -7,7 +7,7 @@ import PostingsListFilter from './PostingsListFilter';
 import ThreeInfoTypeComp from './ThreeInfoTypeComp';
 
 const MainAllPostings = (props) => (
-  <div>
+  <div className="margintop">
 
     <SplitterLayout primaryIndex={0} percentage={true} primaryMinSize={30} secondaryInitialSize={50} secondaryMinSize={40}>
       <div>

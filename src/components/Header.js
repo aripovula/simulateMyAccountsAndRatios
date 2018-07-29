@@ -5,7 +5,7 @@ import { startLogout } from '../actions/auth';
 
 
 export const Header = ({ startLogout }) => (
-  <header className="header">
+  <header className="header fixedElement">
     <div>
       <div className="header__content">      
       &nbsp; Simulate accounts and ratios

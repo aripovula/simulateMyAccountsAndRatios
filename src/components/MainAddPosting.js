@@ -17,7 +17,7 @@ export default class MainAddPosting extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="margintop">
         <SplitterLayout primaryIndex={0} percentage={true} primaryMinSize={30} secondaryInitialSize={50} secondaryMinSize={40}>
           <div>
             {this.props.match.path == "/createposting" && <AddPosting />}
