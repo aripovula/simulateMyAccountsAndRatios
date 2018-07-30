@@ -1,5 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import moment from 'moment';
 import { PieChart, Pie, Sector, Cell, Legend, ResponsiveContainer, Label, XAxis } from 'recharts';
+
+import { selectSeparateLines } from '../selectors/separateLines';
 
 const data = [{ name: 'CA', value: 400 }, { name: 'NY', value: 300 },
 { name: 'WA', value: 300 }, { name: 'Other', value: 200 }];

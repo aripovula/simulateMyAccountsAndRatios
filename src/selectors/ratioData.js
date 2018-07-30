@@ -48,7 +48,7 @@ export const selectRatioData = createSelector(
       if (account.type.includes(',a,')) {
         assets += account.amount; assetsOp += account.amountOpening;
       }
-      if (account.type.includes(',c,')) {
+      if (account.type.includes(',c,') || account.type.includes(',p,')) {
         equity += account.amount; equityOp += account.amountOpening;
       }
       if (account.type.includes(',p,')) {

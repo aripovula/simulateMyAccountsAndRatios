@@ -29,6 +29,7 @@ export const selectSeparateLines = createSelector(
           entryId: enid,
           isDr: lineData.isDr,
           lineItem: lineData.lineItem,
+          lineItemID: lineData.lineItemID,
           amount: lineData.amount,
           createdAt: crdate,
           postingDate: endate,

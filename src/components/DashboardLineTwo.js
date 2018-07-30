@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ReChartLineGM from './ReChartLineGM';
-import ReChartLineSG from './ReChartLineSG';
+import ReChartLineDE from './ReChartLineDE';
 import ReChartLineLR from './ReChartLineLR';
 import { ResponsiveContainer } from 'recharts';
 
@@ -17,13 +17,13 @@ export default class DashboardLineTwo extends React.Component {
             <div id="container2">
                 <div id="left2">
                     <span className="verIndentFive"></span>
-                    <span className="dtitle">gross margin</span>
+                    <span className="dtitle">gross margin, in %</span>
                     <ReChartLineGM />
                 </div>
                 <div id="middle2">
                     <span className="verIndentFive"></span>
-                    <span className="dtitle">sales growth</span>
-                    <ReChartLineSG />
+                    <span className="dtitle">debt-to-equity</span>
+                    <ReChartLineDE />
                 </div>
                 <div id="right2">
                     <span className="verIndentFive"></span>

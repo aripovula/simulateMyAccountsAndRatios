@@ -8,7 +8,7 @@ import { selectRatioData } from '../selectors/ratioData';
 
 let data = [];
 
-class ReChartLineLR extends React.Component {
+class ReChartLineDE extends React.Component {
   render() {
     data = this.getData();
     return (
@@ -35,18 +35,18 @@ class ReChartLineLR extends React.Component {
   getData = () => {
     let data = [];
     let x = moment(this.props.filters.endDate).month();
-      let newAmountGr = (0.88 * Math.pow(x + 1, 1.002));
-      let newAmountPr = (0.88 * Math.pow(x, 1.002));
+      let newAmountGr = (1.96 * Math.pow(x + 1, 0.955));
+      let newAmountPr = (1.96 * Math.pow(x, 0.955));
 
       data[0] = {
         name: moment().subtract(1,'years').endOf('year').format('MMM YYYY'),
-        pv: this.props.ratioData[2].ratio_comparatives.ratioOp.toFixed(4),
-        uv: 0.88
+        pv: this.props.ratioData[3].ratio_comparatives.ratioOp.toFixed(4),
+        uv: 1.96
       };
 
       data[1] = {
         name: moment(this.props.filters.endDate).format('MMM YYYY'),
-        pv: this.props.ratioData[2].ratio_current.ratio.toFixed(4),
+        pv: this.props.ratioData[3].ratio_current.ratio.toFixed(4),
         uv: (newAmountGr - newAmountPr).toFixed(4)
       };
 
@@ -61,6 +61,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ReChartLineLR);
+export default connect(mapStateToProps)(ReChartLineDE);
 
 
