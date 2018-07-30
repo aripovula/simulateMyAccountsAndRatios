@@ -1,10 +1,87 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import numeral from 'numeral';
 import { PieChart, Pie, Sector, Cell, Legend, ResponsiveContainer } from 'recharts';
+
+import { selectFinancialData } from '../selectors/financialData';
 
 let countT = 1;
 let isMounted = false;
-const data = [{ name: 'Our Group', value: 246 }, { name: 'C-Corp', value: 550 },
-{ name: 'SamCo', value: 200 }];
+let data = [];
+
+class ReChartPieMarket extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeIndex: 0
+    }
+    this.onPieEnter = this.onPieEnter.bind(this);
+  }
+
+  componentDidMount = () => {
+    isMounted = true;
+    this.scheduleMarketShare();
+  }
+
+  componentWillUnmount = () => {
+    isMounted = false;
+  }
+
+  onPieEnter(data, index) {
+    this.setState({
+      activeIndex: index,
+    });
+  }
+
+  scheduleMarketShare = () => {
+    if (isMounted) {
+      countT--;
+      if (countT < 0) countT = 2;
+      this.setState(() => { return { activeIndex: countT } });
+      setTimeout(this.scheduleMarketShare, 4 * 1000);
+    }
+  }
+
+
+  render() {
+    data = this.getData();
+    return (
+      <ResponsiveContainer width='100%' aspect={1.0}>
+        <PieChart width={400} height={200}>
+          <Pie
+            dataKey="value"
+            activeIndex={this.state.activeIndex}
+            activeShape={renderActiveShape}
+            data={data}
+            cx={180}
+            cy={75}
+            innerRadius={40}
+            outerRadius={60}
+            fill="#00C49F"
+            onMouseEnter={this.onPieEnter}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    );
+  }
+  getData = () => {
+    const c_corpShare = 33391790;
+    const samCoShare = 12687924;
+    const revenue = parseFloat(this.props.financialData[17].amounts_current.balance.replace(/,/g, "")) * -1 ;
+
+    const annualizationFactor = 12 / ( moment(this.props.filters.endDate).month() +1 );
+    // console.log('cmonthpie = '+moment().month());
+    const normalizedRevenue = revenue * annualizationFactor;
+    // console.log('revenue rev = '+revenue);
+    // console.log('revenue fact = '+annualizationFactor);
+    // console.log('revenue nrev= '+normalizedRevenue);
+
+    const data = [{ name: 'Our Group', value: normalizedRevenue }, { name: 'C-Corp', value: c_corpShare },
+    { name: 'SamCo', value: samCoShare }];
+    return data;
+  }
+}
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
@@ -51,60 +128,11 @@ const renderActiveShape = (props) => {
   );
 };
 
-export default class ReChartPieMarket extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeIndex: 0
-    }
-    this.onPieEnter = this.onPieEnter.bind(this);
+const mapStateToProps = (state) => {
+  return {
+    financialData: selectFinancialData(state),
+    filters: state.filters
+  };
+};
 
-  }
-
-  componentDidMount = () => {
-    isMounted = true;
-    this.scheduleMarketShare();
-  }
-
-  componentWillUnmount = () => {
-    isMounted = false;
-  }
-
-  onPieEnter(data, index) {
-    this.setState({
-      activeIndex: index,
-    });
-  }
-
-  scheduleMarketShare = () => {
-    if (isMounted) {
-      countT--;
-      if (countT < 0) countT = 2;
-      this.setState(() => { return { activeIndex: countT } });
-      setTimeout(this.scheduleMarketShare, 4 * 1000);
-    }
-  }
-
-
-  render() {
-    return (
-      <ResponsiveContainer width='100%' aspect={1.0}>
-        <PieChart width={400} height={200}>
-          <Pie
-            dataKey="value"
-            activeIndex={this.state.activeIndex}
-            activeShape={renderActiveShape}
-            data={data}
-            cx={180}
-            cy={75}
-            innerRadius={40}
-            outerRadius={60}
-            fill="#00C49F"
-            onMouseEnter={this.onPieEnter}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  }
-}
-
+export default connect(mapStateToProps)(ReChartPieMarket);

@@ -89,7 +89,6 @@ export const selectRatioData = createSelector(
     equity = equity + earnings;
     equityOp = equityOp + earningsOp;
 
-    let date = new Date();
     const pyend = moment().subtract(1,'years').endOf('year');
     const cyend = moment().endOf('year');
 
