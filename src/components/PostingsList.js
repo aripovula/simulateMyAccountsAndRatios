@@ -13,7 +13,6 @@ import LoadingModal from './LoadingModal';
 import LoadFailedModal from './LoadFailedModal';
 
 let countP;
-let isSecondTime = false;
 let isRestored = false;
 
 class PostingsList extends React.Component {

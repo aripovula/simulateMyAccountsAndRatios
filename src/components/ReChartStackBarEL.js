@@ -45,7 +45,7 @@ class ReChartStackBarEL extends React.Component {
       equityOp += parseFloat(this.props.financialData[x].amounts_comparatives.openingBalance.replace(/,/g, ""), 10);
     }
 
-    console.log('EL = ' + liabilities, liabilitiesOp, equity, equityOp);
+    // console.log('EL = ' + liabilities, liabilitiesOp, equity, equityOp);
 
     data = [
       {

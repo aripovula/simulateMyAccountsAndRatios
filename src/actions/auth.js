@@ -11,10 +11,34 @@ export const startLogin = () => {
   };
 };
 
+export const startSignIn = (email, password) => {
+  return () => {
+    return firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+      if (error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.error('SIGN IN failed =' + error.message);
+      } else {
+        console.log('SUCCESS SIGN IN');
+      }
+    });
+  }
+}
+
 export const startSignUp = () => {
   console.log('IN ACTION email = ');
-  return () => {
-    return firebase.auth().createUserWithEmailAndPassword('email12@email.com', '12pass12');
+  return (dispatch, getState) => {
+    let email = 'email12@email10.com', password = '12pass12';
+    return firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+      if (error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.error('SIGN UP failed =' + error.message);
+        dispatch(startSignIn(email, password));
+      } else {
+        console.log('SUCCESS SIGN UP');
+      }
+    });
   };
 };
 

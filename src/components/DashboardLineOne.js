@@ -19,12 +19,12 @@ class DashboardLineOne extends React.Component {
             <div id="container">
                 <div id="left">
                     <span className="verIndentFive"></span>
-                    <span className="dtitle">market share - {moment(this.props.filters.endDate).format('DD MMM, YYYY')}</span>
+                    <span className="dtitle">market share - {moment(this.props.filters.endDate).format('MMM D, YYYY')}</span>
                     <ReChartPieMarket />
                 </div>
                 <div id="middle">
                     <span className="verIndentFive"></span>
-                    <span className="dtitle">geographic presence - {moment(this.props.filters.endDate).format('DD MMM, YYYY')}</span>
+                    <span className="dtitle">geographic presence - {moment(this.props.filters.endDate).format('MMM D, YYYY')}</span>
                     <ReChartPieChart />
                 </div>
                 <div id="right">

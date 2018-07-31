@@ -38,14 +38,10 @@ export const LoginPage = ({ startSignUp }) => (
     // Free for personal and commercial use, No attribution required
     <div>
         <header className="header fixedElement">
-
             &nbsp; Simulate accounts and ratios
         </header>
         <div className="margintop">
             {LoginModal({ startSignUp })}
-            <button
-                //onClick={startLogin}
-            >Login</button>
         </div>
     </div>
 )
@@ -54,8 +50,6 @@ const LoginModal = ({ startSignUp }) => (
 
     <Modal
         isOpen={true}
-        //onRequestClose={handleClearSelectedOption}
-        //contentLabel="Confirm delete"
         style={customStyles}
     >
         <div className="card-4" >
@@ -109,8 +103,7 @@ const LoginModal = ({ startSignUp }) => (
 
 const mapDispatchToProps = (dispatch) => (
     {
-        // startLogin: () => { console.log('in dispatch'); dispatch(startLogin())},
-        startSignUp: () => { console.log('in dispatch'); dispatch(startSignUp()) }
+        startSignUp: () => dispatch(startSignUp())
     });
 
 export default connect(undefined, mapDispatchToProps)(LoginPage);
