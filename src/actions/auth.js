@@ -11,6 +11,13 @@ export const startLogin = () => {
   };
 };
 
+export const startSignUp = () => {
+  console.log('IN ACTION email = ');
+  return () => {
+    return firebase.auth().createUserWithEmailAndPassword('email12@email.com', '12pass12');
+  };
+};
+
 export const logout = () => ({
   type: 'LOGOUT'
 });

@@ -27,7 +27,15 @@ module.exports = (env) => {
         loader: 'babel-loader',
         test: /\.js$/,
         exclude: /node_modules/
-      }, {
+      },
+      {
+        test: /\.(png|jpeg|jpg|ttf|...)$/,
+        use: [
+         { loader: 'url-loader', options: { limit: 8192 } } 
+         // limit => file.size =< 8192 bytes ? DataURI : File
+        ]
+      },
+      {
         test: /\.s?css$/,
         use: CSSExtract.extract({
           use: [

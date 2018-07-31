@@ -49,7 +49,7 @@ class DashboardKPIs extends React.Component {
                     &nbsp;<span className="fact">{data.payableDays.toFixed(1)}</span> / <span className="plan">10 &lt; </span>
                 </span><br />
 
-                {/*  sales growth  */}
+                {/*  inventory days  */}
                 <span>
                     <span style={{ color: data.receivableDays < 100 ? '#57d500' : '#ff2e00' }}>
                         &#x25cf;&nbsp;
@@ -76,7 +76,7 @@ class DashboardKPIs extends React.Component {
                     &nbsp;<span className="fact">{data.RoE.toFixed(1)}%</span> / <span className="plan">15% &lt;</span>
                 </span><br />
 
-                <h1>{data.metKPI} / 6<span style={{ fontSize: 14 }}>&nbsp;&nbsp;= {(data.metPercent * 100).toFixed(1)}% meet</span></h1>
+                <h1>{data.metKPI} / 6<span style={{ fontSize: 14 }}>&nbsp;&nbsp;= {(data.metPercent * 100).toFixed(0)}% meet</span></h1>
             </div>
         );
     }

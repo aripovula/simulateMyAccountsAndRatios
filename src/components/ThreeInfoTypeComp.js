@@ -2,8 +2,7 @@ import React from 'react';
 
 import FinStatements from './FinStatements';
 import RatioSummary from './RatioSummary';
-// import SimpleBarChart from './ReChartBars';
-// import ReChartRadialBar from './ReChartRadialBar';
+import ReChartBarsRatio from './ReChartBarsRatio';
 // import ReChartPieChart from './ReChartPieChart';
 // import ReChartStackedBars from './ReChartStackedBars';
 
@@ -81,6 +80,10 @@ export default class ThreeInfoTypeComp extends React.Component {
                         />}
                     {this.state.infoType == 3 &&
                         <div>
+                            <span className="verIndent"></span>
+                            covenant compliance
+                        <span className="verIndent"></span>
+                            <ReChartBarsRatio />
                         </div>
                     }
                 </div>
