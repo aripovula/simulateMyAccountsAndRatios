@@ -29,7 +29,7 @@ class DashboardLineOne extends React.Component {
                 </div>
                 <div id="right">
                     <span className="verIndentFive"></span>
-                    <span className="dtitle">monthly KPI status - {moment(this.props.filters.endDate).format('DD MMM, YYYY')}</span>
+                    <span className="dtitle">monthly KPI status - {moment(this.props.filters.endDate).format('MMM YYYY')}</span>
                     <DashboardKPIs />
                 </div>
 

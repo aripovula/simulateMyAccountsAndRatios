@@ -22,12 +22,12 @@ export default class DashboardLineThree extends React.Component {
                 </div>
                 <div id="middle3">
                     <span className="verIndentFive"></span>
-                    <span className="dtitle">funding structure</span>
+                    <span className="dtitle">funding structure, in %</span>
                     <ReChartStackBarEL />
                 </div>
                 <div id="right3">
                     <span className="verIndentFive"></span>
-                    <span className="dtitle">current a/l</span>
+                    <span className="dtitle">current a/l, in %</span>
                     <ReChartStackBarAL />
                 </div>
 
