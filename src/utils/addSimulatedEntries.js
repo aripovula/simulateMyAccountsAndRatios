@@ -31,18 +31,18 @@ const addAllPostingsInArray = () => {
     for (let x = 0; x < cmonth; x++) {
       let days = x == 0 ? d.getDate() : (cmonth - x) == 2 ? 28 : 30;
       let factor = (days - 1) / 12;
-      console.log('x='+x+'  days='+days);
+      // console.log('x='+x+'  days='+days);
 
       entryOptions.map(entry => {
         let created = moment('' + cyear + '-' + (cmonth - x) + '-' + (Math.round((entry.idu + 1) * factor) + 1) );
-        console.log('' + cyear + '-' + (cmonth - x) + '-' + (Math.round((entry.idu + 1) * factor) + 1));
-        console.log('cyear-'+cyear + ' month=' + cmonth + '  x-' +  x + '- idu =' + entry.idu  + ' factor=' +  factor);
+        //console.log('' + cyear + '-' + (cmonth - x) + '-' + (Math.round((entry.idu + 1) * factor) + 1));
+        // console.log('cyear-'+cyear + ' month=' + cmonth + '  x-' +  x + '- idu =' + entry.idu  + ' factor=' +  factor);
         // console.log('entry.idu='+entry.idu);
         // console.log('created='+created);
         let createdAt = moment(created) + 1;
         let postingDate = createdAt;
         let mon = ' - ' + moment(createdAt).format('MMM-YYYY');
-        console.log('createdAt='+moment(createdAt).format('DD MMM YYYY'));
+        // console.log('createdAt='+moment(createdAt).format('DD MMM YYYY'));
         let newLines = [];
         if (entry.idu == 0) {
           let index = cmonth - x;
@@ -81,7 +81,7 @@ const addAllPostingsInArray = () => {
 
         postings2[uuid()] = posting;
       });
-      if (x == cmonth - 1) {console.log('postings2');console.log(postings2);resolve(postings2)};
+      if (x == cmonth - 1) resolve(postings2);
     }
 
   });

@@ -13,9 +13,7 @@ let uniqCount = 0;
 class PostingsListItem extends React.Component {
   constructor(props) {
     super(props);
-    let date = new Date();
     const pydate = moment().subtract(1,'years').endOf('year');
-    //console.log('pydate=' + pydate.format('MMMM D, YYYY'));
 
     this.state = {
       mainText: undefined,

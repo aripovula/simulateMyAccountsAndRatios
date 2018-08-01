@@ -26,10 +26,11 @@ export const startSignIn = (email, password) => {
 }
 
 export const startSignUp = (email, password) => {
-  console.log('IN ACTION email = '+email);
+  console.log('IN ACTION email = '+email, password);
   return (dispatch, getState) => {
-
+    console.log('IN ACTION email 2= '+email, password);
     return firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+      console.log('IN ACTION email 3 = '+email, password);
       if (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -47,7 +48,11 @@ export const logout = () => ({
 });
 
 export const startLogout = () => {
-  return () => {
-    return firebase.auth().signOut();
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    var toDelete = firebase.database().ref(`users/${uid}/postings`)
+    return toDelete.remove()
+    .then(() => firebase.auth().signOut())
+    .catch(() => firebase.auth().signOut());
   };
 };

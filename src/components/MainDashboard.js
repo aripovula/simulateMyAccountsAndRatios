@@ -18,6 +18,7 @@ import LoadingModal from './LoadingModal';
 import LoadFailedModal from './LoadFailedModal';
 
 let isRestored = false;
+let isMounted = false;
 
 class MainDashboard extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class MainDashboard extends React.Component {
   }
 
   startRestoreDefaults = () => {
-    this.setState(() => ({
+    if (isMounted) this.setState(() => ({
       shortText: 'In process ...',
       mainText: "Loading app related DATA. Please wait"
     }));
@@ -41,11 +42,19 @@ class MainDashboard extends React.Component {
 
   restoreTimedOut = () => {
     if (!isRestored) {
-      this.setState(() => ({
+      if (isMounted) this.setState(() => ({
         mainText: undefined,
         mainTextFail: 'Data loading failed. Please check your INTERNET connection !'
       }));
     }
+  }
+
+  componentDidMount = () => {
+    isMounted = true;
+  }
+
+  componentWillUnmount = () => {
+    isMounted = false;
   }
 
   componentWillMount = () => {
@@ -54,7 +63,7 @@ class MainDashboard extends React.Component {
   }
 
   componentWillReceiveProps = () => {
-    this.setState(() => ({
+    if (isMounted) this.setState(() => ({
       shortText: undefined,
       mainText: undefined,
       mainTextFail: undefined

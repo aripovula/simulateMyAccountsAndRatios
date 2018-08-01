@@ -3,15 +3,10 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 
 import { startSignUp } from '../actions/auth';
+import LoadingModal from './LoadingModal';
+import LoginModal from './LoginModal';
+import LoadFailedModal from './LoadFailedModal';
 
-const modalCustomStyles = {
-    content: {
-        top: '30%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%',
-        transform: 'translate(-50%, -50%)', width: '44%', padding: '1%', margin: '4%'
-    }
-};
-
-Modal.setAppElement(document.getElementById('app'));
 
 // Image is free for personal and commercial use, No attribution required
 let imgSrc = "url('https://images.pexels.com/photos/938963/pexels-photo-938963.jpeg?cs=srgb&dl=accounting-alone-analysis-938963.jpg&fm=jpg')"
@@ -26,8 +21,8 @@ const selectNumbers = () => {
     let text = "";
     let possible = "0123456789";
     let possibleEven = "02468";
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-        text += possibleEven.charAt(Math.floor(Math.random() * possibleEven.length));
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+    text += possibleEven.charAt(Math.floor(Math.random() * possibleEven.length));
     return text;
 }
 
@@ -38,80 +33,95 @@ const generateID = () => {
     return text;
 }
 
-let email = generateID()+"@notreal.com";
-let password = generateID();
+let email2, password2;
+let isRestored = false;
+let isMounted = false;
 
-export const LoginPage = ({ startSignUp }) => (
-    <div style={{ backgroundImage: imgSrc, width: '100%', height: 1000 }}>
-        <header className="header fixedElement">
-            &nbsp; Simulate accounts and ratios
-        </header>
-        <div className="margintop">
-            {LoginModal({ startSignUp })}
-        </div>
-    </div>
-)
+class LoginPage extends React.Component {
+    //export const LoginPage = ({ startSignUp }) => (
 
-const LoginModal = ({ startSignUp }) => (
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpen: true,
+            mainText: undefined,
+            mainTextFail: undefined,
+            shortText: undefined,
+            email: generateID() + "@notreal.com",
+            password: generateID()
+        }
+        this.handleModalLoginClicked = this.handleModalLoginClicked.bind(this);
+    }
 
-    <Modal
-        isOpen={true}
-        style={modalCustomStyles}
-    >
-        <div className="card-4" >
-            <div>
-                <span className="verIndent"></span>
-                <h4 className="is-active">
-                    <span className="horIndent"></span>
-                    Just click 'Login' button - demo version
-                </h4>
+    handleModalLoginClicked = () => {
+        console.log('in handleModalLoginClicked');
+        email2 = this.state.email;
+        password2 = this.state.password;
+        if (isMounted) this.setState(() => ({
+            isOpen: false,
+            mainText: 'Loading app related DATA. Please wait',
+            shortText: 'In process ...',
+            email: generateID() + "@notreal.com",
+            password: generateID()
+        }));
+        isRestored = false;
+        setTimeout(this.restoreTimedOut, 8 * 1000);
+        this.props.startSignUp(email2, password2);
+    }
+
+    restoreTimedOut = () => {
+        if (!isRestored) {
+            if (isMounted) this.setState(() => ({
+                mainText: undefined,
+                mainTextFail: 'Data loading failed. Please check your INTERNET connection !'
+            }));
+        }
+    }
+
+    componentDidMount = () => {
+        isMounted = true;
+      }
+    
+      componentWillUnmount = () => {
+        isMounted = false;
+      }
+    
+    componentWillReceiveProps = () => {
+        if (isMounted) this.setState(() => ({
+            shortText: undefined,
+            mainText: undefined,
+            mainTextFail: undefined
+        }));
+        isRestored = true;
+    }
+
+    render() {
+        return (
+            <div style={{ backgroundImage: imgSrc, width: '100%', height: 1000 }}>
+                <LoginModal
+                    isOpen = {this.state.isOpen}
+                    email = {this.state.email}
+                    password = {this.state.password}
+                    handleModalLoginClicked = {this.handleModalLoginClicked}
+                />
+                <LoadingModal
+                    mainText={this.state.mainText}
+                    shortText={this.state.shortText}
+                />
+                <LoadFailedModal
+                    mainTextFail={this.state.mainTextFail}
+                    shortText={this.state.shortText}
+                />
+                <header className="header fixedElement">
+                    &nbsp; Simulate accounts and ratios
+                </header>
             </div>
-
-            <span className="horIndent" />
-            <span className="postLineList">A random username and password were composed and will be signed up</span>
-            <br /><span className="horIndent" />
-            <span className="postLineList">programmatically with Google Firebase Auth when you click 'Login'.</span>
-            <br /><span className="horIndent" />
-            <span className="postLineList">All data will be wiped off from Google Firebase DB as soon as you log out.</span>
-            <br /><br />
-
-            <div style={{ width: 300 }}>
-                <span className="horIndent"></span>
-                <input
-                    type="text"
-                    defaultValue={email}
-                    autoComplete="off"
-                    placeholder="username"
-                    className="text-input forComment"
-                /></div>
-
-
-            <div style={{ width: 300 }}>
-                <span className="horIndent"></span>
-
-                <input
-                    type="password"
-                    defaultValue={password}
-                    autoComplete="off"
-                    placeholder="password"
-                    className="text-input forComment"
-                /></div>
-
-            <br />
-            <span className="horIndent"></span>
-            <button
-                className="button button1"
-                onClick={() => startSignUp(email, password)}
-            >Login</button>
-            <br /><br />
-        </div>
-    </Modal >
-);
-
+        )
+    }
+}
 
 const mapDispatchToProps = (dispatch) => (
     {
-        startSignUp: () => dispatch(startSignUp(email, password))
+        startSignUp: () => dispatch(startSignUp(email2, password2))
     });
-
 export default connect(undefined, mapDispatchToProps)(LoginPage);

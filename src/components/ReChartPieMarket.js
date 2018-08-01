@@ -29,7 +29,7 @@ class ReChartPieMarket extends React.Component {
   }
 
   onPieEnter(data, index) {
-    this.setState({
+    if (isMounted) this.setState({
       activeIndex: index,
     });
   }
