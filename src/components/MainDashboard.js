@@ -57,7 +57,7 @@ class MainDashboard extends React.Component {
     isMounted = false;
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     console.log('DASH lenGTH = ' + this.props.postings.length);
     if (this.props.postings.length == 0) this.startRestoreDefaults();
   }

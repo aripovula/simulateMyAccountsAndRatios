@@ -25,6 +25,9 @@ export default (state = postingsReducerDefaultState, action) => {
       });
     case 'SET_POSTINGS':
       return action.postings;
+    case 'LOGOUT':
+    console.log('in POSTING LOGOUT');
+      return postingsReducerDefaultState;
     default:
       return state;
   }

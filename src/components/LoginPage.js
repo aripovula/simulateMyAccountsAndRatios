@@ -38,8 +38,6 @@ let isRestored = false;
 let isMounted = false;
 
 class LoginPage extends React.Component {
-    //export const LoginPage = ({ startSignUp }) => (
-
     constructor(props) {
         super(props);
         this.state = {
@@ -54,7 +52,6 @@ class LoginPage extends React.Component {
     }
 
     handleModalLoginClicked = () => {
-        console.log('in handleModalLoginClicked');
         email2 = this.state.email;
         password2 = this.state.password;
         if (isMounted) this.setState(() => ({

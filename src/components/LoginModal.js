@@ -16,9 +16,6 @@ const LoginModal = (props) => (
         isOpen={props.isOpen}
         style={modalCustomStyles}
     >
-    {console.log('props')}
-    {console.log(props)}
-
         <div className="card-4" >
             <div>
                 <span className="verIndent"></span>

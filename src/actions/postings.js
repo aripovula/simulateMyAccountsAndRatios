@@ -76,14 +76,16 @@ export const startSetPostings = () => {
     const uid = getState().auth.uid;
     return database.ref(`users/${uid}/postings`).once('value').then((snapshot) => {
       const postings = [];
-
+      console.log('IN POSTING UID = ');
+      console.log(uid);
       snapshot.forEach((childSnapshot) => {
         postings.push({
           id: childSnapshot.key,
           ...childSnapshot.val()
         });
       });
-
+      console.log('POSTINGS in POSTINGS=');
+      console.log(postings);
       dispatch(setPostings(postings));
     });
   };

@@ -14,6 +14,8 @@ let isEditMode = false;
 let isNewLIused = false;
 let lineItemPrev = '';
 let lineItem = '';
+let date = new Date();
+const pydate = moment().subtract(1, 'years').endOf('year');
 
 export default class PostingForm extends React.Component {
   constructor(props) {
@@ -509,6 +511,13 @@ export default class PostingForm extends React.Component {
                   onDayClick={day => this.processDateChange(day)}
                   onDayChange={day => this.processDateChange(day)}
                   placeholder={this.state.postingDate.format('MMMM D, YYYY')}
+                  dayPickerProps={{
+                    enableOutsideDays: false,
+                    disabledDays: {
+                      before: pydate.toDate(),
+                      after: date,
+                    }
+                  }}    
                 />
               </span>
               <span className="horIndent"></span>

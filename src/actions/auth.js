@@ -52,7 +52,7 @@ export const startLogout = () => {
     const uid = getState().auth.uid;
     var toDelete = firebase.database().ref(`users/${uid}/postings`)
     return toDelete.remove()
-    .then(() => firebase.auth().signOut())
-    .catch(() => firebase.auth().signOut());
+    .then(() => { firebase.auth().signOut(); dispatch(logout());})
+    .catch(() => { firebase.auth().signOut(); dispatch(logout());})
   };
 };

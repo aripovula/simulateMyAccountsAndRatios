@@ -17,7 +17,7 @@ import { Tips } from "../utils/tableUtils";
 import { setStartDate, setEndDate } from '../actions/filters';
 
 let date = new Date();
-const pydate = moment().subtract(1,'years').endOf('year');
+const pydate = moment().subtract(1, 'years').endOf('year');
 let dataPrev;
 
 class RatioSummary extends React.Component {
@@ -57,7 +57,8 @@ class RatioSummary extends React.Component {
 
           <span className="horIndent"></span>
 
-          <span style={{ color: this.state.cColor }}>{this.state.isFullDateFormat ? 'Change reporting date to:' : 'Update dashboard info for date of :'}
+          <span style={{ color: this.state.cColor }}>
+            {this.state.isFullDateFormat ? 'Change reporting date to:' : 'Update dashboard info for date of :'}
             <span className="horIndent"></span>
             <DayPickerInput
               value={this.state.reportDate2}

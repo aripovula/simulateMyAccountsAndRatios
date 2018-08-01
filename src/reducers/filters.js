@@ -7,7 +7,7 @@ const filtersReducerDefaultState = {
   lineItem: '',
   amountF: '',
   sortBy: 'createdDate',
-  startDate: moment().subtract(1,'years').endOf('year'),
+  startDate: moment().subtract(1, 'years').endOf('year'),
   endDate: moment()
 };
 
@@ -65,6 +65,9 @@ export default (state = filtersReducerDefaultState, action) => {
         ...state,
         endDate: action.endDate
       };
+    case 'LOGOUT':
+    console.log('in FILTER LOGOUT');
+      return filtersReducerDefaultState;
     default:
       return state;
   }
