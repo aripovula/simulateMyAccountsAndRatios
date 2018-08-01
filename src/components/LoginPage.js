@@ -1,42 +1,48 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { startLogin } from '../actions/auth';
-import { startSignUp } from '../actions/auth';
 import Modal from 'react-modal';
-// import fLoader from 'file-loader';
-// import uLoader from 'url-loader';
 
-//import LoginModal from './LoginModal';
-const customStyles = {
+import { startSignUp } from '../actions/auth';
+
+const modalCustomStyles = {
     content: {
-        top: '30%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        width: '44%',
-        padding: '1%',
-        margin: '4%'
+        top: '30%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%',
+        transform: 'translate(-50%, -50%)', width: '44%', padding: '1%', margin: '4%'
     }
 };
 
-
 Modal.setAppElement(document.getElementById('app'));
 
-//import BGImage from '../../public/images/loginImage.jpg';
+// Image is free for personal and commercial use, No attribution required
+let imgSrc = "url('https://images.pexels.com/photos/938963/pexels-photo-938963.jpeg?cs=srgb&dl=accounting-alone-analysis-938963.jpg&fm=jpg')"
 
-// const styles = {
-//     paperContainer: {
-//         backgroundImage: `url(${BGImage})`
-//     }
-// };
+const selectLetter = () => {
+    let text = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    return possible.charAt(Math.floor(Math.random() * possible.length));
+}
 
+const selectNumbers = () => {
+    let text = "";
+    let possible = "0123456789";
+    let possibleEven = "02468";
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+        text += possibleEven.charAt(Math.floor(Math.random() * possibleEven.length));
+    return text;
+}
+
+const generateID = () => {
+    let text = "";
+    for (let i = 0; i < 3; i++)
+        text += selectLetter() + selectNumbers();
+    return text;
+}
+
+let email = generateID()+"@notreal.com";
+let password = generateID();
 
 export const LoginPage = ({ startSignUp }) => (
-    // source of image: https://www.pexels.com/photo/person-s-hand-on-top-of-laptop-while-working-938963/
-    // Free for personal and commercial use, No attribution required
-    <div>
+    <div style={{ backgroundImage: imgSrc, width: '100%', height: 1000 }}>
         <header className="header fixedElement">
             &nbsp; Simulate accounts and ratios
         </header>
@@ -50,7 +56,7 @@ const LoginModal = ({ startSignUp }) => (
 
     <Modal
         isOpen={true}
-        style={customStyles}
+        style={modalCustomStyles}
     >
         <div className="card-4" >
             <div>
@@ -69,24 +75,25 @@ const LoginModal = ({ startSignUp }) => (
             <span className="postLineList">All data will be wiped off from Google Firebase DB as soon as you log out.</span>
             <br /><br />
 
-            <div style={{ width: 250 }}>
+            <div style={{ width: 300 }}>
                 <span className="horIndent"></span>
                 <input
                     type="text"
+                    defaultValue={email}
                     autoComplete="off"
                     placeholder="username"
                     className="text-input forComment"
                 /></div>
 
 
-            <div style={{ width: 250 }}>
+            <div style={{ width: 300 }}>
                 <span className="horIndent"></span>
 
                 <input
                     type="password"
+                    defaultValue={password}
                     autoComplete="off"
                     placeholder="password"
-                    size="12"
                     className="text-input forComment"
                 /></div>
 
@@ -94,16 +101,17 @@ const LoginModal = ({ startSignUp }) => (
             <span className="horIndent"></span>
             <button
                 className="button button1"
-                onClick = { () => startSignUp()}
+                onClick={() => startSignUp(email, password)}
             >Login</button>
             <br /><br />
         </div>
     </Modal >
 );
 
+
 const mapDispatchToProps = (dispatch) => (
     {
-        startSignUp: () => dispatch(startSignUp())
+        startSignUp: () => dispatch(startSignUp(email, password))
     });
 
 export default connect(undefined, mapDispatchToProps)(LoginPage);

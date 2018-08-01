@@ -32,7 +32,7 @@ class MainDashboard extends React.Component {
   startRestoreDefaults = () => {
     this.setState(() => ({
       shortText: 'In process ...',
-      mainText: "Restoring defaults. Please wait"
+      mainText: "Loading app related DATA. Please wait"
     }));
     isRestored = false;
     setTimeout(this.restoreTimedOut, 8 * 1000);
@@ -43,7 +43,7 @@ class MainDashboard extends React.Component {
     if (!isRestored) {
       this.setState(() => ({
         mainText: undefined,
-        mainTextFail: 'Restoring defaults failed. Please check your INTERNET connection !'
+        mainTextFail: 'Data loading failed. Please check your INTERNET connection !'
       }));
     }
   }

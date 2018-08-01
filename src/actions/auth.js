@@ -25,10 +25,10 @@ export const startSignIn = (email, password) => {
   }
 }
 
-export const startSignUp = () => {
-  console.log('IN ACTION email = ');
+export const startSignUp = (email, password) => {
+  console.log('IN ACTION email = '+email);
   return (dispatch, getState) => {
-    let email = 'email12@email10.com', password = '12pass12';
+
     return firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
       if (error) {
         var errorCode = error.code;
