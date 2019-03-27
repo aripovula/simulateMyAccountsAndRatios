@@ -8,13 +8,14 @@
     "build:dev": "webpack",
     "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server",
-    "test": "cross-env NODE_ENV=test jest --config=jest.config.json",
+    "test": "jest --watch",
     "start": "node server/server.js",
     "heroku-postbuild": "yarn run build:prod"
   },
   "dependencies": {
+    "ajv": "^6.10.0",
     "babel-cli": "6.24.1",
-    "babel-core": "6.25.0",
+    "babel-core": "^6.25.0",
     "babel-loader": "7.1.1",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "6.23.0",
@@ -57,9 +58,12 @@
   "devDependencies": {
     "cross-env": "^5.2.0",
     "dotenv": "^6.0.0",
-    "enzyme": "^3.3.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.11.2",
     "enzyme-to-json": "^3.3.4",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^23.4.1",
+    "jest-enzyme": "^7.0.2",
     "react-test-renderer": "^16.4.1",
     "webpack-dev-server": "2.5.1"
   },

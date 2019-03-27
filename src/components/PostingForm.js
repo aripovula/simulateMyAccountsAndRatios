@@ -20,8 +20,8 @@ const pydate = moment().subtract(1, 'years').endOf('year');
 export default class PostingForm extends React.Component {
   constructor(props) {
     super(props);
-    console.log('PostingForm CONSTRUCTOR this.props.postingForm');
-    console.log(this.props.posting);
+    // console.log('PostingForm CONSTRUCTOR this.props.postingForm');
+    // console.log(this.props.posting);
     this.state = {
       note: this.props.posting ? this.props.posting.note : '',
       totalAmount: this.props.posting ? this.props.posting.totalAmount : '',
@@ -53,8 +53,8 @@ export default class PostingForm extends React.Component {
   }
 
   onActionButtonSelected = (posting) => {
-    console.log('in onActionButtonSelected data=');
-    console.log(posting.lines);
+    // console.log('in onActionButtonSelected data=');
+    // console.log(posting.lines);
     idCounter = 4;
     this.setState(() => {
       return {
@@ -100,7 +100,7 @@ export default class PostingForm extends React.Component {
     // 2 and 3. when more than one options - user can select to type number or click one of options
     // typed arbitrary text not matching offered options will not be accepted.
     if (lineItem.length == lineItemPrev.length - 1 && lineItem.length > 4) lineItem = '';
-    console.log('id 22 = ' + id2locate + ' lineItem = ' + lineItem + ' lineItemPrev = ' + lineItemPrev);
+    // console.log('id 22 = ' + id2locate + ' lineItem = ' + lineItem + ' lineItemPrev = ' + lineItemPrev);
     let index2change;
     let counterF = 0;
     // because some entry lines could have been deleted we need to find right index to change
@@ -156,7 +156,7 @@ export default class PostingForm extends React.Component {
           });
         }
       }
-      console.log('FSLIs2offer.length=' + FSLIs2offer.length);
+      // console.log('FSLIs2offer.length=' + FSLIs2offer.length);
       if (!isFound) {
         // if matching text not yet found and only one line item that is contained in 
         // pre-added line items is found auto-use it as selected line item and add it to the input field
@@ -178,8 +178,8 @@ export default class PostingForm extends React.Component {
               offeredFSLIindex: id2locate
             }
           });
-          console.log('FSLIs2offer');
-          console.log(FSLIs2offer);
+          // console.log('FSLIs2offer');
+          // console.log(FSLIs2offer);
           // if no match warn the user
         } else {
           isNewLIused = true;
@@ -199,7 +199,7 @@ export default class PostingForm extends React.Component {
 
   handleOfferSelection = (selectionNum) => {
     const idSel = selectionNum - 1;
-    console.log('idSel = ' + idSel);
+    // console.log('idSel = ' + idSel);
     // console.log('this.state.linesData');
     // console.log(this.state.linesData);
     // console.log('e.target.id = ' + e.target.id);
@@ -214,7 +214,7 @@ export default class PostingForm extends React.Component {
         newLinesData.push(lineData);
       });
       lineItem = prevState.offeredFSLIs[idSel];
-      console.log('lineItemPrev = ' + lineItemPrev);
+      // console.log('lineItemPrev = ' + lineItemPrev);
       // console.log('newLinesData');
       // console.log(newLinesData);
 
@@ -225,8 +225,8 @@ export default class PostingForm extends React.Component {
       }
     });
     isNewLIused = false;
-    console.log('this.state.linesData IN FUNCTION');
-    console.log(this.state.linesData);
+    // console.log('this.state.linesData IN FUNCTION');
+    // console.log(this.state.linesData);
   }
 
   onAmountChanged = (e) => {
@@ -238,7 +238,7 @@ export default class PostingForm extends React.Component {
       if (lineData.idu == id2locate) index2change = counterF;
       counterF++;
     });
-    console.log('id = ' + e.target.id + ' amount = ' + amount);
+    // console.log('id = ' + e.target.id + ' amount = ' + amount);
     if (!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
       this.setState((prevState) => {
         if (!amount) { prevState.linesData[index2change].amount = '' }
@@ -292,18 +292,18 @@ export default class PostingForm extends React.Component {
   processEntryTypeChange = (e) => {
     let id2locate = e.target.id;
     let index2change;
-    console.log('id = ' + id2locate);
+    // console.log('id = ' + id2locate);
     this.setState((prevState) => {
       // console.log('state - all lines');
       let counterF = 0;
       this.state.linesData.map((lineData) => {
-        console.log(lineData);
+        // console.log(lineData);
         if (lineData.idu == id2locate) { index2change = counterF; console.log(index2change); }
         counterF++;
       });
       let isDr = !prevState.linesData[index2change].isDr;
       prevState.linesData[index2change].isDr = isDr;
-      console.log('id = ' + index2change + ' isDr = ' + isDr);
+      // console.log('id = ' + index2change + ' isDr = ' + isDr);
       return {
         linesData: prevState.linesData
       }
@@ -355,15 +355,15 @@ export default class PostingForm extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log('is2go2list=' + is2go2list);
+    // console.log('is2go2list=' + is2go2list);
 
     let isRejectedBasedOnLineItemIDs = false;
     let verificationCounter = 0;
     let FSLIs = getPYbalances();
     let linesDataNew;
     this.setState((prevState) => {
-      console.log('prevState.linesData');
-      console.log(prevState.linesData);
+      // console.log('prevState.linesData');
+      // console.log(prevState.linesData);
       linesDataNew = prevState.linesData;
 
       for (let x = 0; x < this.state.linesData.length; x++) {
@@ -384,10 +384,10 @@ export default class PostingForm extends React.Component {
         linesData: linesDataNew
       }
     }, () => {
-      console.log('AFTER ASSIGNING LIDs');
-      console.log(this.state.linesData);
+      // console.log('AFTER ASSIGNING LIDs');
+      // console.log(this.state.linesData);
 
-      console.log('verificationCounter=' + verificationCounter);
+      // console.log('verificationCounter=' + verificationCounter);
       if (verificationCounter != this.state.linesData.length) {
         this.onErrorChange('Please double check correctness of all line items');
         isRejectedBasedOnLineItemIDs = true;
@@ -412,8 +412,8 @@ export default class PostingForm extends React.Component {
 
 
       render() {
-        console.log('this.state.linesData in RENDER');
-        console.log(this.state.linesData);
+        // console.log('this.state.linesData in RENDER');
+        // console.log(this.state.linesData);
         { countP = 0 }
         return (
           <form className="form" onSubmit={this.onSubmit}>
@@ -434,7 +434,7 @@ export default class PostingForm extends React.Component {
 
             <div>
             <br />
-            {console.log('this.state.offeredFSLIs.length = ' + this.state.offeredFSLIs.length)}
+
             {this.state.offeredFSLIs.length > 0 &&
 
               this.state.offeredFSLIs.map(offeredFSLI => {
@@ -524,7 +524,6 @@ export default class PostingForm extends React.Component {
 
               <button className="button button1 buttonwide">Post Entry</button>
 
-              {console.log('this.isEditMode' + isEditMode)}
               {!isEditMode && <span>
                 <label className="text14black">&amp; stay here &nbsp;
             <input
@@ -541,5 +540,4 @@ export default class PostingForm extends React.Component {
           </form>
         )
       }
-      //render();
     }
