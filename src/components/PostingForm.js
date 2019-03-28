@@ -416,7 +416,7 @@ export default class PostingForm extends React.Component {
         // console.log(this.state.linesData);
         { countP = 0 }
         return (
-          <form className="form" onSubmit={this.onSubmit}>
+          <form className="form" onSubmit={this.onSubmit} test-attr="postingForm">
 
             {this.state.linesData.map((lineData) => {
               return <PostingOneLine
@@ -464,6 +464,7 @@ export default class PostingForm extends React.Component {
               <button
                 className="button1"
                 type="button"
+                test-attr="plusDrButton"
                 onClick={this.processAddDrLine}
               >+ Dr line
             </button>
@@ -490,6 +491,7 @@ export default class PostingForm extends React.Component {
                 type="text"
                 autoComplete="off"
                 placeholder="Description"
+                test-attr="description_input"
                 className="text-input forComment"
                 value={this.state.note}
                 onChange={this.onNoteChange}
