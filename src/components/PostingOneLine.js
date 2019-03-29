@@ -9,12 +9,13 @@ export default class PostingOneLine extends React.Component {
 
   render() {
     isDr = this.props.isDr;
-    return <div>
+    return <div test-attr="postingOneLine">
       <span className="horIndent"></span>
       <button
         id={this.props.idu}
         type='button'
         className="button1"
+        test-attr="DrButton"
         onClick={this.props.processEntryTypeChange}
       >
         {isDr ? 'Dr' : 'Cr'}
@@ -24,6 +25,7 @@ export default class PostingOneLine extends React.Component {
         id={this.props.idu}
         type="text"
         placeholder=" line item"
+        test-attr="text_input_with_placeholder"
         className="text-input forLineItem"
         //size="36"
         value={this.props.lineItem}
@@ -34,6 +36,7 @@ export default class PostingOneLine extends React.Component {
         id={this.props.idu}
         type="number"
         placeholder=" amount, US$"
+        test-attr="text_input_with_zero_value"
         className="text-input forNumber"
         //size="16"
         value={'' + (parseFloat(this.props.amount, 10) / 100)}

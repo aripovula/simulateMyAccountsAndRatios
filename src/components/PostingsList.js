@@ -77,7 +77,7 @@ class PostingsList extends React.Component {
     countP = 0;
     return (
 
-      <div>
+      <div test-attr="postingsList">
         <LoadingModal
           mainText={this.state.mainText}
           shortText={this.state.shortText}

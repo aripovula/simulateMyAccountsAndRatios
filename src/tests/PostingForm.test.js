@@ -37,12 +37,29 @@ it('renders Description text input', () => {
     expect(item.length).toBe(1);
 });
 
+// testing State
 test('initially state.totalAmount == 0', () => {
     const wrapper = setup();
     const item = wrapper.state("totalAmount");
     expect(item.length).toBe(0);
 });
 
+// testing State and actual display based on state change
+it('renders Description text input', () => {
+    const note = "Revenue recognition";
+    const wrapper = setup(null, {note});
+    const inputItem = findAttr(wrapper, "description_input");
+    const stateValue = wrapper.state("note");
+    inputItem.simulate('change', { target: { value: 'Revenue recognition' } });
+    wrapper.update();
+    expect(stateValue).toEqual(note);
+    // toEqual version
+    expect(inputItem.get(0).props.value).toEqual('Revenue recognition');
+    // toContain version
+    expect(inputItem.get(0).props.value).toContain('Revenue recognition');
+});
+
+// testing State
 it('adds an object to state.linesData if +DrLine button clicked', () => {
     const linesData = [
         { idu: 0, lineItemID: 0, isDr: true, lineItem: '', amount: 0 },
@@ -55,3 +72,6 @@ it('adds an object to state.linesData if +DrLine button clicked', () => {
     const item2 = wrapper.state("linesData");
     expect(item2.length).toBe(3);
 });
+
+// text is rendered based on these changes, but not on this component.
+// hence related unit testing is done in relevant component as shallow test
