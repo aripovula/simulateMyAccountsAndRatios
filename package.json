@@ -32,6 +32,7 @@
     "node-sass": "4.5.3",
     "normalize.css": "7.0.0",
     "numeral": "^2.0.6",
+    "prop-types": "^15.7.2",
     "react": "^16.4.1",
     "react-day-picker": "^7.1.10",
     "react-dom": "^16.4.1",
@@ -56,6 +57,7 @@
     "webpack": "3.1.0"
   },
   "devDependencies": {
+    "check-prop-types": "^1.1.2",
     "cross-env": "^5.2.0",
     "dotenv": "^6.0.0",
     "enzyme": "^3.9.0",

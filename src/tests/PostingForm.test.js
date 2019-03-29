@@ -13,7 +13,7 @@ const setup = ( props={}, state=null) => {
     return wrapper;
 }
 
-const findAttr = (wrapper, val) => {
+const findByAttr = (wrapper, val) => {
     return wrapper.find(`[test-attr="${val}"]`);
 }
 
@@ -21,19 +21,19 @@ it('renders without crashing', () => {
     const wrapper = setup();
     // console.log(wrapper.debug());
     expect(wrapper).toBeTruthy();
-    const item = findAttr(wrapper, "postingForm");
+    const item = findByAttr(wrapper, "postingForm");
     expect(item.length).toBe(1);
 });
 
 it('renders + Dr line button', () => {
     const wrapper = setup();
-    const item = findAttr(wrapper, "plusDrButton");
+    const item = findByAttr(wrapper, "plusDrButton");
     expect(item.length).toBe(1);
 });
 
 it('renders Description text input', () => {
     const wrapper = setup();
-    const item = findAttr(wrapper, "description_input");
+    const item = findByAttr(wrapper, "description_input");
     expect(item.length).toBe(1);
 });
 
@@ -48,7 +48,7 @@ test('initially state.totalAmount == 0', () => {
 it('renders Description text input', () => {
     const note = "Revenue recognition";
     const wrapper = setup(null, {note});
-    const inputItem = findAttr(wrapper, "description_input");
+    const inputItem = findByAttr(wrapper, "description_input");
     const stateValue = wrapper.state("note");
     inputItem.simulate('change', { target: { value: 'Revenue recognition' } });
     wrapper.update();
@@ -66,7 +66,7 @@ it('adds an object to state.linesData if +DrLine button clicked', () => {
         { idu: 1, lineItemID: 0, isDr: false, lineItem: '', amount: 0 }
     ];
     const wrapper = setup(null, {linesData});
-    const item = findAttr(wrapper, "plusDrButton");
+    const item = findByAttr(wrapper, "plusDrButton");
     item.simulate('click');
     wrapper.update();
     const item2 = wrapper.state("linesData");
