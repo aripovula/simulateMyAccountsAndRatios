@@ -15,7 +15,7 @@ import LoadFailedModal from './LoadFailedModal';
 let countP;
 let isRestored = false;
 
-class PostingsList extends React.Component {
+export class PostingsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -71,9 +71,7 @@ class PostingsList extends React.Component {
 
 
   render() {
-    console.log("from PList PROPs =");
-    console.log(this.props);
-    // console.log('amountF=' + this.props.postings.amountF)
+    // console.log("from PList PROPs =", this.props);
     countP = 0;
     return (
 
@@ -118,15 +116,19 @@ class PostingsList extends React.Component {
           </div>
           <div>
 
-            {this.props.postings.length == 0 && this.props.separateLines.length == 0 && <div className="boxedtransp"><br />No entries have been found !<br /><br /></div>}
+            {this.props.postings && this.props.postings.length == 0 && this.props.separateLines 
+              
+              && this.props.separateLines.length == 0 
+              && <div className="boxedtransp"><br />No entries have been found !<br /><br /></div>
+            }
 
-            {this.state.showLinesOnly == true && this.props.separateLines.map((separateLine) => {
+            {this.state.showLinesOnly == true && this.props.separateLines && this.props.separateLines.map((separateLine, i) => {
               //console.log(separateLine);
               countP++;
-              return <SeparateLineItem key={separateLine.id} countP={countP} {...separateLine} />;
+              return <SeparateLineItem key={separateLine.id || i} countP={countP} {...separateLine} />;
             })}
 
-            {this.state.showLinesOnly == false && this.props.postings.map((posting) => {
+            {this.state.showLinesOnly == false && this.props.postings && this.props.postings.map((posting) => {
               //console.log(posting);
               countP++;
               return <PostingListItem key={posting.id} countP={countP} {...posting} />;

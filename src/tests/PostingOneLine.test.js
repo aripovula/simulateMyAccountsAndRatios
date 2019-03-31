@@ -1,11 +1,10 @@
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
-import EnzymeAdapter from 'enzyme-adapter-react-16';
+import { shallow } from 'enzyme';
+
 import PropTypes from 'prop-types';
 import checkPropTypes from 'check-prop-types';
 import PostingOneLine from '../components/PostingOneLine';
 
-Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const defaultProps = {isDr: true};
 
