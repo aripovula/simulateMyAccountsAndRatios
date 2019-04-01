@@ -11,6 +11,8 @@ export const history = createBrowserHistory();
 import { addPosting, editPosting, removePosting } from '../actions/postings';
 import { createStore } from 'redux';
 import postingsReducers from '../reducers/postings';
+import combinedReducers from '../store/configureStore';
+import { startAddPosting } from '../actions/postings';
 
 // import ConnectedHome, { Home } from '../src/js/components/Home'
 // import PropTypes from 'prop-types';
@@ -110,5 +112,39 @@ describe('Connected, mount + wrapping in <Provider>', () => {
     it('gets props that match with initialState', () => {
         expect(wrapper.find(PostingsListUnconctd).prop('postings')).toEqual(initialState.postings);
     });
+
+})
+
+
+describe('Actual Store + reducers, Integration test', () => {
+
+    const initialState = { postings: [aPosting] }
+    // const mockStore = configureStore();
+    let store;
+    let wrapper;
+
+    beforeEach(() => {
+        store = createStore(combinedReducers);
+        wrapper = mount(
+            <Provider store={store}>
+                <Router history={history}>
+                    <PostingsList />
+                </Router>
+            </Provider>
+        );
+        // console.log(wrapper.debug());
+    })
+
+
+    it('renders connected component without crashing', () => {
+        expect(wrapper).toBeTruthy();
+        const item = findByAttr(wrapper, "postingsList");
+        expect(wrapper.length).toBe(1);
+    });
+
+    // it('gets props that match with initialState', () => {
+    //     store.dispatch(startAddPosting(aPosting));
+    //     expect(wrapper.find(PostingsListUnconctd).prop('postings')).toEqual(initialState.postings);
+    // });
 
 })
