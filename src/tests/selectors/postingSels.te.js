@@ -8,7 +8,7 @@ const aPosting = {
     note: 'abc1234', postingDate: 1234, totalAmount: 2468
 };
 
-const postings = [ aPosting, aPosting, aPosting ];
+const postings = [aPosting, JSON.parse(JSON.stringify(aPosting)), JSON.parse(JSON.stringify(aPosting))];
 postings[0].note = 'xyz1234';
 postings[2].note = 'opr1234';
 

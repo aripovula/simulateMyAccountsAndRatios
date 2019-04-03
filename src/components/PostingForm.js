@@ -379,7 +379,7 @@ export default class PostingForm extends React.Component {
           }
         }
       }
-  
+
       return {
         linesData: linesDataNew
       }
@@ -411,135 +411,135 @@ export default class PostingForm extends React.Component {
   }
 
 
-      render() {
-        // console.log('this.state.linesData in RENDER');
-        // console.log(this.state.linesData);
-        { countP = 0 }
-        return (
-          <form className="form" onSubmit={this.onSubmit} test-attr="postingForm">
+  render() {
+    // console.log('this.state.linesData in RENDER');
+    // console.log(this.state.linesData);
+    { countP = 0 }
+    return (
+      <form className="form" onSubmit={this.onSubmit} test-attr="postingForm">
 
-            {this.state.linesData.map((lineData) => {
-              return <PostingOneLine
-                key={lineData.idu}
-                idu={lineData.idu}
-                isDr={lineData.isDr}
-                lineItem={lineData.lineItem}
-                amount={lineData.amount}
-                processDeleteLine={this.processDeleteLine}
-                processEntryTypeChange={this.processEntryTypeChange}
-                onAmountChanged={this.onAmountChanged}
-                onLineItemChange={this.onLineItemChange}
-              />
-            })}
+        {this.state.linesData.map((lineData) => {
+          return <PostingOneLine
+            key={lineData.idu}
+            idu={lineData.idu}
+            isDr={lineData.isDr}
+            lineItem={lineData.lineItem}
+            amount={lineData.amount}
+            processDeleteLine={this.processDeleteLine}
+            processEntryTypeChange={this.processEntryTypeChange}
+            onAmountChanged={this.onAmountChanged}
+            onLineItemChange={this.onLineItemChange}
+          />
+        })}
 
-            <div>
-            <br />
+        <div>
+          <br />
 
-            {this.state.offeredFSLIs.length > 0 &&
+          {this.state.offeredFSLIs.length > 0 &&
 
-              this.state.offeredFSLIs.map(offeredFSLI => {
-                return (
-                  <div key={++countP}>
+            this.state.offeredFSLIs.map(offeredFSLI => {
+              return (
+                <div key={++countP}>
+                  <span className="horIndent"></span>
+                  <span>
+
+                    <span style={{ color: 'red' }}>{countP}. {offeredFSLI}</span>
+
                     <span className="horIndent"></span>
-                    <span>
 
-                      <span style={{ color: 'red' }}>{countP}. {offeredFSLI}</span>
+                    <span id={countP} className="noDecor2" onClick={(e) => this.handleOfferSelection(e.target.id)}>click to select or type {countP}</span>
+                  </span>
+                </div>
+              )
+            })
+            //offeredFSLIindex
+          }
 
-                      <span className="horIndent"></span>
+        </div>
 
-                      <span id={countP} className="noDecor2" onClick={(e) => this.handleOfferSelection(e.target.id)}>click to select or type {countP}</span>
-                    </span>
-                  </div>
-                )
-              })
-              //offeredFSLIindex
-            }
+        <div>
+          <span className="verIndent"></span>
+          <span className="horIndent"></span>
 
-          </div>
-          
-            <div>
-              <span className="verIndent"></span>
-              <span className="horIndent"></span>
-
-              <button
-                className="button1"
-                type="button"
-                test-attr="plusDrButton"
-                onClick={this.processAddDrLine}
-              >+ Dr line
+          <button
+            className="button1"
+            type="button"
+            test-attr="plusDrButton"
+            onClick={this.processAddDrLine}
+          >+ Dr line
             </button>
 
-              <span className="horIndent"></span>
+          <span className="horIndent"></span>
 
-              <button
-                className="button1"
-                type="button"
-                onClick={this.processAddCrLine}
-              >+ Cr line
+          <button
+            className="button1"
+            type="button"
+            onClick={this.processAddCrLine}
+          >+ Cr line
           </button>
 
-              <span className="horIndent"></span>
-
-              <span className="warning">{this.state.error != null && this.state.error}</span>
-              <span className="success"><strong>{this.state.success != null && this.state.success}</strong></span>
-
-              <br />
-              <span className="verIndentFive"></span>
-              <span className="horIndent"></span>
-
-              <input
-                type="text"
-                autoComplete="off"
-                placeholder="Description"
-                test-attr="description_input"
-                className="text-input forComment"
-                value={this.state.note}
-                onChange={this.onNoteChange}
-              />
-
-              <span className="horIndent"></span>
-              <span className="noDecor" onClick={this.onStayHereSelected}>clear form</span>
-
-              <span className="verIndentFive"></span>
-              <span className="horIndent"></span>
-
-              <span>Date of posting:
           <span className="horIndent"></span>
-                <DayPickerInput
-                  value={this.state.postingDate.format('MMMM D, YYYY')}
-                  selectedDays={this.state.postingDate}
-                  format="LL"
-                  formatDate={formatDate}
-                  onDayClick={day => this.processDateChange(day)}
-                  onDayChange={day => this.processDateChange(day)}
-                  placeholder={this.state.postingDate.format('MMMM D, YYYY')}
-                  dayPickerProps={{
-                    enableOutsideDays: false,
-                    disabledDays: {
-                      before: pydate.toDate(),
-                      after: date,
-                    }
-                  }}    
-                />
-              </span>
-              <span className="horIndent"></span>
 
-              <button className="button button1 buttonwide">Post Entry</button>
+          <span test-attr="errorMsg" className="warning">{this.state.error != null && this.state.error}</span>
+          <span className="success"><strong>{this.state.success != null && this.state.success}</strong></span>
 
-              {!isEditMode && <span>
-                <label className="text14black">&amp; stay here &nbsp;
+          <br />
+          <span className="verIndentFive"></span>
+          <span className="horIndent"></span>
+
+          <input
+            type="text"
+            autoComplete="off"
+            placeholder="Description"
+            test-attr="description_input"
+            className="text-input forComment"
+            value={this.state.note}
+            onChange={this.onNoteChange}
+          />
+
+          <span className="horIndent"></span>
+          <span className="noDecor" onClick={this.onStayHereSelected}>clear form</span>
+
+          <span className="verIndentFive"></span>
+          <span className="horIndent"></span>
+
+          <span>Date of posting:
+          <span className="horIndent"></span>
+            <DayPickerInput
+              value={this.state.postingDate.format('MMMM D, YYYY')}
+              selectedDays={this.state.postingDate}
+              format="LL"
+              formatDate={formatDate}
+              onDayClick={day => this.processDateChange(day)}
+              onDayChange={day => this.processDateChange(day)}
+              placeholder={this.state.postingDate.format('MMMM D, YYYY')}
+              dayPickerProps={{
+                enableOutsideDays: false,
+                disabledDays: {
+                  before: pydate.toDate(),
+                  after: date,
+                }
+              }}
+            />
+          </span>
+          <span className="horIndent"></span>
+
+          <button className="button button1 buttonwide">Post Entry</button>
+
+          {!isEditMode && <span>
+            <label className="text14black">&amp; stay here &nbsp;
             <input
-                    name="is2go2list"
-                    type="checkbox"
-                    onChange={this.handleCheckboxChange} />
-                </label>
-              </span>
-              }
+                name="is2go2list"
+                type="checkbox"
+                onChange={this.handleCheckboxChange} />
+            </label>
+          </span>
+          }
 
 
-              <br /><span className="smalltext">* click Dr or Cr buttons to toggle between Dr and Cr. Total check is auto re-counted.</span>
-            </div>
-          </form>
-        )
-      }
-    }
+          <br /><span className="smalltext">* click Dr or Cr buttons to toggle between Dr and Cr. Total check is auto re-counted.</span>
+        </div>
+      </form>
+    )
+  }
+}
