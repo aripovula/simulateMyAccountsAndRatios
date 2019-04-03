@@ -101,8 +101,8 @@ export class PostingsList extends React.Component {
 
 
                   <span onChange={this.togglePostingsAndLines.bind(this)}>
-                    <input type="radio" value="postings" name="filterby" defaultChecked /> &nbsp;postings &nbsp;
-                    <input type="radio" value="lines" name="filterby" /> &nbsp;entry lines
+                    <label><input type="radio" value="postings" name="filterby" defaultChecked /> &nbsp;postings &nbsp;</label>
+                    <label><input type="radio" value="lines" name="filterby" /> &nbsp;entry lines</label>
                   </span>
                 </span>
                 <span className="horIndent"></span>
@@ -119,7 +119,7 @@ export class PostingsList extends React.Component {
             {this.props.postings && this.props.postings.length == 0 && this.props.separateLines 
               
               && this.props.separateLines.length == 0 
-              && <div className="boxedtransp"><br />No entries have been found !<br /><br /></div>
+              && <div test-attr="notFound" className="boxedtransp"><br />No entries have been found !<br /><br /></div>
             }
 
             {this.state.showLinesOnly == true && this.props.separateLines && this.props.separateLines.map((separateLine, i) => {

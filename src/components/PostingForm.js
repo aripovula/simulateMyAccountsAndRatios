@@ -414,6 +414,8 @@ export default class PostingForm extends React.Component {
   render() {
     // console.log('this.state.linesData in RENDER');
     // console.log(this.state.linesData);
+    // console.log('props-', this.props);
+    
     { countP = 0 }
     return (
       <form className="form" onSubmit={this.onSubmit} test-attr="postingForm">

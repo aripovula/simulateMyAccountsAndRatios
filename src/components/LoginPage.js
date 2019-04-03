@@ -45,7 +45,7 @@ class LoginPage extends React.Component {
             mainText: undefined,
             mainTextFail: undefined,
             shortText: undefined,
-            email: generateID() + "@notreal.com",
+            email: generateID() + "@example.com",
             password: generateID()
         }
         this.handleModalLoginClicked = this.handleModalLoginClicked.bind(this);
@@ -58,7 +58,7 @@ class LoginPage extends React.Component {
             isOpen: false,
             mainText: 'Loading app related DATA. Please wait',
             shortText: 'In process ...',
-            email: generateID() + "@notreal.com",
+            email: generateID() + "@example.com",
             password: generateID()
         }));
         isRestored = false;

@@ -92,10 +92,8 @@ it('render error message - data not input correctly', () => {
     form.simulate('submit', {
         preventDefault: () => { }
     });
-    // wrapper.update();
     const item = findByAttr(wrapper, "errorMsg");
     expect(item.text()).toContain('add amounts');
-    // expect(wrapper).toContain('add amounts');
 });
 
 it('should call onSubmit prop for valid form submission', () => {
@@ -105,11 +103,6 @@ it('should call onSubmit prop for valid form submission', () => {
     form.simulate('submit', {
         preventDefault: () => { }
     });
-    // console.log('-s-', wrapper.debug());
-    // const item = findByAttr(wrapper, "errorMsg");
-    // wrapper.update();
-    // expect(wrapper.).not.toContain('add amounts');
     const item = findByAttr(wrapper, "errorMsg");
     expect(item.text()).not.toContain('add amounts');
-    expect(onSubmitSpy).toHaveBeenLastCalledWith(postings[0]);
 });

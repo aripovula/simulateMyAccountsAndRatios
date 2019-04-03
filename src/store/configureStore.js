@@ -7,6 +7,8 @@ import authReducer from '../reducers/auth';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+export const middlewares = [thunk];
+
 export default () => {
   const store = createStore(
     combineReducers({
@@ -14,7 +16,7 @@ export default () => {
       filters: filtersReducer,
       auth: authReducer
     }),
-    composeEnhancers(applyMiddleware(thunk))
+    composeEnhancers(applyMiddleware(...middlewares))
   );
 
   
