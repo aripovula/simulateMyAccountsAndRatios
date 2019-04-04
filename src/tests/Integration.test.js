@@ -1,65 +1,17 @@
 import React from 'react';
 import uuid from 'uuid';
-import { shallow, mount } from 'enzyme';
-import renderer from 'react-test-renderer'
-import PostingsList, { PostingsList as PostingsListUnconctd } from '../components/PostingsList'; 
-// import configureStore from 'redux-mock-store'
 import configureStore from '../store/configureStore';
-import { Provider } from 'react-redux'
-import { Router, Route, Switch, Link, NavLink } from 'react-router-dom';
-import { createBrowserHistory} from 'history';
-export const history = createBrowserHistory();
-
-import { addPosting, editPosting, removePosting } from '../actions/postings';
-import { createStore, applyMiddleware } from 'redux';
-
-import postingsReducers from '../reducers/postings';
-import combinedReducers, { middlewares } from '../store/configureStore';
 import { startAddDummy } from '../actions/dummy';
+import { startAddPostingSkipFb } from '../actions/postings';
 
 const store = configureStore();
-console.log(store.getState());
-
-
-// const storeFactory = (initialState) => {
-//     const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
-//     return createStoreWithMiddleware(combinedReducers, initialState);
-// };
-
-// const setup = ( props={}, initialState={}) => {
-//     // store = storeFactory(initialState);
-//     const wrapper = shallow(<PostingsList store={store} />).dive();
-//     // console.log(wrapper.debug());
-//     return wrapper;
-// }
+// console.log(store.getState());
 
 const dummyObj = { dummy: 'test12' }
 
-const findByAttr = (wrapper, val) => {
-    return wrapper.find(`[test-attr="${val}"]`);
-}
-
 describe('Actual Store + reducers, Integration test', () => {
 
-    const initialState = { dummyObj }
-    // const mockStore = configureStore();
-    // let store;
-    let wrapper;
-
-    // beforeEach(() => {
-    //     // store = createStore(combinedReducers);
-    //     // wrapper = setup(null, initialState);
-    //     // console.log(wrapper.debug());
-    // })
-
-
-    // it('renders connected component without crashing', () => {
-    //     expect(wrapper).toBeTruthy();
-    //     const item = findByAttr(wrapper, "postingsList");
-    //     expect(wrapper.length).toBe(1);
-    // });
-
-    it('gets props that match with initialState', async () => {
+    it('should set Store value when dummy data is dispatched', async () => {
         
         const oldState = store.getState();
         
@@ -76,3 +28,26 @@ describe('Actual Store + reducers, Integration test', () => {
 })
 
 
+describe('Actual Store + reducers, Integration test', () => {
+
+    const aPosting = {
+        createdAt: 1, isUnPosted: false,
+        linesData: [{ amount: 1234, idu: 0, isDr: true, lineItem: "Cash", lineItemID: 1 },
+        { amount: 1234, idu: 1, isDr: false, lineItem: "Loan", lineItemID: 21 }],
+        note: 'abc1234', postingDate: 1234, totalAmount: 2468
+    };
+
+    it('should set Store value when a new posting is dispatched', async () => {
+
+        const oldState = store.getState();
+        const id = uuid();
+        store.dispatch(startAddPostingSkipFb(aPosting, id));
+        const newState = store.getState();
+        const expected = JSON.parse(JSON.stringify(oldState));
+        expected.postings = [aPosting];
+        expected.postings[0]["id"] = id;
+
+        expect(JSON.parse(JSON.stringify(newState))).toEqual(JSON.parse(JSON.stringify(expected)));
+    });
+
+})

@@ -29,7 +29,31 @@ export const startAddPosting = (postingData = {}) => {
     });
     // return Promise.resolve();
   };
-  
+};
+
+
+export const startAddPostingSkipFb = (postingData = {}, id) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    const {
+      linesData,
+      note = '',
+      totalAmount = '',
+      createdAt = 0,
+      postingDate = 0,
+      isUnPosted = false
+    } = postingData;
+    const posting = { linesData, note, totalAmount, createdAt, postingDate, isUnPosted };
+
+    // return database.ref(`users/${uid}/postings`).push(posting).then((ref) => {
+      dispatch(addPosting({
+        id,
+        ...posting
+      }));
+    // });
+    // return Promise.resolve();
+  };
+
 };
 
 

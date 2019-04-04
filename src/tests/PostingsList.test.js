@@ -14,23 +14,6 @@ import postingsReducers from '../reducers/postings';
 import combinedReducers from '../store/configureStore';
 import { startAddPosting } from '../actions/postings';
 
-// import ConnectedHome, { Home } from '../src/js/components/Home'
-// import PropTypes from 'prop-types';
-// import checkPropTypes from 'check-prop-types';
-
-
-// const storeFactory = (initialState) => {
-//     return createStore(rootReducer, initialState);
-// };
-
-// const setup = ( props={}, initialState={}) => {
-//     const store = storeFactory(initialState);
-//     const wrapper = shallow(<PostingsList {...props}  />);
-//     // if (state) wrapper.setState(state);
-//     console.log(wrapper.debug());
-//     return wrapper;
-// }
-
 const findByAttr = (wrapper, val) => {
     return wrapper.find(`[test-attr="${val}"]`);
 }
@@ -53,8 +36,6 @@ describe('Unconnected, shallow, test renders', () => {
     it('renders without crashing', () => {
         expect(wrapper).toBeTruthy();
         const item = findByAttr(wrapper, "postingsList");
-        // wrapper.update();
-        // console.log(wrapper.debug());
         expect(item.length).toBe(1);
     });
 })
@@ -116,7 +97,7 @@ describe('Connected, mount + wrapping in <Provider>', () => {
 })
 
 
-describe('Actual Store + reducers, Integration test', () => {
+describe('Actual Store + reducers', () => {
 
     const initialState = { postings: [aPosting] }
     // const mockStore = configureStore();
@@ -141,10 +122,5 @@ describe('Actual Store + reducers, Integration test', () => {
         const item = findByAttr(wrapper, "postingsList");
         expect(wrapper.length).toBe(1);
     });
-
-    // it('gets props that match with initialState', () => {
-    //     store.dispatch(startAddPosting(aPosting));
-    //     expect(wrapper.find(PostingsListUnconctd).prop('postings')).toEqual(initialState.postings);
-    // });
 
 })
