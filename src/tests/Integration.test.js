@@ -2,7 +2,7 @@ import React from 'react';
 import uuid from 'uuid';
 import configureStore from '../store/configureStore';
 import { startAddDummy } from '../actions/dummy';
-import { startAddPostingSkipFb } from '../actions/postings';
+import { startAddPostingSkipFb, startAddPostingSimulateDelay } from '../actions/postings';
 
 const store = configureStore();
 // console.log(store.getState());
@@ -50,4 +50,31 @@ describe('Actual Store + reducers, Integration test', () => {
         expect(JSON.parse(JSON.stringify(newState))).toEqual(JSON.parse(JSON.stringify(expected)));
     });
 
-})
+});
+
+describe('Actual Store + reducers, Integration test ASYNCHRONEOUS', () => {
+
+    const aPosting = {
+        createdAt: 1, isUnPosted: false,
+        linesData: [{ amount: 1234, idu: 0, isDr: true, lineItem: "Cash", lineItemID: 1 },
+        { amount: 1234, idu: 1, isDr: false, lineItem: "Loan", lineItemID: 21 }],
+        note: 'abc1234', postingDate: 1234, totalAmount: 2468
+    };
+
+    it('should set Store value when asyncronous action is dispatched', async () => {
+
+        const oldState = store.getState();
+        const id = uuid();
+        return store.dispatch(startAddPostingSimulateDelay(aPosting, id))
+        .then(() => {
+            const newState = store.getState();
+            const expected = JSON.parse(JSON.stringify(oldState));
+            expected.postings.push(aPosting);
+            expected.postings[1]["id"] = id;
+            expect(JSON.parse(JSON.stringify(newState))).toEqual(JSON.parse(JSON.stringify(expected)));
+        })
+        ;
+    });
+
+});
+

@@ -56,6 +56,37 @@ export const startAddPostingSkipFb = (postingData = {}, id) => {
 
 };
 
+export const startAddPostingSimulateDelay = (postingData = {}, id) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    const {
+      linesData,
+      note = '',
+      totalAmount = '',
+      createdAt = 0,
+      postingDate = 0,
+      isUnPosted = false
+    } = postingData;
+    const posting = { linesData, note, totalAmount, createdAt, postingDate, isUnPosted };
+
+    // return database.ref(`users/${uid}/postings`).push(posting).then((ref) => {
+    return new Promise( (resolve, reject) => {
+      setTimeout( () => {
+        dispatch(addPosting({
+          id,
+          ...posting
+        }));
+        resolve('foo');
+      }, 300);
+    });
+    
+
+    
+    // });
+    // return Promise.resolve();
+  };
+
+};
 
 //REMOVE_POSTING
 export const removePosting = ({ id } = {}) => ({
