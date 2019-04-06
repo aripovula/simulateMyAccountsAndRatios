@@ -49,6 +49,7 @@ const PostingOneLine = (props) => {
       <span
         //to="#"
         id={props.idu}
+        test-attr="deleteLineX"
         onClick={props.processDeleteLine}
         className="noDecor"
       >&#10060;</span>

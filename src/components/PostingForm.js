@@ -476,6 +476,7 @@ export default class PostingForm extends React.Component {
           <button
             className="button1"
             type="button"
+            test-attr="plusCrButton"
             onClick={this.processAddCrLine}
           >+ Cr line
           </button>
@@ -526,7 +527,10 @@ export default class PostingForm extends React.Component {
           </span>
           <span className="horIndent"></span>
 
-          <button className="button button1 buttonwide">Post Entry</button>
+          <button
+            test-attr="onSubmitButton"
+            className="button button1 buttonwide"
+          >Post Entry</button>
 
           {!isEditMode && <span>
             <label className="text14black">&amp; stay here &nbsp;

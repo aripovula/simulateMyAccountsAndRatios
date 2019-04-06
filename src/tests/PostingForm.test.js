@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import PropTypes from 'prop-types';
 // import checkPropTypes from 'check-prop-types';
 import PostingForm from '../components/PostingForm';
@@ -106,3 +106,4 @@ it('should call onSubmit prop for valid form submission', () => {
     const item = findByAttr(wrapper, "errorMsg");
     expect(item.text()).not.toContain('add amounts');
 });
+

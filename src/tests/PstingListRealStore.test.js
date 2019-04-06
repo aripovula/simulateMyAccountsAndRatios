@@ -37,4 +37,23 @@ describe('Connected, shallow, test renders', () => {
         const item = findByAttr(wrapper, "postingsList");
         expect(item.length).toBe(1);
     });
-})
+
+
+});
+
+describe('Connected, shallow, Redux props', () => {
+
+    let wrapper;
+    const showLinesOnly = true;
+    beforeEach(() => {
+        wrapper = setup({ showLinesOnly });
+    })
+
+    it('has showLinesOnly piece of state as props', () => {
+        // const showLinesOnly = false;
+        const prop = wrapper.instance().props.showLinesOnly;
+        expect(prop).toBe(showLinesOnly);
+    });
+
+
+});
