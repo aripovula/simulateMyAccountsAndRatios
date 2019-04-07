@@ -27,11 +27,16 @@ class PostingsListFilter extends React.Component {
     };
   }
 
+  componentDidMount = () => {
+    this.clearDateRange();
+  }
+
   showFromMonth() {
     let { from, to } = this.state;
-
-    from = from.toDate();
-    to = to.toDate();
+    console.log('from - ', from);
+    
+    // from = from.toDate();
+    // to = to.toDate();
     if (!from) {
       return;
     }

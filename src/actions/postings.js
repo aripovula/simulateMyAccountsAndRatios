@@ -27,7 +27,6 @@ export const startAddPosting = (postingData = {}) => {
         ...posting
       }));
     });
-    // return Promise.resolve();
   };
 };
 
@@ -44,14 +43,10 @@ export const startAddPostingSkipFb = (postingData = {}, id) => {
       isUnPosted = false
     } = postingData;
     const posting = { linesData, note, totalAmount, createdAt, postingDate, isUnPosted };
-
-    // return database.ref(`users/${uid}/postings`).push(posting).then((ref) => {
       dispatch(addPosting({
         id,
         ...posting
       }));
-    // });
-    // return Promise.resolve();
   };
 
 };
@@ -69,7 +64,6 @@ export const startAddPostingSimulateDelay = (postingData = {}, id) => {
     } = postingData;
     const posting = { linesData, note, totalAmount, createdAt, postingDate, isUnPosted };
 
-    // return database.ref(`users/${uid}/postings`).push(posting).then((ref) => {
     return new Promise( (resolve, reject) => {
       setTimeout( () => {
         dispatch(addPosting({
@@ -79,11 +73,6 @@ export const startAddPostingSimulateDelay = (postingData = {}, id) => {
         resolve('foo');
       }, 300);
     });
-    
-
-    
-    // });
-    // return Promise.resolve();
   };
 
 };

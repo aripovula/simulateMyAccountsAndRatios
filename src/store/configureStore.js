@@ -21,11 +21,5 @@ export default () => {
     composeEnhancers(applyMiddleware(...middlewares))
   );
 
-  
-  // console.log('STORE FROM STORE=');
-  // console.log(store);
-  //const state = store.getState();
-  // console.log('State FROM STORE=');
-  // console.log(state);
   return store;
 };

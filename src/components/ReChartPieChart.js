@@ -55,6 +55,8 @@ class ReChartPieChart extends React.Component {
   }
 
   render() {
+    console.log('financialData - ', this.props.financialData);
+    
     data = this.getData();
     return (
       <ResponsiveContainer width='100%' aspect={1.0}>

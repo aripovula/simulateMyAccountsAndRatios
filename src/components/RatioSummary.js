@@ -11,6 +11,7 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { disabledDays } from 'react-day-picker';
 import { formatDate, parseDate } from 'react-day-picker/moment';
+import Helmet from 'react-helmet';
 // local imports
 import { selectRatioData } from '../selectors/ratioData';
 import { Tips } from "../utils/tableUtils";
@@ -58,17 +59,19 @@ class RatioSummary extends React.Component {
           <span className="horIndent"></span>
 
           <span style={{ color: this.state.cColor }}>
-            {this.state.isFullDateFormat ? 'Change reporting date to:' : 'Update dashboard info for date of :'}
+            {this.state.isFullDateFormat ? 'Change reporting date to:' : 'Update info for date of :'}
             <span className="horIndent"></span>
+            <span className="InputFromTo-to">
             <DayPickerInput
               value={this.state.reportDate2}
-              selectedDays={this.props.filters.endDate}
+              selectedDays={pydate.toDate()}
               format="LL"
               formatDate={formatDate}
               onDayClick={day => this.processReportDateChange(day)}
               onDayChange={day => this.processReportDateChange(day)}
               placeholder="pick report date"
               dayPickerProps={{
+                numberOfMonths: 3,
                 enableOutsideDays: false,
                 disabledDays: {
                   before: pydate.toDate(),
@@ -76,6 +79,33 @@ class RatioSummary extends React.Component {
                 }
               }}
             />
+            </span>
+            <Helmet>
+              <style>{`
+                .InputFromTo .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+                  background-color: #f0f8ff !important;
+                  color: #4a90e2;
+                }
+                .InputFromTo .DayPicker-Day {
+                  border-radius: 0 !important;
+                }
+                .InputFromTo .DayPicker-Day--start {
+                  border-top-left-radius: 50% !important;
+                  border-bottom-left-radius: 50% !important;
+                }
+                .InputFromTo .DayPicker-Day--end {
+                  border-top-right-radius: 50% !important;
+                  border-bottom-right-radius: 50% !important;
+                }
+                .InputFromTo .DayPickerInput-Overlay {
+                  width: 550px;
+                }
+                .InputFromTo-to .DayPickerInput-Overlay {
+                  margin-left: -40px;
+                }
+                `}
+              </style>
+            </Helmet>
           </span>
         </div>
         <ReactTable

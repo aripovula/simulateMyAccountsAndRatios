@@ -50,7 +50,6 @@ describe('Connected, shallow, Redux props', () => {
     })
 
     it('has showLinesOnly piece of state as props', () => {
-        // const showLinesOnly = false;
         const prop = wrapper.instance().props.showLinesOnly;
         expect(prop).toBe(showLinesOnly);
     });

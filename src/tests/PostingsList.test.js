@@ -81,7 +81,6 @@ describe('Connected, mount + wrapping in <Provider>', () => {
                 </Router>
             </Provider>
         );
-        // console.log(wrapper.debug());
     })
 
     it('renders connected component without crashing', () => {
@@ -100,7 +99,6 @@ describe('Connected, mount + wrapping in <Provider>', () => {
 describe('Actual Store + reducers', () => {
 
     const initialState = { postings: [aPosting] }
-    // const mockStore = configureStore();
     let store;
     let wrapper;
 
@@ -113,7 +111,6 @@ describe('Actual Store + reducers', () => {
                 </Router>
             </Provider>
         );
-        // console.log(wrapper.debug());
     })
 
 

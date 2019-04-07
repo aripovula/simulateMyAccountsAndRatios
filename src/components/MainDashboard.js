@@ -2,6 +2,7 @@ import React from 'react';
 import SplitterLayout from 'react-splitter-layout';
 import { render } from "react-dom";
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import FinStatements from './FinStatements';
 import RatioSummary from './RatioSummary';
@@ -16,6 +17,7 @@ import { selectPostings } from '../selectors/postings';
 import addSimulatedEntries from '../utils/addSimulatedEntries';
 import LoadingModal from './LoadingModal';
 import LoadFailedModal from './LoadFailedModal';
+import { setStartDate, setEndDate } from '../actions/filters';
 
 let isRestored = false;
 let isMounted = false;
@@ -51,16 +53,19 @@ class MainDashboard extends React.Component {
 
   componentDidMount = () => {
     isMounted = true;
+    this.props.dispatch(setStartDate(  moment().subtract(1,'years').endOf('year')  ));
+    this.props.dispatch(setEndDate(moment()));
+    if (this.props.postings.length == 0) this.startRestoreDefaults();
   }
 
   componentWillUnmount = () => {
     isMounted = false;
   }
 
-  componentDidMount = () => {
-    console.log('DASH lenGTH = ' + this.props.postings.length);
-    if (this.props.postings.length == 0) this.startRestoreDefaults();
-  }
+  // componentDidMount = () => {
+  //   console.log('DASH lenGTH = ' + this.props.postings.length);
+  //   if (this.props.postings.length == 0) this.startRestoreDefaults();
+  // }
 
   componentWillReceiveProps = () => {
     if (isMounted) this.setState(() => ({

@@ -29,7 +29,6 @@ postings[2].note = 'opr1234';
 
 it('renders without crashing', () => {
     const wrapper = setup();
-    // console.log(wrapper.debug());
     expect(wrapper).toBeTruthy();
     const item = findByAttr(wrapper, "postingForm");
     expect(item.length).toBe(1);

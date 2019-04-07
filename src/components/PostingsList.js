@@ -43,8 +43,16 @@ export class PostingsList extends React.Component {
     if (!isRestored) {
       this.setState(() => ({
         mainText: undefined,
-        mainTextFail: 'Restoring defaults failed. Please check your INTERNET connection !'
+        mainTextFail: 'Restoring defaults failed. It may be due to connection problems or other reasons !\n\rIf this is happening in older versions of Safari please try updating it or use other browsers'
       }));
+      setTimeout( 
+        () => {
+          this.setState(() => ({
+            mainText: undefined,
+            mainTextFail: undefined
+          }))
+        },
+        10 * 1000);
     }
   }
 
