@@ -37,7 +37,7 @@ class RatioSummary extends React.Component {
   }
 
   processReportDateChange(date, modifiers = {}) {
-    console.log('modifiers.disabled = ' + modifiers.disabled);
+    // console.log('modifiers.disabled = ' + modifiers.disabled);
     if (modifiers.disabled) {
       return;
     }

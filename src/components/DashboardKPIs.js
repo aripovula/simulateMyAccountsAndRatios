@@ -51,7 +51,7 @@ class DashboardKPIs extends React.Component {
 
                 {/*  inventory days  */}
                 <span>
-                    <span style={{ color: data.receivableDays < 100 ? '#57d500' : '#ff2e00' }}>
+                    <span style={{ color: data.inventoryDays < 60 ? '#57d500' : '#ff2e00' }}>
                         &#x25cf;&nbsp;
                     </span>
                     &nbsp;inventory days:
@@ -69,7 +69,7 @@ class DashboardKPIs extends React.Component {
 
                 {/*  RoE  */}
                 <span>
-                    <span style={{ color: data.RoE > 4 ? '#57d500' : '#ff2e00' }}>
+                    <span style={{ color: data.RoE > 15 ? '#57d500' : '#ff2e00' }}>
                         &#x25cf;&nbsp;
                     </span>
                     &nbsp;return on equity:
@@ -81,6 +81,7 @@ class DashboardKPIs extends React.Component {
         );
     }
 
+    // calculates which KPIs were met
     getData = () => {
 
         let metKPI = 6;

@@ -26,6 +26,7 @@ const selectNumbers = () => {
     return text;
 }
 
+// renders random username to eliminate conflict if two cocurrent users login to this demo app
 const generateID = () => {
     let text = "";
     for (let i = 0; i < 3; i++)
@@ -66,6 +67,7 @@ class LoginPage extends React.Component {
         this.props.startSignUp(email2, password2);
     }
 
+    // if login fails this fn makes a pop-up modal to display wth 'Failed' message
     restoreTimedOut = () => {
         if (!isRestored) {
             if (isMounted) this.setState(() => ({

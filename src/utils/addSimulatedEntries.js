@@ -10,8 +10,8 @@ import { getEntryOptions } from "./getEntryOptions";
 
 const addSimulatedEntries = (props) => {
   var user = firebase.auth().currentUser;
-  console.log('user');
-  console.log(user);
+  // console.log('user');
+  // console.log(user);
   return addAllPostingsInArray()
     .then((postings) => { return database.ref(`users/${user.uid}/postings`).set(postings) })
     .then(() => props.dispatch(startSetPostings()))

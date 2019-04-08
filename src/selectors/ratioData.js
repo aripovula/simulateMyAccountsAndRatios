@@ -13,7 +13,7 @@ export const selectRatioData = createSelector(
   getPostings, getEndDate,
   (postings, endDate) => {
 
-    console.log('in selectRatioData postings.length = '+postings.length);
+    // console.log('in selectRatioData postings.length = '+postings.length);
     let accounts = getPYbalances();
     let data = [];
 

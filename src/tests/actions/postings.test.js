@@ -11,10 +11,6 @@ it('should remove posting', () => {
     })
 })
 
-// it('should edit posting', ()=> {
-//     expect(editPosting()).toBe({});
-// });
-
 it('should edit posting', () => {
     const action = editPosting('a123', {isUnPosted: false, note: 'testing'});
     expect(action).toEqual({

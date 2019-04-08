@@ -4,7 +4,7 @@ import React from 'react';
 class AddActionButton extends React.Component {
       
     render () {
-    console.log('actBut props = ');
+    // console.log('actBut props = ');
     //console.log(props);
     //console.log('actBut name = '+props.actButton.name);
     return (

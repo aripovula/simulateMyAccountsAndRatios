@@ -65,8 +65,8 @@ export default (state = filtersReducerDefaultState, action) => {
         ...state,
         endDate: action.endDate
       };
+    // I do not rememver why I added this code :)  but I decided to keep it not to incidentally cause app to crash
     case 'LOGOUT':
-    console.log('in FILTER LOGOUT');
       return filtersReducerDefaultState;
     default:
       return state;

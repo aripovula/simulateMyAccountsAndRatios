@@ -46,8 +46,8 @@ class FinStatements extends React.Component {
 
   render() {
     const dataTemp = this.props.financialData;
-    console.log('postingsInFinStatementUpdated Render DATA');
-    console.log(this.props);
+    // console.log('postingsInFinStatementUpdated Render DATA');
+    // console.log(this.props);
     // console.log('data prev');
     // console.log(dataPrev);
     // console.log('BEFORE CallinG findUpdatedOnes');

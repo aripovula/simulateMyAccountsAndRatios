@@ -31,9 +31,10 @@ class PostingsListFilter extends React.Component {
     this.clearDateRange();
   }
 
+  //  fn suggested by react-day-picker npm
   showFromMonth() {
     let { from, to } = this.state;
-    console.log('from - ', from);
+    // console.log('from - ', from);
     
     // from = from.toDate();
     // to = to.toDate();
@@ -44,6 +45,8 @@ class PostingsListFilter extends React.Component {
       this.to.getDayPicker().showMonth(from);
     }
   }
+
+  //  fn suggested by react-day-picker npm
   handleFromChange(from) {
     // Change the from date and focus the "to" input field
     this.setState({ from }, () => {
@@ -51,6 +54,8 @@ class PostingsListFilter extends React.Component {
     });
 
   }
+
+  //  fn suggested by react-day-picker npm
   handleToChange(to) {
     this.setState({ to }, () => {
       this.showFromMonth();
@@ -58,6 +63,7 @@ class PostingsListFilter extends React.Component {
     });
   }
 
+  // reset selected filter dates
   clearDateRange = () => {
     this.setState({ from: undefined, to: undefined }, () => {
       this.props.dispatch(setStartDate(moment(pydate)));

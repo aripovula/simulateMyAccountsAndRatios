@@ -1,6 +1,6 @@
 import uuid from 'uuid';
 
-
+// I added this action to work out certain testing techniques using JEST / Enzyme
 export const addDummy = (dummy) => ({
   type: 'SET_DUMMY',
   dummy

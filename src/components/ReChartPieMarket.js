@@ -46,24 +46,28 @@ class ReChartPieMarket extends React.Component {
 
   render() {
     data = this.getData();
-    if (data[0].value < 1) alert('Revenue data for current year is not received! Please make sure that you are connected to internet and the browser version is up to date (did not work in older versions of Safari during testing ! )');
     return (
-      <ResponsiveContainer width='100%' aspect={1.0}>
-        <PieChart width={400} height={200}>
-          <Pie
-            dataKey="value"
-            activeIndex={this.state.activeIndex}
-            activeShape={renderActiveShape}
-            data={data}
-            cx={180}
-            cy={75}
-            innerRadius={40}
-            outerRadius={60}
-            fill="#00C49F"
-            onMouseEnter={this.onPieEnter}
-          />
-        </PieChart>
-      </ResponsiveContainer>
+      <div>
+        {data[0].value != 0 &&
+          <ResponsiveContainer width='100%' aspect={1.0}>
+            <PieChart width={400} height={200}>
+              <Pie
+                dataKey="value"
+                activeIndex={this.state.activeIndex}
+                activeShape={renderActiveShape}
+                data={data}
+                cx={180}
+                cy={75}
+                innerRadius={40}
+                outerRadius={60}
+                fill="#00C49F"
+                onMouseEnter={this.onPieEnter}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        }
+        {data[0].value == 0 && <span style={{fontSize:12}}><br/>Data fetching for current year failed! Please make sure that you are connected to internet and the browser version is up to date. Or try another browser (data fetching worked in Chrome, Opera and Firefox but did not work in older versions of Safari during testing ! )</span>}
+      </div>
     );
   }
   getData = () => {

@@ -52,6 +52,8 @@ export default class PostingForm extends React.Component {
     isNewLIused = false;
   }
 
+  //this fn is triggrered when one of 8 buttons with predefined postings is triggered
+  // and it sets all values of preset posting to the postings form input fields adding more line items if needed
   onActionButtonSelected = (posting) => {
     // console.log('in onActionButtonSelected data=');
     // console.log(posting.lines);
@@ -64,6 +66,9 @@ export default class PostingForm extends React.Component {
     }, this.checkSum);
   }
 
+  // default behaviour -> when a Submit entry is clicked in Posting form app navigates away from
+  // posting form and opens all postings list.
+  // If user ticks 'stay here' checkbox instead of navigating away app stays on the same page after submitting
   onStayHereSelected = () => {
     idCounter = 2;
     isNewLIused = false;
@@ -71,6 +76,7 @@ export default class PostingForm extends React.Component {
       return {
         note: "",
         totalAmount: '',
+        error: '',
         createdAt: moment(),
         postingDate: moment(),
         linesData: [

@@ -8,6 +8,7 @@ export const addPosting = (posting) => ({
   posting
 });
 
+// Thunk middleware
 export const startAddPosting = (postingData = {}) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
@@ -30,7 +31,7 @@ export const startAddPosting = (postingData = {}) => {
   };
 };
 
-
+// used for testing - same as above fn but without firebase fetch
 export const startAddPostingSkipFb = (postingData = {}, id) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
@@ -51,6 +52,7 @@ export const startAddPostingSkipFb = (postingData = {}, id) => {
 
 };
 
+// used for testing with simulated DB delay
 export const startAddPostingSimulateDelay = (postingData = {}, id) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
@@ -83,6 +85,7 @@ export const removePosting = ({ id } = {}) => ({
   id
 });
 
+// Thunk middleware
 export const startRemovePosting = ({ id } = {}) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
@@ -100,6 +103,7 @@ export const editPosting = (id, updates) => ({
   updates
 });
 
+// Thunk middleware
 export const startEditPosting = (id, updates) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
@@ -115,21 +119,22 @@ export const setPostings = (postings) => ({
   postings
 });
 
+// Thunk middleware
 export const startSetPostings = () => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
     return database.ref(`users/${uid}/postings`).once('value').then((snapshot) => {
       const postings = [];
-      console.log('IN POSTING UID = ');
-      console.log(uid);
+      // console.log('IN POSTING UID = ');
+      // console.log(uid);
       snapshot.forEach((childSnapshot) => {
         postings.push({
           id: childSnapshot.key,
           ...childSnapshot.val()
         });
       });
-      console.log('POSTINGS in POSTINGS=');
-      console.log(postings);
+      // console.log('POSTINGS in POSTINGS=');
+      // console.log(postings);
       dispatch(setPostings(postings));
     });
   };

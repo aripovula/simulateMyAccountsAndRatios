@@ -10,7 +10,7 @@ const getPostings = (state) => selectPostings(state);
 export const selectFinancialData = createSelector(
   getPostings, (postings) => {
 
-    console.log('postings in selectFinancialData  postings.length = '+postings.length);
+    // console.log('postings in selectFinancialData  postings.length = '+postings.length);
     //console.log(postings);
 
     let accounts = getPYbalances();

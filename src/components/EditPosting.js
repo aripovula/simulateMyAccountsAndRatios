@@ -8,7 +8,7 @@ let actButtons;
 
 class EditPosting extends React.Component {
     constructor(props) {
-        console.log('in EditPosting');
+        // console.log('in EditPosting');
         super(props);
         this.state = {
         }
@@ -47,8 +47,8 @@ class EditPosting extends React.Component {
                                 ...this.props.posting,
                                 isUnPosted: true
                             }
-                            console.log('newPosting');
-                            console.log(newPosting);
+                            // console.log('newPosting');
+                            // console.log(newPosting);
                             this.props.dispatch(startEditPosting(this.props.posting.id, newPosting));
                             this.props.history.push(`/editposting/${this.props.posting.id}`);
                         }}>Temporarily un-post</button>}
@@ -74,8 +74,6 @@ class EditPosting extends React.Component {
 }
 
 const mapStateToProps = (state, props) => {
-    console.log('Edit state');
-    console.log(state);
     return {
         posting: state.postings.find((posting) => posting.id === props.idtoedit)
     };
