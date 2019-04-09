@@ -5,6 +5,7 @@ import createHistory from 'history/createBrowserHistory';
 import MainDashboard from '../components/MainDashboard';
 import MainAddPosting from '../components/MainAddPosting';
 import MainAllPostings from '../components/MainAllPostings';
+import Source from '../components/Source';
 import Header from '../components/Header';
 import AddPosting from '../components/AddPosting';
 import EditPosting from '../components/EditPosting';
@@ -24,6 +25,7 @@ const AppRouter = () => (
         <PrivateRoute path="/postings" component={MainAllPostings} exact={true} />
         <PrivateRoute path="/createposting" component={MainAddPosting} exact={true} />
         <PrivateRoute path="/editposting/:id" component={MainAddPosting} exact={true} />
+        <PrivateRoute path="/source" component={Source} exact={true} />
       </Switch>
     </div>
     </Router>

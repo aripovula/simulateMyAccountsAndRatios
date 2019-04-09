@@ -41,7 +41,7 @@ export const Header = ({ startLogout }) => (
         <span className="horIndent"></span>|<span className="horIndent"></span>
 
         <NavLink
-          to="#"
+          to="/source"
           style={{ color: 'white', textDecoration: 'none', fontSize: '14px' }}
           activeStyle={{ color: 'red', textDecoration: 'none' }}
         >Link to Github repo
