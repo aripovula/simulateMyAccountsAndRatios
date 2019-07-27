@@ -13,16 +13,15 @@ class AddPosting extends React.Component {
   constructor(props) {
     // console.log('in AddPosting');
     super(props);
-    actButtons = getEntryOptions().slice(0,12); // this function is defined at the bottom
+    actButtons = getEntryOptions().slice(0,12); 
     this.state = {
     }
     this.textInput = React.createRef();
     this.applyActionButtonValues = this.applyActionButtonValues.bind(this);
   }
 
-  // posting form has 8 buttons with pre-defined postings. 
-  // this fn adds text of selected predefined posting
-  // this component is child component of posting form parent component
+  // posting form has 12 buttons with pre-defined postings. 
+  // this fn adds text of selected predefined posting to posting form
   applyActionButtonValues = (e) => {
     // console.log('in applyActionButtonValues');
     // console.log(e.target.id);
@@ -34,7 +33,7 @@ class AddPosting extends React.Component {
       <div>
         <div className="boxed ">
 
-          {/* this part renders 8 action buttons each representing pre-defined postings*/}
+          {/* this part renders 12 action buttons each representing pre-defined postings*/}
           {actButtons.map((actButton) => {
             return <AddActionButton
               key={actButton.idu}
