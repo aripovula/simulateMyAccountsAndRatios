@@ -453,7 +453,7 @@ a.addnlightbg:active {
   text-align: center;
 }
 
-  @media (max-width:768px) {
+  @media (min-width:768px) {
     .w3-modal-content {
       width: 500px
     }
@@ -477,13 +477,13 @@ a.addnlightbg:active {
     }
   }
 
-  @media (max-width:992px) and (min-width:601px) {
+  @media (min-width:992px) and (min-width:601px) {
     .w3-hide-medium {
       display: none !important
     }
   }
 
-  @media (max-width:992px) {
+  @media (min-width:992px) {
     .w3-sidebar.w3-collapse {
       display: none
     }
