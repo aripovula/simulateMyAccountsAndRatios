@@ -485,7 +485,9 @@ a.addnlightbg:active {
 
   @media (min-width:992px) {
     .w3-sidebar.w3-collapse {
-      display: none
+      display: none;
+      width: 50%;
+      box-sizing: border-box;
     }
 
     .w3-main {
