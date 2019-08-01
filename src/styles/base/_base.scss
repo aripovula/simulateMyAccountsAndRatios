@@ -459,13 +459,13 @@ a.addnlightbg:active {
     }
 
     .w3-modal {
-      padding-top: 50px
+      padding-top: 20px
     }
   }
 
   @media (min-width:993px) {
     .w3-modal-content {
-      width: 900px
+      width: 800px
     }
 
     .w3-hide-large {
@@ -486,7 +486,7 @@ a.addnlightbg:active {
   @media (min-width:992px) {
     .w3-sidebar.w3-collapse {
       display: none;
-      width: 50%;
+      width: 60%;
       box-sizing: border-box;
     }
 
