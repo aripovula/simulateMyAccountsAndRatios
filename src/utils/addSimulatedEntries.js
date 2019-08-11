@@ -26,7 +26,8 @@ const addAllPostingsInArray = () => {
   let cmonth = d.getMonth() + 1;
   let cyear = d.getFullYear();
 
-  // may be Promise is not necessary here. Added as a precaution in case moment takes longer than usual
+  // may be Promise is not necessary here. Promise is used to be able to 
+  // chain steps above (adding to Firebase, then dispatching record to Redux store)
   return new Promise((resolve, reject) => {
     for (let x = 0; x < cmonth; x++) {
       let days = x == 0 ? d.getDate() : (cmonth - x) == 2 ? 28 : 30;
